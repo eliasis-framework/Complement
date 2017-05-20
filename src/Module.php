@@ -447,9 +447,12 @@ class Module {
             
             } else {
 
-                if (!$deleteAll && $object === $slug . '.php') {
+                if (!$deleteAll) {
 
-                    continue;
+                    if ($object == $slug.'.php' || $object == $slug.'.png') {
+
+                        continue;
+                    }
                 }
 
                 unlink($modulePath . App::DS . $object);
@@ -462,7 +465,7 @@ class Module {
 
             $folder = array_pop($path);
 
-            if ($folder === $slug) {
+            if ($folder === $slug || $folder === 'images') {
 
                 return true;
             }
