@@ -526,7 +526,9 @@ class Module {
 
         $name = self::$id;
 
-        $path = $this->modules[$id][$name]['path'] . 'config'. App::DS;
+        $root = $this->modules[$id][$name]['path']['root'];
+
+        $path =  $root . 'config' . App::DS;
 
         if (is_dir($path) && $handle = scandir($path)) {
 
@@ -541,6 +543,8 @@ class Module {
                 $this->modules[$id][$name] = $merge;
             }
         }
+
+        $this->modules[$id][$name]['path']['root'] = $path;
     }
                                                                                
     /**
