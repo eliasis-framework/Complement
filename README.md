@@ -72,7 +72,7 @@ Module->getModulesInfo();
  
 ### Tests
 
-- [ ] Pending.
+- [ ] Pending
 
 ### Exception Handler
 

@@ -73,7 +73,7 @@ Module->getModulesInfo();
 
 ### Tests 
 
-- [ ] Pendiente.
+- [ ] Pendiente
 
 ### Manejador de excepciones
 
