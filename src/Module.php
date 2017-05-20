@@ -222,11 +222,16 @@ class Module {
                 $file = file_get_contents($filepath);
                 
                 return self::$states = json_decode($file, true);
-            } 
+            
+            } else {
+
+                return self::_setStates();
+
+            }
             
             $message = 'modules-states.jsond file not found in';
 
-            throw new ModuleException($message . ' ' . __DIR__, 605);
+            throw new ModuleException($message . ' ' . $path, 605);
         }
 
         return self::$states;
