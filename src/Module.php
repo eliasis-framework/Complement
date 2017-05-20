@@ -502,6 +502,7 @@ class Module {
                 'name'        => $name,
                 'version'     => $module['version'],
                 'description' => $module['description'],
+                'path'        => $module['path'],
                 'uri'         => $module['uri'],
                 'author'      => $module['author'],
                 'author-uri'  => $module['author-uri'],

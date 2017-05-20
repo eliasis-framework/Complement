@@ -19,3 +19,5 @@
 * Added `Eliasis\Module\Module::__callstatic()` method.
 
 * Bug fixed when creating status file.
+
+* The module path was added to the getModulesInfo method.
