@@ -17,3 +17,5 @@
 * Added `Eliasis\Module\Module->_getSettings()` method.
 * Added `Eliasis\Module\Module->_addResources()` method.
 * Added `Eliasis\Module\Module::__callstatic()` method.
+
+* Bug fixed when creating status file.
