@@ -167,7 +167,7 @@ class Module {
 
         $folder = explode(App::DS, $path);
 
-        $module['path']   = $path . App::DS;
+        $module['path']['root'] = $path . App::DS;
         $module['folder'] = array_pop($folder) . App::DS;
 
         $instance->modules[App::$id][self::$id] = $module;
@@ -502,7 +502,7 @@ class Module {
                 'name'        => $name,
                 'version'     => $module['version'],
                 'description' => $module['description'],
-                'path'        => $module['path'],
+                'path'        => $module['path']['root'],
                 'uri'         => $module['uri'],
                 'author'      => $module['author'],
                 'author-uri'  => $module['author-uri'],
