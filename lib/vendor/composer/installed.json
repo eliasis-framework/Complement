@@ -1,0 +1,156 @@
+[
+    {
+        "name": "josantonius/url",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Josantonius/PHP-Url.git",
+            "reference": "2893ec8de40206c4c9d9d4989c391d1e27ce37d8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Josantonius/PHP-Url/zipball/2893ec8de40206c4c9d9d4989c391d1e27ce37d8",
+            "reference": "2893ec8de40206c4c9d9d4989c391d1e27ce37d8",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.6 || ^7.0"
+        },
+        "time": "2017-05-09 14:19:44",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Josantonius\\Url\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josantonius",
+                "email": "hello@josantonius.com",
+                "homepage": "https://josantonius.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Library for urls manipulation.",
+        "keywords": [
+            "hhvm",
+            "https",
+            "path",
+            "php",
+            "uri",
+            "url"
+        ]
+    },
+    {
+        "name": "eliasis-framework/eliasis",
+        "version": "1.0.7",
+        "version_normalized": "1.0.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Eliasis-Framework/Eliasis.git",
+            "reference": "5bd6a88f05b604fdfab5cf43af51f4aada3143f1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Eliasis-Framework/Eliasis/zipball/5bd6a88f05b604fdfab5cf43af51f4aada3143f1",
+            "reference": "5bd6a88f05b604fdfab5cf43af51f4aada3143f1",
+            "shasum": ""
+        },
+        "require": {
+            "josantonius/url": "^1.1.1",
+            "php": "^5.6 || ^7.0"
+        },
+        "time": "2017-05-19 19:51:01",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Eliasis\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josantonius",
+                "email": "hello@josantonius.com",
+                "homepage": "https://josantonius.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Eliasis PHP Framework",
+        "keywords": [
+            "Eliasis",
+            "framework",
+            "hmvc",
+            "php"
+        ]
+    },
+    {
+        "name": "josantonius/hook",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Josantonius/PHP-Hook.git",
+            "reference": "02ec6aa272b5cfc2f633ddb6270f38b2366d7460"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Josantonius/PHP-Hook/zipball/02ec6aa272b5cfc2f633ddb6270f38b2366d7460",
+            "reference": "02ec6aa272b5cfc2f633ddb6270f38b2366d7460",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.6 || ^7.0"
+        },
+        "time": "2017-05-19 23:53:26",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Josantonius\\Hook\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josantonius",
+                "email": "hello@josantonius.com",
+                "homepage": "https://josantonius.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Library for handling hooks.",
+        "keywords": [
+            "HOOK",
+            "php"
+        ]
+    }
+]
