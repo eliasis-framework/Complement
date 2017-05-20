@@ -1,5 +1,5 @@
 {
-    "name":        "eliasis-framework/Module",
+    "name":        "eliasis-framework/module",
     "version":     "1.0.0",
     "description": "PHP library for adding addition of modules for Eliasis Framework.",
     "type":        "library",
