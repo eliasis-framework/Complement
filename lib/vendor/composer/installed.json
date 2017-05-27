@@ -59,12 +59,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Eliasis-Framework/Eliasis.git",
-            "reference": "5bd6a88f05b604fdfab5cf43af51f4aada3143f1"
+            "reference": "2cdd5e66581af524349a1a2c099cdca88e8215d8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Eliasis-Framework/Eliasis/zipball/5bd6a88f05b604fdfab5cf43af51f4aada3143f1",
-            "reference": "5bd6a88f05b604fdfab5cf43af51f4aada3143f1",
+            "url": "https://api.github.com/repos/Eliasis-Framework/Eliasis/zipball/2cdd5e66581af524349a1a2c099cdca88e8215d8",
+            "reference": "2cdd5e66581af524349a1a2c099cdca88e8215d8",
             "shasum": ""
         },
         "require": {

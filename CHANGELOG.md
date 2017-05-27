@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## 1.0.0 - 2017-05-27
+## 1.0.1 - 2017-05-27
+
+* The following parameters were added for the module configuration file:
+
+	id       → Required → Unique identifier. Previously 'name' was used.
+	state    → Required → State: active, inactive, uninstalled, installed.
+	category → Required → Category: Extension, component, widget, plugin...
+
+## 1.0.0 - 2017-05-07
 * Added `Eliasis\Module\Module` class.
 * Added `Eliasis\Module\Module::getInstance()` method.
 * Added `Eliasis\Module\Module::loadModules()` method.

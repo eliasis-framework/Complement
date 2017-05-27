@@ -119,7 +119,7 @@ class Module {
 
                     $module = require($file);
 
-                    self::$id = isset($module['name']) ? $module['name'] : '';
+                    self::$id = isset($module['id']) ? $module['id'] : '';
 
                     self::_add($module, $path . $dir);
                 }
@@ -149,16 +149,19 @@ class Module {
 
         $required = [
 
+            'id',
             'name',
             'version',
             'description',
+            'state',
+            'category',
             'uri',
             'author',
             'author-uri',
             'license',
         ];
 
-        if (count(array_intersect_key(array_flip($required),$module)) !== 7) {
+        if (count(array_intersect_key(array_flip($required),$module)) != 10) {
 
             $message = 'The module configuration file is not correct. Path';
 
@@ -504,16 +507,14 @@ class Module {
 
             $module = $instance->modules[App::$id][$module];
 
-            $name = $module['name'];
-
-            $name = trim(implode(' ', preg_split("/(?=[A-Z])/", $name)));
-
             $data[] = [
 
-                'id'          => $module['name'],
-                'name'        => $name,
+                'id'          => $module['id'],
+                'name'        => $module['name'],
                 'version'     => $module['version'],
                 'description' => $module['description'],
+                'state'       => $module['state'],
+                'category'    => $module['category'],
                 'path'        => $module['path']['root'],
                 'uri'         => $module['uri'],
                 'author'      => $module['author'],
