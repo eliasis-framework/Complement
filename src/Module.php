@@ -143,7 +143,7 @@ class Module {
      */
     private static function _add($module, $path) {
 
-        Hook::setHook($hookID = 'module-launch');
+        Hook::setHook($hookID = 'module-load');
 
         $instance = self::getInstance();
 
@@ -332,8 +332,12 @@ class Module {
      * Change module state.
      *
      * @since 1.0.0
+     *
+     * @return boolean
      */
-    public static function changeState() {
+    public static function changeState($moduleName = null) {
+
+        self::$id = ($moduleName) ? $moduleName : self::$id;
 
         $instance = self::getInstance();
 
@@ -354,8 +358,13 @@ class Module {
                 break;
 
             case 'uninstalled':
-                $action = 'installation';
+                $action = '';
                 $state = 'installed';
+                break;
+
+            case 'installed':
+                $action = 'installation';
+                $state = 'inactive';
                 break;
 
             case 'remove':
@@ -369,6 +378,8 @@ class Module {
         $instance->_setAction($action);
 
         self::_setStates();
+
+        return $state;
     }
 
     /**
@@ -376,27 +387,27 @@ class Module {
      *
      * @since 1.0.0
      *
-     * @param boolean $pluginName → plugin name to delete
+     * @param boolean $moduleName → plugin name to delete
      * @param boolean $deleteAll  → delete the entire directory or
      *                              leave only the configuration file.
      *
-     * @return boolean
+     * @return string → module state
      */
-    public static function remove($pluginName, $deleteAll = true) {
+    public static function remove($moduleName = null, $deleteAll = true) {
 
         $instance = self::getInstance();
 
-        self::$id = $pluginName;
+        self::$id = ($moduleName) ? $moduleName : self::$id;
 
-        if (isset($instance->modules[App::$id][self::$id]['path'])) {
+        if (isset($instance->modules[App::$id][self::$id]['path']['root'])) {
 
             $instance->_setState('remove');
 
             $instance->changeState();
 
-            $modulePath = $instance->modules[App::$id][self::$id]['path'];
+            $modulePath = $instance->modules[App::$id][self::$id]['root'];
 
-            $instance->_deleteDir($modulePath, $deleteAll);
+            //$instance->_deleteDir($modulePath, $deleteAll);
 
             if ($deleteAll) {
             
@@ -405,11 +416,9 @@ class Module {
             }
 
             self::_setStates();
-
-            return true;
         }
 
-        return false;
+        return 'uninstalled';
     }
 
     /**
@@ -597,6 +606,13 @@ class Module {
         }
 
         self::$id = $index;
+
+        $method = (isset($params[0])) ? $params[0] : '';
+
+        if (method_exists($instance, $method)) {
+
+            call_user_func([$instance, $method]);
+        }
 
         $column[] = $instance->modules[App::$id][$index];
 

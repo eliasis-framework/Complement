@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## 1.0.0 - 2017-05-20
+## 1.0.0 - 2017-05-27
 * Added `Eliasis\Module\Module` class.
+* Added `Eliasis\Module\Module::getInstance()` method.
 * Added `Eliasis\Module\Module::loadModules()` method.
 * Added `Eliasis\Module\Module::_add()` method.
 * Added `Eliasis\Module\Module::getStates()` method.
