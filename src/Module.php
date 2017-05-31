@@ -13,6 +13,7 @@ namespace Eliasis\Module;
 
 use Eliasis\App\App,
     Josantonius\Hook\Hook,
+    Josantonius\Json\Json,
     Eliasis\Module\Exception\ModuleException;
 
 /**
@@ -98,8 +99,6 @@ class Module {
      */
     public static function loadModules($path) {
 
-        Hook::setHook(self::$hooks);
-
         self::getStates();
 
         if (is_dir($path) && $handle = opendir($path)) {
@@ -142,8 +141,6 @@ class Module {
      * @throws ModuleException → module configuration file error
      */
     private static function _add($module, $path) {
-
-        Hook::setHook($hookID = 'module-load');
 
         $instance = self::getInstance();
 
@@ -188,17 +185,13 @@ class Module {
 
             $instance->_addResources();
 
-            Hook::run($hookID);
-
-            Hook::resetHook($hookID);
+            Hook::doAction('module-load');
 
             if (in_array($action, self::$hooks)) {
 
-                Hook::run($action);
+                Hook::doAction($action);
 
                 $instance->_setAction('');
-
-                Hook::resetHook($action);
             }
         }
     }
@@ -408,9 +401,9 @@ class Module {
 
             $instance->changeState();
 
-            $modulePath = $instance->modules[App::$id][self::$id]['root'];
+            $path = $instance->modules[App::$id][self::$id]['path']['root'];
 
-            //$instance->_deleteDir($modulePath, $deleteAll);
+            //$instance->_deleteDir($path, $deleteAll);
 
             if ($deleteAll) {
             
@@ -549,6 +542,8 @@ class Module {
 
             foreach ($files as $file) {
 
+                if ($file === 'hooks.php') { continue; }
+
                 $content = require($path . $file);
 
                 $merge = array_merge($this->modules[$id][$name], $content);
@@ -557,7 +552,8 @@ class Module {
             }
         }
 
-        $this->modules[$id][$name]['path']['root'] = $path;
+        $this->modules[$id][$name]['path']['root']   = $root;
+        $this->modules[$id][$name]['path']['config'] = $path;
     }
                                                                                
     /**
@@ -567,18 +563,18 @@ class Module {
      */
     private function _addResources() {
 
-        $config = $this->modules[App::$id][self::$id];
+        $module = $this->modules[App::$id][self::$id];
 
-        if (isset($config['hooks']) && count($config['hooks'])) {
+        if (file_exists($module['path']['config'] . 'hooks.php')) {
 
-            Hook::addHook($config['hooks']);
+            require_once($module['path']['config'] . 'hooks.php');
         } 
 
         if (class_exists($Router = 'Josantonius\Router\Router')) {
 
-            if (isset($config['routes']) && count($config['routes'])) {
+            if (isset($module['routes']) && count($module['routes'])) {
 
-                $Router::addRoute($config['routes']);
+                $Router::addRoute($module['routes']);
             }
         }
     }
