@@ -62,7 +62,7 @@ Module::loadModules();
 Module::getStates();
 Module::changeState();
 Module::remove();
-Module->getModulesInfo();
+Module::getModulesInfo();
 ```
 ### Usage
 

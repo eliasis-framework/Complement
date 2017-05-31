@@ -201,33 +201,15 @@ class Module {
      *
      * @since 1.0.0
      *
-     * @throws ModuleException → file not found
-     *
      * @return array → modules states
      */
     public static function getStates() {
 
         if (is_null(self::$states)) {
 
-            $path = App::ROOT() . 'modules' . App::DS;
+            $filepath = App::MODULES() . App::modules('states-file');
 
-            $filepath = $path . App::modules('states-file');
-
-            if (is_file($filepath)) {
-
-                $file = file_get_contents($filepath);
-                
-                return self::$states = json_decode($file, true);
-            
-            } else {
-
-                return self::_setStates();
-
-            }
-            
-            $message = 'modules-states.jsond file not found in';
-
-            throw new ModuleException($message . ' ' . $path, 605);
+            self::$states = Json::fileToArray($filepath);
         }
 
         return self::$states;
@@ -237,25 +219,12 @@ class Module {
      * Save states for modules.
      *
      * @since 1.0.0
-     *
-     * @throws ModuleException → file could not be created
      */
     private static function _setStates() {
 
-        $path = App::ROOT() . 'modules' . App::DS;
+        $filepath = App::MODULES() . App::modules('states-file');
 
-        $filepath = $path . App::modules('states-file');
-
-        $json = json_encode(self::$states, JSON_PRETTY_PRINT);
-        
-        if (!$file = fopen($filepath, 'w+')) { 
-
-            $message = 'modules-states.jsond could not be created in';
-            
-            throw new ModuleException($message . ' ' . $filepath, 300);
-        }
-
-        fwrite($file, $json);
+        Json::ArrayToFile(self::$states, $filepath);
     }
 
     /**
@@ -325,6 +294,45 @@ class Module {
     }
 
     /**
+     * Delete module.
+     *
+     * @since 1.0.0
+     *
+     * @param boolean $moduleName → plugin name to delete
+     * @param boolean $deleteAll  → delete the entire directory or
+     *                              leave only the configuration file.
+     *
+     * @return string → module state
+     */
+    public static function remove($moduleName = null, $deleteAll = true) {
+
+        $instance = self::getInstance();
+
+        self::$id = ($moduleName) ? $moduleName : self::$id;
+
+        if (isset($instance->modules[App::$id][self::$id]['path']['root'])) {
+
+            $instance->_setState('remove');
+
+            $instance->changeState();
+
+            $path = $instance->modules[App::$id][self::$id]['path']['root'];
+
+            //$instance->_deleteDir($path, $deleteAll);
+
+            if ($deleteAll) {
+            
+                unset($this->modules[App::$id][self::$id]);
+                unset(self::$states[App::$id][self::$id]);
+            }
+
+            self::_setStates();
+        }
+
+        return 'uninstalled';
+    }
+
+    /**
      * Change module state.
      *
      * @since 1.0.0
@@ -376,45 +384,6 @@ class Module {
         self::_setStates();
 
         return $state;
-    }
-
-    /**
-     * Delete module.
-     *
-     * @since 1.0.0
-     *
-     * @param boolean $moduleName → plugin name to delete
-     * @param boolean $deleteAll  → delete the entire directory or
-     *                              leave only the configuration file.
-     *
-     * @return string → module state
-     */
-    public static function remove($moduleName = null, $deleteAll = true) {
-
-        $instance = self::getInstance();
-
-        self::$id = ($moduleName) ? $moduleName : self::$id;
-
-        if (isset($instance->modules[App::$id][self::$id]['path']['root'])) {
-
-            $instance->_setState('remove');
-
-            $instance->changeState();
-
-            $path = $instance->modules[App::$id][self::$id]['path']['root'];
-
-            //$instance->_deleteDir($path, $deleteAll);
-
-            if ($deleteAll) {
-            
-                unset($this->modules[App::$id][self::$id]);
-                unset(self::$states[App::$id][self::$id]);
-            }
-
-            self::_setStates();
-        }
-
-        return 'uninstalled';
     }
 
     /**
@@ -486,9 +455,11 @@ class Module {
      *
      * @since 1.0.0
      *
+     * @param string $category → module category
+     *
      * @return array $data → modules info
      */
-    public static function getModulesInfo() {
+    public static function getModulesInfo($category = 'all') {
 
         $data = [];
 
@@ -499,6 +470,11 @@ class Module {
         foreach ($modules as $module) {
 
             $module = $instance->modules[App::$id][$module];
+
+            if ($category !== 'all' && $module['category'] !== $category) {
+
+                continue;
+            }
 
             $data[] = [
 
@@ -576,6 +552,22 @@ class Module {
             }
         }
     }
+                                                                      
+    /**
+     * Check if module exists.
+     *
+     * @since 1.0.2
+     *
+     * @param string $id → module id
+     *
+     * @return boolean
+     */
+    public static function exists($id) {
+
+        $instance = self::getInstance();
+
+        return array_key_exists($id, $instance->modules[App::$id]);
+    }
 
     /**
      * Receives the name of the module to execute: Module::ModuleName();
@@ -603,10 +595,11 @@ class Module {
         self::$id = $index;
 
         $method = (isset($params[0])) ? $params[0] : '';
+        $args   = (isset($params[1])) ? $params[1] : [];
 
         if (method_exists($instance, $method)) {
 
-            call_user_func([$instance, $method]);
+            return call_user_func_array([$instance, $method], $args);
         }
 
         $column[] = $instance->modules[App::$id][$index];

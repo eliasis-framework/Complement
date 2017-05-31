@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.0.2 - 2017-05-31
+
+* Some bugs were fixed.
+
+* Added argument in `getModulesInfo` method to filter modules by category.
+
+* Added `Eliasis\Module\Module::exists($id)` method.
+
+* Required `Josantonius/Json` library.
+
 ## 1.0.1 - 2017-05-27
 
 * The following parameters were added for the module configuration file:
@@ -9,6 +19,7 @@
 	category → Required → Category: Extension, component, widget, plugin...
 
 ## 1.0.0 - 2017-05-07
+
 * Added `Eliasis\Module\Module` class.
 * Added `Eliasis\Module\Module::getInstance()` method.
 * Added `Eliasis\Module\Module::loadModules()` method.
@@ -26,6 +37,9 @@
 * Added `Eliasis\Module\Module->_getSettings()` method.
 * Added `Eliasis\Module\Module->_addResources()` method.
 * Added `Eliasis\Module\Module::__callstatic()` method.
+
+* Required `Eliasis-Framework/Eliasis` framework.
+* Required `Josantonius/Hook` library.
 
 * Bug fixed when creating status file.
 
