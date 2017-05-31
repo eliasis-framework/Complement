@@ -542,8 +542,6 @@ class Module {
 
             foreach ($files as $file) {
 
-                if ($file === 'hooks.php') { continue; }
-
                 $content = require($path . $file);
 
                 $merge = array_merge($this->modules[$id][$name], $content);
@@ -565,9 +563,9 @@ class Module {
 
         $module = $this->modules[App::$id][self::$id];
 
-        if (file_exists($module['path']['config'] . 'hooks.php')) {
+        if (isset($module['hooks'])) {
 
-            require_once($module['path']['config'] . 'hooks.php');
+            Hook::addActions($module['hooks']);
         } 
 
         if (class_exists($Router = 'Josantonius\Router\Router')) {
