@@ -590,7 +590,7 @@ class Module {
             return $this->modules[$id][$name][$option] = $value;
         }
 
-        if (array_key_exists($option, $data)) {
+        if (array_key_exists($option, $value)) {
 
             $this->modules[$id][$name][$option] = array_merge_recursive(
 
