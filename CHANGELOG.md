@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.3 - 2017-05-31
+
+* Added `Eliasis\Module\Module->addOption()` method.
+
 ## 1.0.2 - 2017-05-31
 
 * Some bugs were fixed.

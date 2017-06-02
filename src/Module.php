@@ -570,6 +570,45 @@ class Module {
     }
 
     /**
+     * Add options to plugin settings.
+     *
+     * @since 1.0.3
+     *
+     * @param string $option → option name or options array
+     * @param mixed  $value  → value/s
+     *
+     * @return
+     */
+    protected function addOption($option, $value) {
+
+        $id = App::$id;
+
+        $name = self::$id;
+
+        if (!is_array($value)) {
+
+            return $this->modules[$id][$name][$option] = $value;
+        }
+
+        if (array_key_exists($option, $data)) {
+
+            $this->modules[$id][$name][$option] = array_merge_recursive(
+
+                $this->modules[$id][$name][$option], $value
+            );
+        
+        } else {
+
+            foreach ($value as $key => $value) {
+            
+                $this->modules[$id][$name][$option][$key] = $value;
+            }
+        }
+
+        return $this->modules[$id][$name][$option];        
+    }
+
+    /**
      * Receives the name of the module to execute: Module::ModuleName();
      *
      * @since 1.0.0
@@ -581,7 +620,7 @@ class Module {
      *
      * @return mixed
      */
-    public static function __callstatic($index, $params = '') {
+    public static function __callstatic($index, $params = false) {
 
         $instance = self::getInstance();
 
@@ -593,6 +632,8 @@ class Module {
         }
 
         self::$id = $index;
+
+        if (!$params) { return $instance; }
 
         $method = (isset($params[0])) ? $params[0] : '';
         $args   = (isset($params[1])) ? $params[1] : [];

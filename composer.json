@@ -1,6 +1,6 @@
 {
     "name":        "eliasis-framework/module",
-    "version":     "1.0.2",
+    "version":     "1.0.3",
     "description": "PHP library for adding addition of modules for Eliasis Framework.",
     "type":        "library",
     "keywords": [
@@ -32,9 +32,9 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^5.6 || ^7.0",
-        "Eliasis-Framework/Eliasis" : "^1.0.7",
-        "Josantonius/Hook" : "^1.0.2",
-        "Josantonius/Json" : "^1.1.1"
+        "Eliasis-Framework/Eliasis" : "^1.0.8",
+        "Josantonius/Hook" : "^1.0.3",
+        "Josantonius/Json" : "^1.1.2"
     },
     "autoload": {
         "psr-4": {

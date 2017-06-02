@@ -63,7 +63,9 @@ Module::getStates();
 Module::changeState();
 Module::remove();
 Module::getModulesInfo();
+Module::exists();
 ```
+
 ### Usage
 
 - The library will be loaded automatically from the Eliasis Framework core.
