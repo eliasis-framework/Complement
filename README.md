@@ -62,6 +62,9 @@ Module::loadModules();
 Module::getStates();
 Module::changeState();
 Module::remove();
+Module::set();
+Module::get();
+Module::instance();
 Module::getModulesInfo();
 Module::exists();
 ```

@@ -44,7 +44,7 @@ Esta ĺibrería es soportada por versiones de PHP 5.6 o superiores y es compatib
 
 ### Cómo empezar y ejemplos
 
-Para utilizar esta librería, simplemente:
+Para utilizar esta biblioteca, simplemente:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -54,7 +54,7 @@ use Eliasis\Module\Module;
 
 ### Métodos disponibles
 
-Métodos disponibles en esta librería:
+Métodos disponibles en esta biblioteca:
 
 ```php
 Module::getInstance();
@@ -62,13 +62,16 @@ Module::loadModules();
 Module::getStates();
 Module::changeState();
 Module::remove();
+Module::set();
+Module::get();
+Module::instance();
 Module::getModulesInfo();
 Module::exists();
 ```
 
 ### Uso
 
-- Una vez instalada, la librería se cargará automáticamente desde el core de Eliasis Framework.
+- Una vez instalada, la biblioteca se cargará automáticamente desde el core de Eliasis Framework.
 
 - Examinará el directorio "modules" en la raíz del sitio y cargará los módulos que tienen un [archivo de configuración válido](https://github.com/Eliasis-Framework/Modules#create-module).
 
@@ -78,7 +81,7 @@ Module::exists();
 
 ### Manejador de excepciones
 
-Esta librería utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
+Esta biblioteca utiliza [control de excepciones](src/Exception) que puedes personalizar a tu gusto.
 ### Contribuir
 1. Comprobar si hay incidencias abiertas o abrir una nueva para iniciar una discusión en torno a un fallo o función.
 1. Bifurca la rama del repositorio en GitHub para iniciar la operación de ajuste.
