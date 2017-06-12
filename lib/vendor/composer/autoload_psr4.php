@@ -7,6 +7,7 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Josantonius\\Url\\' => array($vendorDir . '/josantonius/url/src'),
+    'Josantonius\\Json\\' => array($vendorDir . '/josantonius/json/src'),
     'Josantonius\\Hook\\' => array($vendorDir . '/josantonius/hook/src'),
     'Eliasis\\Module\\' => array($baseDir . '/src'),
     'Eliasis\\' => array($vendorDir . '/eliasis-framework/eliasis/src'),

@@ -10,6 +10,7 @@ class ComposerStaticInit7d665493a0d69eb2a102f56296aa7db1
         'J' => 
         array (
             'Josantonius\\Url\\' => 16,
+            'Josantonius\\Json\\' => 17,
             'Josantonius\\Hook\\' => 17,
         ),
         'E' => 
@@ -23,6 +24,10 @@ class ComposerStaticInit7d665493a0d69eb2a102f56296aa7db1
         'Josantonius\\Url\\' => 
         array (
             0 => __DIR__ . '/..' . '/josantonius/url/src',
+        ),
+        'Josantonius\\Json\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/josantonius/json/src',
         ),
         'Josantonius\\Hook\\' => 
         array (

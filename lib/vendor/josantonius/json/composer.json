@@ -1,12 +1,16 @@
 {
-    "name":        "eliasis-framework/eliasis",
-    "version":     "1.0.9",
-    "description": "Eliasis PHP Framework",
+    "name":        "josantonius/json",
+    "version":     "1.1.2",
     "type":        "library",
+    "description": "PHP simple library for managing Json files.",
     "keywords": [
-        "Eliasis", 
-        "HMVC",
-        "Framework", 
+        "JSON", 
+        "HHVM", 
+        "File to array", 
+        "Array to file", 
+        "JavaScript Object Notation", 
+        "JavaScript", 
+        "Data exchange",
         "PHP"
     ],
     "license": "MIT",
@@ -19,22 +23,23 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/eliasis-framework/eliasis/issues",
-        "forum": "http://stackoverflow.com/tags/eliasis",
-        "source": "https://github.com/eliasis-framework/eliasis"
+        "source": "https://github.com/josantonius/php-json"
     },
     "config": {
-        "vendor-dir": "lib/vendor",
         "preferred-install": "dist"
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^5.6 || ^7.0",
-        "Josantonius/Url" : "^1.1.2"
+        "php": "^5.6 || ^7.0"
     },
     "autoload": {
         "psr-4": {
-            "Eliasis\\"   : "src/"
+            "Josantonius\\Json\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Josantonius\\Json\\Tests\\": "tests/"
         }
     },
     "extra": {

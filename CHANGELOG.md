@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.0.4 - 2017-06-12
+
+* Added `Eliasis\Module\Module->set()` method.
+* Added `Eliasis\Module\Module->get()` method.
+* Added `Eliasis\Module\Module->instance()` method.
+
+* Deprecated `Eliasis\Module\Module->addOption()` method.
+
+The `addOption()` method will be deleted in the next version. It will be replaced by the `set()` method and will be removed in the next version.
+
 ## 1.0.3 - 2017-05-31
 
 * Added `Eliasis\Module\Module->addOption()` method.

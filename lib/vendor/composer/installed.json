@@ -54,24 +54,24 @@
     },
     {
         "name": "eliasis-framework/eliasis",
-        "version": "1.0.7",
-        "version_normalized": "1.0.7.0",
+        "version": "1.0.9",
+        "version_normalized": "1.0.9.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Eliasis-Framework/Eliasis.git",
-            "reference": "2cdd5e66581af524349a1a2c099cdca88e8215d8"
+            "reference": "b909d1bf48d8dd156151defcece4175d0751fc51"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Eliasis-Framework/Eliasis/zipball/2cdd5e66581af524349a1a2c099cdca88e8215d8",
-            "reference": "2cdd5e66581af524349a1a2c099cdca88e8215d8",
+            "url": "https://api.github.com/repos/Eliasis-Framework/Eliasis/zipball/b909d1bf48d8dd156151defcece4175d0751fc51",
+            "reference": "b909d1bf48d8dd156151defcece4175d0751fc51",
             "shasum": ""
         },
         "require": {
-            "josantonius/url": "^1.1.1",
+            "josantonius/url": "^1.1.2",
             "php": "^5.6 || ^7.0"
         },
-        "time": "2017-05-19 19:51:01",
+        "time": "2017-06-12 12:02:19",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -106,23 +106,23 @@
     },
     {
         "name": "josantonius/hook",
-        "version": "1.0.2",
-        "version_normalized": "1.0.2.0",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Josantonius/PHP-Hook.git",
-            "reference": "02ec6aa272b5cfc2f633ddb6270f38b2366d7460"
+            "reference": "1bccac139199d33f0c330596abf6b17abca3be0f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Josantonius/PHP-Hook/zipball/02ec6aa272b5cfc2f633ddb6270f38b2366d7460",
-            "reference": "02ec6aa272b5cfc2f633ddb6270f38b2366d7460",
+            "url": "https://api.github.com/repos/Josantonius/PHP-Hook/zipball/1bccac139199d33f0c330596abf6b17abca3be0f",
+            "reference": "1bccac139199d33f0c330596abf6b17abca3be0f",
             "shasum": ""
         },
         "require": {
             "php": "^5.6 || ^7.0"
         },
-        "time": "2017-05-19 23:53:26",
+        "time": "2017-06-02 02:16:38",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -149,7 +149,65 @@
         ],
         "description": "Library for handling hooks.",
         "keywords": [
+            "Action Hooks",
             "HOOK",
+            "actions",
+            "hhvm",
+            "php"
+        ]
+    },
+    {
+        "name": "josantonius/json",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Josantonius/PHP-Json.git",
+            "reference": "3bd96f56e4157d774321d78cf5fc86191378ef66"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Josantonius/PHP-Json/zipball/3bd96f56e4157d774321d78cf5fc86191378ef66",
+            "reference": "3bd96f56e4157d774321d78cf5fc86191378ef66",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.6 || ^7.0"
+        },
+        "time": "2017-05-31 06:39:12",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Josantonius\\Json\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Josantonius",
+                "email": "hello@josantonius.com",
+                "homepage": "https://josantonius.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "PHP simple library for managing Json files.",
+        "keywords": [
+            "Array to file",
+            "File to array",
+            "JavaScript Object Notation",
+            "data exchange",
+            "hhvm",
+            "javascript",
+            "json",
             "php"
         ]
     }

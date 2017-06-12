@@ -28,9 +28,9 @@ class Module {
      *
      * @since 1.0.0
      *
-     * @var object
+     * @var array
      */
-    protected static $instance;
+    protected static $instances;
 
     /**
      * Available modules.
@@ -39,7 +39,7 @@ class Module {
      *
      * @var array
      */
-    protected $modules = [];
+    protected $module = [];
 
     /**
      * List of modules (status indicators).
@@ -82,13 +82,14 @@ class Module {
      */
     public static function getInstance() {
 
-        if (is_null(self::$instance)) { 
+        if (!isset(self::$instances[App::$id][self::$id])) { 
 
-            self::$instance = new self;
+            self::$instances[App::$id][self::$id] = new self;
         }
 
-        return self::$instance;
+        return self::$instances[App::$id][self::$id];
     }
+
 
     /**
      * Load all modules found in the directory.
@@ -98,8 +99,6 @@ class Module {
      * @param string $path → modules folder path
      */
     public static function loadModules($path) {
-
-        self::getStates();
 
         if (is_dir($path) && $handle = opendir($path)) {
 
@@ -126,8 +125,6 @@ class Module {
 
             closedir($handle);
         }
-
-        self::_setStates();
     }
 
     /**
@@ -142,7 +139,9 @@ class Module {
      */
     private static function _add($module, $path) {
 
-        $instance = self::getInstance();
+        $that = self::getInstance();
+
+        self::getStates();
 
         $required = [
 
@@ -169,21 +168,22 @@ class Module {
 
         $module['path']['root'] = $path . App::DS;
         $module['folder'] = array_pop($folder) . App::DS;
+        $module['slug'] = trim($module['folder'], App::DS);
 
-        $instance->modules[App::$id][self::$id] = $module;
+        $that->module = $module;
 
-        $state  = $instance->_getState();
-        $action = $instance->_getAction($state);
+        $state  = $that->_getState();
+        $action = $that->_getAction($state);
 
-        $instance->_setAction($action);
+        $that->_setAction($action);
 
-        $instance->_setState($state);
+        $that->_setState($state);
 
-        $instance->_getSettings();
+        $that->_getSettings();
 
         if (in_array($action, self::$hooks) || $state === 'active') {
 
-            $instance->_addResources();
+            $that->_addResources();
 
             Hook::doAction('module-load');
 
@@ -191,9 +191,11 @@ class Module {
 
                 Hook::doAction($action);
 
-                $instance->_setAction('');
+                $that->_setAction('');
             }
         }
+
+        self::_setStates();
     }
 
     /**
@@ -205,12 +207,17 @@ class Module {
      */
     public static function getStates() {
 
-        if (is_null(self::$states)) {
+        $id = App::$id;
 
-            $filepath = App::MODULES() . App::modules('states-file');
+        $name = self::$id;
 
-            self::$states = Json::fileToArray($filepath);
-        }
+        $filepath = App::MODULES() . App::modules('states-file');
+
+        $states = Json::fileToArray($filepath);
+
+        $states = isset($states[$id][$name]) ? $states[$id][$name] : [];
+
+        self::$states = $states;
 
         return self::$states;
     }
@@ -222,9 +229,16 @@ class Module {
      */
     private static function _setStates() {
 
-        $filepath = App::MODULES() . App::modules('states-file');
+        if (!is_null(self::$states)) {
 
-        Json::ArrayToFile(self::$states, $filepath);
+            $filepath = App::MODULES() . App::modules('states-file');
+
+            $states = Json::fileToArray($filepath);
+
+            $states[App::$id][self::$id] = self::$states;
+
+            Json::ArrayToFile($states, $filepath);
+        }
     }
 
     /**
@@ -236,13 +250,13 @@ class Module {
      */
     private function _getState() {
 
-        if (isset(self::$states[App::$id][self::$id]['state'])) {
+        if (isset(self::$states['state'])) {
 
-            return self::$states[App::$id][self::$id]['state'];
+            return self::$states['state'];
         
-        } else if (isset($this->modules[App::$id][self::$id]['state'])) {
+        } else if (isset($this->module['state'])) {
 
-            return $this->modules[App::$id][self::$id]['state'];
+            return $this->module['state'];
         }
 
         return App::modules('default-state');
@@ -257,9 +271,9 @@ class Module {
      */
     private function _setState($state) {
 
-        $this->modules[App::$id][self::$id]['state'] = $state;
+        $this->module['state'] = $state;
 
-        self::$states[App::$id][self::$id]['state'] = $state;
+        self::$states['state'] = $state;
     }
 
     /**
@@ -273,9 +287,9 @@ class Module {
 
         $action = App::modules('default-action');
 
-        if (isset(self::$states[App::$id][self::$id]['action'])) {
+        if (isset(self::$states['action'])) {
 
-            $action = self::$states[App::$id][self::$id]['action'];
+            $action = self::$states['action'];
         }
 
         return ($state === 'uninstalled') ? '' : $action;
@@ -290,7 +304,7 @@ class Module {
      */
     private function _setAction($action) {
 
-        self::$states[App::$id][self::$id]['action'] = $action;
+        self::$states['action'] = $action;
     }
 
     /**
@@ -306,24 +320,24 @@ class Module {
      */
     public static function remove($moduleName = null, $deleteAll = true) {
 
-        $instance = self::getInstance();
+        $that = self::getInstance();
 
         self::$id = ($moduleName) ? $moduleName : self::$id;
 
-        if (isset($instance->modules[App::$id][self::$id]['path']['root'])) {
+        if (isset($that->module['path']['root'])) {
 
-            $instance->_setState('remove');
+            $that->_setState('remove');
 
-            $instance->changeState();
+            $that->changeState();
 
-            $path = $instance->modules[App::$id][self::$id]['path']['root'];
+            $path = $that->module['path']['root'];
 
-            //$instance->_deleteDir($path, $deleteAll);
+            //$that->_deleteDir($path, $deleteAll);
 
             if ($deleteAll) {
             
-                unset($this->modules[App::$id][self::$id]);
-                unset(self::$states[App::$id][self::$id]);
+                unset($this->module);
+                unset(self::$states);
             }
 
             self::_setStates();
@@ -343,11 +357,11 @@ class Module {
 
         self::$id = ($moduleName) ? $moduleName : self::$id;
 
-        $instance = self::getInstance();
+        $that = self::getInstance();
 
         self::getStates();
 
-        $state = $instance->_getState();
+        $state = $that->_getState();
 
         switch ($state) {
             
@@ -377,9 +391,9 @@ class Module {
                 break;
         }
 
-        $instance->_setState($state);
+        $that->_setState($state);
 
-        $instance->_setAction($action);
+        $that->_setAction($action);
 
         self::_setStates();
 
@@ -397,9 +411,11 @@ class Module {
      *
      * @return boolean
      */
-    private function _deleteDir($modulePath, $deleteAll) { 
+    private function _deleteDir($modulePath, $deleteAll) {
 
-        $slug = trim($this->modules[App::$id][self::$id]['folder'], App::DS);
+        $that = self::getInstance();
+
+        $slug = trim($that->module['folder'], App::DS);
 
         if (!is_dir($modulePath)) {
 
@@ -417,7 +433,7 @@ class Module {
                 
             if (is_dir($modulePath . $object . App::DS)) {
             
-                $this->_deleteDir($modulePath . $object, $deleteAll);
+                $that->_deleteDir($modulePath . $object, $deleteAll);
             
             } else {
 
@@ -463,13 +479,19 @@ class Module {
 
         $data = [];
 
-        $instance = self::getInstance();
+        $id = self::$id;
 
-        $modules = array_keys($instance->modules[App::$id]);
+        $that = self::getInstance();
+
+        $modules = array_keys(self::$instances[App::$id]);
 
         foreach ($modules as $module) {
 
-            $module = $instance->modules[App::$id][$module];
+            self::$id = $module;
+
+            $that = self::getInstance();
+
+            $module = $that->module;
 
             if ($category !== 'all' && $module['category'] !== $category) {
 
@@ -490,9 +512,11 @@ class Module {
                 'author-uri'  => $module['author-uri'],
                 'license'     => $module['license'],
                 'state'       => $module['state'],
-                'slug'        => trim($module['folder'], App::DS),
+                'slug'        => $module['slug'],
             ];
         }
+
+        self::$id = $id;
 
         return $data;
     }
@@ -504,30 +528,28 @@ class Module {
      */
     private function _getSettings() {
 
-        $id = App::$id;
+        $that = self::getInstance();
 
-        $name = self::$id;
+        $_root = $that->module['path']['root'];
 
-        $root = $this->modules[$id][$name]['path']['root'];
+        $_path =  $_root . 'config' . App::DS;
+            
+        if (is_dir($_path) && $handle = scandir($_path)) {
 
-        $path =  $root . 'config' . App::DS;
+            $_files = array_slice($handle, 2);
 
-        if (is_dir($path) && $handle = scandir($path)) {
+            foreach ($_files as $_file) {
 
-            $files = array_slice($handle, 2);
+                $content = require($_path . $_file);
 
-            foreach ($files as $file) {
+                $merge = array_merge($that->module, $content);
 
-                $content = require($path . $file);
-
-                $merge = array_merge($this->modules[$id][$name], $content);
-
-                $this->modules[$id][$name] = $merge;
+                $that->module = $merge;
             }
         }
 
-        $this->modules[$id][$name]['path']['root']   = $root;
-        $this->modules[$id][$name]['path']['config'] = $path;
+        $that->module['path']['root']   = $_root;
+        $that->module['path']['config'] = $_path;
     }
                                                                                
     /**
@@ -537,7 +559,9 @@ class Module {
      */
     private function _addResources() {
 
-        $module = $this->modules[App::$id][self::$id];
+        $that = self::getInstance();
+
+        $module = $that->module;
 
         if (isset($module['hooks'])) {
 
@@ -564,15 +588,16 @@ class Module {
      */
     public static function exists($id) {
 
-        $instance = self::getInstance();
-
-        return array_key_exists($id, $instance->modules[App::$id]);
+        return array_key_exists($id, self::$instances);
     }
 
     /**
      * Add options to plugin settings.
      *
      * @since 1.0.3
+     *
+     * @deprecated 1.0.4 → This method will be deleted in the next version.
+     *                     It will be replaced by the set method.
      *
      * @param string $option → option name or options array
      * @param mixed  $value  → value/s
@@ -581,31 +606,135 @@ class Module {
      */
     protected function addOption($option, $value) {
 
-        $id = App::$id;
-
-        $name = self::$id;
+        $that = self::getInstance();
 
         if (!is_array($value)) {
 
-            return $this->modules[$id][$name][$option] = $value;
+            return $that->module[$option] = $value;
         }
 
         if (array_key_exists($option, $value)) {
 
-            $this->modules[$id][$name][$option] = array_merge_recursive(
+            $that->module[$option] = array_merge_recursive(
 
-                $this->modules[$id][$name][$option], $value
+                $that->module[$option], $value
             );
         
         } else {
 
             foreach ($value as $key => $value) {
             
-                $this->modules[$id][$name][$option][$key] = $value;
+                $that->module[$option][$key] = $value;
             }
         }
 
-        return $this->modules[$id][$name][$option];        
+        return $that->module[$option];        
+    }
+
+    /**
+     * Define new configuration settings.
+     *
+     * @since 1.0.4
+     *
+     * @param string $option → option name or options array
+     * @param mixed  $value  → value/s
+     *
+     * @return mixed
+     */
+    public static function set($option, $value) {
+
+        $that = self::getInstance();
+
+        if (!is_array($value)) {
+
+            return $that->module[$option] = $value;
+        }
+
+        if (array_key_exists($option, $value)) {
+
+            $that->module[$option] = array_merge_recursive(
+
+                $that->module[$option], $value
+            );
+        
+        } else {
+
+            foreach ($value as $key => $value) {
+            
+                $that->module[$option][$key] = $value;
+            }
+        }
+
+        return $that->module[$option];        
+    }
+
+    /**
+     * Get options saved.
+     *
+     * @since 1.0.4
+     *
+     * @param array $params
+     *
+     * @return mixed
+     */
+    public static function get(...$params) {
+
+        $that = self::getInstance();
+
+        $key = array_shift($params);
+
+        $col[] = isset($that->module[$key]) ? $that->module[$key] : 0;
+
+        if (!count($params)) {
+
+            return ($col[0]) ? $col[0] : '';
+        }
+
+        foreach ($params as $param) {
+
+            $col = array_column($col, $param);
+        }
+        
+        return (isset($col[0])) ? $col[0] : '';
+    }
+
+    /**
+     * Get controller instance.
+     *
+     * @since 1.0.4
+     *
+     * @param array $class     → class name
+     * @param array $namespace → namespace index
+     *
+     * @return object|false → class instance or false
+     */
+    public function instance($class, $namespace = '') {
+
+        $that = self::getInstance();
+
+        if (isset($that->module['namespaces'])) {
+
+            if (isset($that->module['namespaces'][$namespace])) {
+
+                $namespace = $that->module['namespaces'][$namespace];
+
+                $class = $namespace . $class . '\\' . $class;
+
+                return call_user_func([$class, 'getInstance']);
+            }
+
+            foreach ($that->module['namespaces'] as $key => $namespace) {
+
+                $instance = $namespace . $class . '\\' . $class;
+                
+                if (class_exists($instance)) {
+
+                    return call_user_func([$instance, 'getInstance']);
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -618,43 +747,29 @@ class Module {
      *
      * @throws ModuleException → Module not found
      *
-     * @return mixed
+     * @return object
      */
     public static function __callstatic($index, $params = false) {
 
-        $instance = self::getInstance();
-
-        if (!isset($instance->modules[App::$id][$index])) {
+        if (!array_key_exists($index, self::$instances[App::$id])) {
 
             $message = 'Module not found';
 
             throw new ModuleException($message . ': ' . $index . '.', 817);
         }
 
+        $that = self::getInstance();
+
         self::$id = $index;
 
-        if (!$params) { return $instance; }
+        if (!$params) { return $that; }
 
         $method = (isset($params[0])) ? $params[0] : '';
         $args   = (isset($params[1])) ? $params[1] : [];
 
-        if (method_exists($instance, $method)) {
+        if (method_exists($that, $method)) {
 
-            return call_user_func_array([$instance, $method], $args);
+            return call_user_func_array([$that, $method], $args);
         }
-
-        $column[] = $instance->modules[App::$id][$index];
-
-        if (!count($params)) {
-
-            return (!is_null($column[0])) ? $column[0] : '';
-        }
-
-        foreach ($params as $param) {
-
-            $column = array_column($column, $param);
-        }
-        
-        return (isset($column[0])) ? $column[0] : '';
     }
 }
