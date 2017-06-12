@@ -588,7 +588,7 @@ class Module {
      */
     public static function exists($id) {
 
-        return array_key_exists($id, self::$instances);
+        return array_key_exists($id, self::$instances[App::$id]);
     }
 
     /**
