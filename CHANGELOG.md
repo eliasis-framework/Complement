@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.0.5 - 2017-06-18
+
+* Fixes in `remove()` method and others.
+
+* Deleted `Eliasis\Module\Module->addOption()` method.
+
+* Added `Eliasis\Module\Module->_doAction()` method.
+
 ## 1.0.4 - 2017-06-12
 
 * Added `Eliasis\Module\Module->set()` method.

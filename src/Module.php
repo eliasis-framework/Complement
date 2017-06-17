@@ -189,13 +189,9 @@ class Module {
 
             if (in_array($action, self::$hooks)) {
 
-                Hook::doAction($action);
-
-                $that->_setAction('');
+                $that->_doAction($action, $state);
             }
         }
-
-        self::_setStates();
     }
 
     /**
@@ -274,6 +270,8 @@ class Module {
         $this->module['state'] = $state;
 
         self::$states['state'] = $state;
+
+        self::_setStates();
     }
 
     /**
@@ -308,6 +306,23 @@ class Module {
     }
 
     /**
+     * Execute action hook.
+     *
+     * @since 1.0.5
+     *
+     * @param string $action
+     * @param string $state
+     */
+    private function _doAction($action, $state) {
+
+        Hook::doAction($action);
+
+        $this->_setAction('');
+
+        $this->_setState($state);
+    }
+
+    /**
      * Delete module.
      *
      * @since 1.0.0
@@ -320,30 +335,22 @@ class Module {
      */
     public static function remove($moduleName = null, $deleteAll = true) {
 
-        $that = self::getInstance();
-
         self::$id = ($moduleName) ? $moduleName : self::$id;
+
+        $that = self::getInstance();
 
         if (isset($that->module['path']['root'])) {
 
             $that->_setState('remove');
 
-            $that->changeState();
+            $state = $that->changeState(self::$id);
 
             $path = $that->module['path']['root'];
 
-            //$that->_deleteDir($path, $deleteAll);
-
-            if ($deleteAll) {
-            
-                unset($this->module);
-                unset(self::$states);
-            }
-
-            self::_setStates();
+            $that->_deleteDir($path, $deleteAll);     
         }
 
-        return 'uninstalled';
+        return $state;
     }
 
     /**
@@ -393,9 +400,7 @@ class Module {
 
         $that->_setState($state);
 
-        $that->_setAction($action);
-
-        self::_setStates();
+        $that->_doAction($action, $state);
 
         return $state;
     }
@@ -589,46 +594,6 @@ class Module {
     public static function exists($id) {
 
         return array_key_exists($id, self::$instances[App::$id]);
-    }
-
-    /**
-     * Add options to plugin settings.
-     *
-     * @since 1.0.3
-     *
-     * @deprecated 1.0.4 → This method will be deleted in the next version.
-     *                     It will be replaced by the set method.
-     *
-     * @param string $option → option name or options array
-     * @param mixed  $value  → value/s
-     *
-     * @return
-     */
-    protected function addOption($option, $value) {
-
-        $that = self::getInstance();
-
-        if (!is_array($value)) {
-
-            return $that->module[$option] = $value;
-        }
-
-        if (array_key_exists($option, $value)) {
-
-            $that->module[$option] = array_merge_recursive(
-
-                $that->module[$option], $value
-            );
-        
-        } else {
-
-            foreach ($value as $key => $value) {
-            
-                $that->module[$option][$key] = $value;
-            }
-        }
-
-        return $that->module[$option];        
     }
 
     /**
