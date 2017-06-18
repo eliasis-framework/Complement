@@ -4,6 +4,8 @@
 
 * Fixes in `remove()` method and others.
 
+* Action hooks are executed when the module state is changed using Ajax.
+
 * Deleted `Eliasis\Module\Module->addOption()` method.
 
 * Added `Eliasis\Module\Module->_doAction()` method.

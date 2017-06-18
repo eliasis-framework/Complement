@@ -310,16 +310,24 @@ class Module {
      *
      * @since 1.0.5
      *
-     * @param string $action
-     * @param string $state
+     * @param string  $action
+     * @param string  $state
+     * @param boolean $addAction
      */
-    private function _doAction($action, $state) {
+    private function _doAction($action, $state, $addAction = false) {
+
+        $that = self::getInstance();
+
+        if ($addAction && isset($that->module['hooks'][$action])) {
+
+            Hook::addAction($that->module['hooks'][$action]);
+        }
 
         Hook::doAction($action);
 
-        $this->_setAction('');
+        $that->_setAction('');
 
-        $this->_setState($state);
+        $that->_setState($state);
     }
 
     /**
@@ -400,7 +408,7 @@ class Module {
 
         $that->_setState($state);
 
-        $that->_doAction($action, $state);
+        $that->_doAction($action, $state, true);
 
         return $state;
     }
@@ -416,7 +424,7 @@ class Module {
      *
      * @return boolean
      */
-    private function _deleteDir($modulePath, $deleteAll) {
+    public static function _deleteDir($modulePath, $deleteAll) {
 
         $that = self::getInstance();
 
@@ -431,16 +439,9 @@ class Module {
         
         foreach ($objects as $object) { 
         
-            if ($object == '.' && $object == '..') {
+            if ($object === '.' || $object === '..') { continue; }
 
-                continue;
-            }
-                
-            if (is_dir($modulePath . $object . App::DS)) {
-            
-                $that->_deleteDir($modulePath . $object, $deleteAll);
-            
-            } else {
+            if (is_file($modulePath . $object)) {
 
                 if (!$deleteAll) {
 
@@ -450,8 +451,12 @@ class Module {
                     }
                 }
 
-                unlink($modulePath . App::DS . $object);
-            }
+                unlink($modulePath . $object);
+
+            } else {
+
+                $that->_deleteDir($modulePath.$object.App::DS, $deleteAll);
+            } 
         }
 
         if (!$deleteAll) {
