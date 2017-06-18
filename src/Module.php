@@ -424,7 +424,7 @@ class Module {
      *
      * @return boolean
      */
-    public static function _deleteDir($modulePath, $deleteAll) {
+    private static function _deleteDir($modulePath, $deleteAll) {
 
         $that = self::getInstance();
 
