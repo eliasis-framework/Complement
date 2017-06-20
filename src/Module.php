@@ -177,7 +177,7 @@ class Module {
 
         $that->_setAction($action);
 
-        $that->_setState($state);
+        $that->setState($state);
 
         $that->_getSettings();
 
@@ -265,9 +265,11 @@ class Module {
      *
      * @param string $state → module state
      */
-    private function _setState($state) {
+    public function setState($state) {
 
-        $this->module['state'] = $state;
+        $that = self::getInstance();
+
+        $that->module['state'] = $state;
 
         self::$states['state'] = $state;
 
@@ -327,7 +329,7 @@ class Module {
 
         $that->_setAction('');
 
-        $that->_setState($state);
+        $that->setState($state);
     }
 
     /**
@@ -349,7 +351,7 @@ class Module {
 
         if (isset($that->module['path']['root'])) {
 
-            $that->_setState('remove');
+            $that->setState('remove');
 
             $state = $that->changeState(self::$id);
 
@@ -400,13 +402,23 @@ class Module {
                 $state = 'inactive';
                 break;
 
+            case 'outdated':
+                $action = 'installation';
+                $state = 'updated';
+                break;
+
+            case 'updated':
+                $action = 'activation';
+                $state = 'active';
+                break;
+
             case 'remove':
                 $action = 'uninstallation';
                 $state = 'uninstalled';
                 break;
         }
 
-        $that->_setState($state);
+        $that->setState($state);
 
         $that->_doAction($action, $state, true);
 
@@ -735,11 +747,11 @@ class Module {
         if (!$params) { return $that; }
 
         $method = (isset($params[0])) ? $params[0] : '';
-        $args   = (isset($params[1])) ? $params[1] : [];
+        $args   = (isset($params[1])) ? $params[1] : 0;
 
         if (method_exists($that, $method)) {
 
-            return call_user_func_array([$that, $method], $args);
+            return call_user_func_array([$that, $method], [$args]);
         }
     }
 }

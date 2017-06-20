@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 1.0.6 - 2017-06-20
+
+* New states were added for the management of the modules: `updated` and `outdated`.
+
+* Deleted `Eliasis\Module\Module->_setState()` method.
+
+* Added `Eliasis\Module\Module->setState()` method.
+
 ## 1.0.5 - 2017-06-18
 
 * Fixes in `remove()` method and others.
