@@ -394,7 +394,7 @@ class Module {
 
             case 'uninstalled':
                 $action = '';
-                $state = 'installed';
+                $state = 'inactive';
                 break;
 
             case 'installed':
@@ -477,7 +477,7 @@ class Module {
 
             $folder = array_pop($path);
 
-            if ($folder === $slug || $folder === 'images') {
+            if ($folder === $slug || $folder === 'images' || $folder === 'public') {
 
                 return true;
             }
