@@ -181,9 +181,7 @@ class Module {
 
         $that->_getSettings();
 
-        $isActive = ($state === 'active' || $state === 'outdated');
-
-        if (in_array($action, self::$hooks) || $isActive) {
+        if (in_array($action, self::$hooks) || $state === 'active' || $state === 'outdated') {
 
             $that->_addResources();
 
@@ -266,6 +264,8 @@ class Module {
      * @since 1.0.0
      *
      * @param string $state → module state
+     *
+     * @return string → state
      */
     public function setState($state) {
 
@@ -276,6 +276,8 @@ class Module {
         self::$states['state'] = $state;
 
         self::_setStates();
+
+        return $state;
     }
 
     /**
@@ -396,7 +398,7 @@ class Module {
 
             case 'uninstalled':
                 $action = '';
-                $state = 'inactive';
+                $state = 'installed';
                 break;
 
             case 'installed':
