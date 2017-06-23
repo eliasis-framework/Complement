@@ -181,7 +181,9 @@ class Module {
 
         $that->_getSettings();
 
-        if (in_array($action, self::$hooks) || $state === 'active') {
+        $isActive = ($state === 'active' || $state === 'outdated');
+
+        if (in_array($action, self::$hooks) || $isActive) {
 
             $that->_addResources();
 
