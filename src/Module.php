@@ -326,9 +326,9 @@ class Module {
 
         $that = self::getInstance();
 
-        Hook::getInstance(App::$id);
-
         if ($addAction && isset($that->module['hooks'])) {
+
+        	Hook::getInstance(App::$id);
 
             foreach ($that->module['hooks'] as $hook) {
                 
