@@ -328,13 +328,15 @@ class Module {
 
         if ($addAction && isset($that->module['hooks'])) {
 
-        	Hook::getInstance(App::$id);
-
             foreach ($that->module['hooks'] as $hook) {
                 
                 if (isset($hook[0]) && $action === $hook[0]) {
 
-                    Hook::addActions($hook);
+                    Hook::getInstance(App::$id);
+
+                    Hook::addActions([$hook]);
+
+                    break;
                 }
             }
         }
