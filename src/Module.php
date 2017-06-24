@@ -327,7 +327,7 @@ class Module {
 
         $Launcher = $that->instance('Launcher', 'controller');
 
-        if (is_object($Launcher)) {
+        if (is_object($Launcher) && method_exists($Launcher, $action)) {
 
             call_user_func([$Launcher, $action]);
         }
@@ -348,9 +348,9 @@ class Module {
      *
      * @return string → module state
      */
-    public static function remove($moduleName = null, $deleteAll = true) {
+    public static function remove($moduleName, $deleteAll = true) {
 
-        self::$id = ($moduleName) ? $moduleName : self::$id;
+        self::$id = $moduleName;
 
         $that = self::getInstance();
 
