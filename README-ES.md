@@ -60,6 +60,7 @@ Métodos disponibles en esta biblioteca:
 Module::getInstance();
 Module::loadModules();
 Module::getStates();
+Module::setState();
 Module::changeState();
 Module::remove();
 Module::set();

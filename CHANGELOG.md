@@ -1,8 +1,8 @@
 # CHANGELOG
 
-## 1.0.6 - 2017-06-20
+## 1.0.6 - 2017-06-25
 
-* Bugs fixed in doAction() method and when using the Hook class.
+* Bugs fixed in doAction() method.
 
 * Deleted `Eliasis\Module\Module->_setState()` method.
 

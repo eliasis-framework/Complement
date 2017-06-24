@@ -60,6 +60,7 @@ Available methods in this library:
 Module::getInstance();
 Module::loadModules();
 Module::getStates();
+Module::setState();
 Module::changeState();
 Module::remove();
 Module::set();

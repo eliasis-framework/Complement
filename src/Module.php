@@ -181,9 +181,9 @@ class Module {
 
         $that->_getSettings();
 
-        if (in_array($action, self::$hooks) || $state === 'active' || $state === 'outdated') {
+        $states = ['active', 'outdated'];
 
-            Hook::getInstance(App::$id);
+        if (in_array($action, self::$hooks) || in_array($state, $states)) {
 
             $that->_addResources();
 
@@ -320,28 +320,17 @@ class Module {
      *
      * @param string  $action
      * @param string  $state
-     * @param boolean $addAction
      */
-    private function _doAction($action, $state, $addAction = false) {
+    private function _doAction($action, $state) {
 
         $that = self::getInstance();
 
-        if ($addAction && isset($that->module['hooks'])) {
+        $Launcher = $that->instance('Launcher', 'controller');
 
-            foreach ($that->module['hooks'] as $hook) {
-                
-                if (isset($hook[0]) && $action === $hook[0]) {
+        if (is_object($Launcher)) {
 
-                    Hook::getInstance(App::$id);
-
-                    Hook::addActions([$hook]);
-
-                    break;
-                }
-            }
+            call_user_func([$Launcher, $action]);
         }
-
-        Hook::doAction($action);
 
         $that->_setAction('');
 
@@ -436,7 +425,7 @@ class Module {
 
         $that->setState($state);
 
-        $that->_doAction($action, $state, true);
+        $that->_doAction($action, $state);
 
         return $state;
     }
@@ -448,7 +437,7 @@ class Module {
      *
      * @param boolean $modulePath → module path
      * @param boolean $deleteAll  → delete the entire directory or
-     *                              leave only the configuration file.
+     *                              leave only the configuration file
      *
      * @return boolean
      */
@@ -465,25 +454,25 @@ class Module {
          
         $objects = scandir($modulePath); 
         
-        foreach ($objects as $object) { 
+        foreach ($objects as $obj) { 
         
-            if ($object === '.' || $object === '..') { continue; }
+            if ($obj === '.' || $obj === '..') { continue; }
 
-            if (is_file($modulePath . $object)) {
+            if (is_file($modulePath . $obj)) {
 
                 if (!$deleteAll) {
 
-                    if ($object == $slug.'.php' || $object == $slug.'.png') {
+                    if ($obj == $slug . '.php' || $obj == $slug . '.png') {
 
                         continue;
                     }
                 }
 
-                unlink($modulePath . $object);
+                unlink($modulePath . $obj);
 
             } else {
 
-                $that->_deleteDir($modulePath.$object.App::DS, $deleteAll);
+                $that->_deleteDir($modulePath . $obj . App::DS, $deleteAll);
             } 
         }
 
@@ -493,7 +482,9 @@ class Module {
 
             $folder = array_pop($path);
 
-            if ($folder === $slug || $folder === 'images' || $folder === 'public') {
+            $folders = [$slug, 'images', 'public'];
+
+            if (in_array($folder, $folders)) {
 
                 return true;
             }
