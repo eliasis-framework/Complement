@@ -183,6 +183,8 @@ class Module {
 
         if (in_array($action, self::$hooks) || $state === 'active' || $state === 'outdated') {
 
+            Hook::getInstance(App::$id);
+
             $that->_addResources();
 
             Hook::doAction('module-load');
@@ -324,9 +326,17 @@ class Module {
 
         $that = self::getInstance();
 
-        if ($addAction && isset($that->module['hooks'][$action])) {
+        Hook::getInstance(App::$id);
 
-            Hook::addAction($that->module['hooks'][$action]);
+        if ($addAction && isset($that->module['hooks'])) {
+
+            foreach ($that->module['hooks'] as $hook) {
+                
+                if (isset($hook[0]) && $action === $hook[0]) {
+
+                    Hook::addActions($hook);
+                }
+            }
         }
 
         Hook::doAction($action);
