@@ -187,9 +187,9 @@ class Module {
 
             $that->_addResources();
 
-            $Hook = Hook::getInstance(App::$id);
+            Hook::getInstance(App::$id);
 
-            $Hook->doAction('module-load');
+            Hook::doAction('module-load');
 
             if (in_array($action, self::$hooks)) {
 
@@ -596,9 +596,9 @@ class Module {
 
         if (isset($module['hooks'])) {
 
-            $Hook = Hook::getInstance(App::$id);
+            Hook::getInstance(App::$id);
             
-            $Hook->addActions($module['hooks']);
+            Hook::addActions($module['hooks']);
         } 
 
         if (class_exists($Router = 'Josantonius\Router\Router')) {
