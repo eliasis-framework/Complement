@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.7 - 2017-07-25
+
+* Fixed a bug in `__callstatic()` method. Now save the module id before obtaining the module instance.
+
 ## 1.0.6 - 2017-06-25
 
 * Bugs fixed in doAction() method.
