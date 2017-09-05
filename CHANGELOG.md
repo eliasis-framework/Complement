@@ -2,6 +2,14 @@
 
 ## 1.0.8 - 2017-09-05
 
+* The library was optimized and some errors corrected.
+
+* The whole library was restructured by dividing it into traits.
+
+* Module visualization and management was implemented.
+
+* Added option to install external modules just by adding the link to the configuration file.
+
 * Deleted `Eliasis\Module\Module->_getState()` method.
 * Deleted `Eliasis\Module\Module->_setStates()` method.
 * Deleted `Eliasis\Module\Module::getStates()` method.
