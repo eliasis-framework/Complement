@@ -81,36 +81,38 @@ class App {
      * @param string $baseDirectory → directory where class is instantiated
      * @param string $type          → application type
      * @param string $id            → unique id for the application
+     *
+     * @return void
      */
     public static function run($baseDirectory, $type = 'app', $id = '0') {
 
         self::$id = $id;
 
         $that = self::getInstance();
-
-        $that->_setPaths($baseDirectory, $that);
-
-        $that->_setUrls($baseDirectory, $type, $that);
-
+        
+        $that->_setPaths($baseDirectory);
+        $that->_setUrls($baseDirectory, $type);
+        $that->_setIp();
         $that->_runErrorHandler();
-
         $that->_runCleaner();
-
-        $that->_getSettings($that);
-
+        $that->_getSettings();
+        $that->_runHooks();
         $that->_runModules();
-
-        $that->_runRoutes($that);
+        $that->_runRoutes();
     }
 
     /**
      * Error Handler.
      *
      * @since 1.0.1
+     *
+     * @link https://github.com/Josantonius/PHP-ErrorHandler
+     *
+     * @return void
      */
     private function _runErrorHandler() {
 
-        if (class_exists($class='Josantonius\ErrorHandler\ErrorHandler')) {
+        if (class_exists($class = 'Josantonius\ErrorHandler\ErrorHandler')) {
 
             new $class;
         }
@@ -120,6 +122,13 @@ class App {
      * Cleaning resources.
      *
      * @since 1.0.1
+     *
+     * @uses void Cleaner::removeMagicQuotes() → remove magic quotes
+     * @uses void Cleaner::unregisterGlobals() → remove register globals
+     *
+     * @link https://github.com/Josantonius/PHP-Cleaner
+     *
+     * @return void
      */
     private function _runCleaner() {
 
@@ -136,13 +145,15 @@ class App {
      * @since 1.0.1
      *
      * @param string $baseDirectory → directory where class is instantiated
-     * @param object $that          → application instance 
+     *
+     * @return void
      */
-    private function _setPaths($baseDirectory, $that) {
+    private function _setPaths($baseDirectory) {
 
-        $that->set("ROOT", $baseDirectory . App::DS);
-        $that->set("CORE", dirname(dirname(__DIR__)) . App::DS);
-        $that->set("MODULES", App::ROOT() . 'modules' . App::DS);
+        $this->set('ROOT', $baseDirectory . App::DS);
+        $this->set('CORE', dirname(dirname(__DIR__)) . App::DS);
+        $this->set('MODULES', App::ROOT() . 'modules' . App::DS);
+        $this->set('PUBLIC',  App::ROOT() . 'public'  . App::DS);
     }
 
     /**
@@ -152,14 +163,15 @@ class App {
      *
      * @param string $baseDirectory → directory where class is instantiated
      * @param string $type          → application type
-     * @param object $that          → application instance 
+     *
+     * @return void
      */
-    private function _setUrls($baseDirectory, $type, $that) {
+    private function _setUrls($baseDirectory, $type) {
 
         switch ($type) {
 
             case 'wordpress-plugin':
-                $baseUrl = plugins_url(basename($baseDirectory)) . App::DS;
+                $baseUrl = plugins_url(basename($baseDirectory)) . '/';
                 break;
             
             default:
@@ -167,16 +179,39 @@ class App {
                 break;
         }
 
-        $that->set("MODULES_URL", $baseUrl . 'modules' . App::DS);
-        $that->set("PUBLIC_URL",  $baseUrl . 'public'  . App::DS);
+        $this->set('MODULES_URL', $baseUrl . 'modules/');
+        $this->set('PUBLIC_URL',  $baseUrl . 'public/');
+    }
+
+    /**
+     * Set ip.
+     *
+     * @since 1.1.0
+     *
+     * @uses string Ip::get() → get IP
+     *
+     * @link https://github.com/Josantonius/PHP-Ip
+     *
+     * @return void
+     */
+    private function _setIp() {
+
+        if (class_exists($Ip = 'Josantonius\Ip\Ip')) {
+
+            $ip = $Ip::get();
+
+            $this->set('IP', ($ip) ? $ip : 'unknown');
+        }
     }
 
     /**
      * Get settings.
      *
      * @since 1.0.0
+     *
+     * @return void
      */
-    private function _getSettings($that) {
+    private function _getSettings() {
 
         $path = [
 
@@ -194,25 +229,55 @@ class App {
 
                     $config = require($dir . $file);
 
-                    $that->settings = array_merge($that->settings, $config);
+                    $this->settings = array_merge($this->settings, $config);
                 }
             }
         }         
     }
 
     /**
+     * Load hooks.
+     *
+     * @since 1.1.0
+     *
+     * @uses string Hook::getInstance() → get Hook instance
+     * @uses string Hook::addActions()  → add action hook
+     *
+     * @link https://github.com/Josantonius/PHP-Hook
+     *
+     * @return void
+     */
+    private function _runHooks() {
+
+        if (class_exists($Hook = 'Josantonius\Hook\Hook')) {
+
+            $Hook::getInstance(self::$id);
+
+            if (isset($this->settings['hooks'])) {
+
+                $Hook::addActions($this->settings['hooks']);
+
+                unset($this->settings['hooks']);
+            }
+        }
+    }
+
+    /**
      * Load Modules.
      *
      * @since 1.0.1
+     *
+     * @uses string Module::loadModules() → load modules
+     *
+     * @link https://github.com/Eliasis-Framework/Module
+     *
+     * @return void
      */
     private function _runModules() {
 
-        if (is_dir($modulesPath = App::ROOT() . 'modules' . App::DS)) {
+        if (class_exists($Module = 'Eliasis\Module\Module')) {
 
-            if (class_exists($Module = 'Eliasis\Module\Module')) {
-
-                $Module::loadModules($modulesPath);
-            }
+            $Module::loadModules();
         }
     } 
 
@@ -220,58 +285,27 @@ class App {
      * Load Routes.
      *
      * @since 1.0.1
+     *
+     * @uses string Router::addRoute() → add routes
+     * @uses string Router::dispatch() → dispath routes
+     *
+     * @link https://github.com/Josantonius/PHP-Router
+     *
+     * @return void
      */
-    private function _runRoutes($that) {
+    private function _runRoutes() {
 
         if (class_exists($Router = 'Josantonius\Router\Router')) {
 
-            if (isset($that->settings['routes'])) {
+            if (isset($this->settings['routes'])) {
 
-                $Router::addRoute($that->settings['routes']);
+                $Router::addRoute($this->settings['routes']);
 
-                unset($that->settings['routes']);
+                unset($this->settings['routes']);
 
                 $Router::dispatch();
             }
         }
-    }
-
-    /**
-     * Define new configuration settings.
-     *
-     * @since 1.0.0
-     *
-     * @deprecated 1.0.9 → This method will be deleted in the next version.
-     *                     It will be replaced by the set method.
-     *
-     * @param string $option → option name or options array
-     * @param mixed  $value  → value/s
-     *
-     * @return mixed
-     */
-    public static function addOption($option, $value) {
-
-        if (!is_array($value)) {
-
-            return self::$settings[self::$id][$option] = $value;
-        }
-
-        if (array_key_exists($option, $value)) {
-
-            self::$settings[self::$id][$option] = array_merge_recursive(
-
-                self::$settings[self::$id][$option], $value
-            );
-        
-        } else {
-
-            foreach ($value as $key => $value) {
-            
-                self::$settings[self::$id][$option][$key] = $value;
-            }
-        }
-
-        return self::$settings[self::$id][$option];        
     }
 
     /**

@@ -1,3 +1,7 @@
+/resources export-ignore
+/public/js/vue export-ignore
+/public/sass export-ignore
+/public/images export-ignore
 /tests export-ignore
 /lib export-ignore
 .gitattributes export-ignore

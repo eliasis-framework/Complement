@@ -12,6 +12,7 @@ Librería PHP para agregar adición de módulos en Eliasis Framework.
 - [Requisitos](#requisitos)
 - [Cómo empezar y ejemplos](#cómo-empezar-y-ejemplos)
 - [Métodos disponibles](#métodos-disponibles)
+- [Imágenes](#imagenes)
 - [Uso](#uso)
 - [Tests](#tests)
 - [Manejador de excepciones](#manejador-de-excepciones)
@@ -22,10 +23,10 @@ Librería PHP para agregar adición de módulos en Eliasis Framework.
 
 ---
 
-<p align="center"><strong>Echa un vistazo al código</strong></p>
+<p align="center"><strong>Vista de los módulos</strong></p>
 
 <p align="center">
-  <a href="https://youtu.be/ZKZsMehN3ls" title="Echa un vistazo al código">
+  <a href="https://youtu.be/EJi_TXa28Mc" title="Echa un vistazo al código">
   	<img src="https://raw.githubusercontent.com/Josantonius/PHP-Algorithm/master/resources/youtube-thumbnail.jpg">
   </a>
 </p>
@@ -69,22 +70,45 @@ Métodos disponibles en esta biblioteca:
 ```php
 Module::getInstance();
 Module::loadModules();
-Module::getStates();
-Module::setState();
-Module::changeState();
-Module::remove();
-Module::set();
-Module::get();
-Module::instance();
+Module::loadModule();
 Module::getModulesInfo();
+Module::script();
+Module::style();
 Module::exists();
+Module::getLibraryPath();
+Module::getLibraryVersion();
+Module::render();
+
+Module::Identifier()->setModule();
+Module::Identifier()->set();
+Module::Identifier()->get();
+Module::Identifier()->instance();
+Module::Identifier()->getAction();
+Module::Identifier()->setAction();
+Module::Identifier()->doAction();
+Module::Identifier()->hasNewVersion()` method.
+Module::Identifier()->getRepositoryVersion()` method.
+Module::Identifier()->install()` method.
+Module::Identifier()->remove()` method.
+Module::Identifier()->setState()` method.
+Module::Identifier()->changeState()` method.
+Module::Identifier()->getState()` method.
+Module::Identifier()->getStates()` method.
 ```
+
+### Imágenes
+
+![image](resources/eliasis-module-1.png)
+
+![image](resources/eliasis-module-2.png)
+
+![image](resources/eliasis-module-3.png)
 
 ### Uso
 
 - Una vez instalada, la biblioteca se cargará automáticamente desde el core de Eliasis Framework.
 
-- Examinará el directorio "modules" en la raíz del sitio y cargará los módulos que tienen un [archivo de configuración válido](https://github.com/Eliasis-Framework/Modules#create-module).
+- [ ] Pendiente
 
 ### Tests 
 

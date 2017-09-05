@@ -1,0 +1,52 @@
+/**
+ * Load Button
+ *
+ * @author Igor Oliveira
+ * @link https://codepen.io/devigor/pen/oZXozG
+ */
+.module-load
+  display: inline-block
+  width: 14px
+  height: 14px
+  margin-top: 6px
+  border-radius: 100%
+
+.module-load-remove
+  border: 5px solid #d91e18
+
+.module-load-install
+  border: 5px solid #0073aa
+
+.module-open
+  border-top: 5px solid transparent
+  -webkit-animation: load-animate infinite linear 1s
+  animation: load-animate infinite linear 1s
+
+@-webkit-keyframes load-animate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+    opacity: 0.35
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)
+
+
+@keyframes load-animate
+  0%
+    -webkit-transform: rotate(0deg)
+    transform: rotate(0deg)
+
+  50%
+    -webkit-transform: rotate(180deg)
+    transform: rotate(180deg)
+    opacity: 0.35
+
+  100%
+    -webkit-transform: rotate(360deg)
+    transform: rotate(360deg)

@@ -1,5 +1,101 @@
 # CHANGELOG
 
+## 1.0.8 - 2017-09-05
+
+* Deleted `Eliasis\Module\Module->_getState()` method.
+* Deleted `Eliasis\Module\Module->_setStates()` method.
+* Deleted `Eliasis\Module\Module::getStates()` method.
+* Deleted `Eliasis\Module\Module::setState()` method.
+* Deleted `Eliasis\Module\Module::changeState()` method.
+* Deleted `Eliasis\Module\Module->_getAction()` method.
+* Deleted `Eliasis\Module\Module->_setAction()` method.
+* Deleted `Eliasis\Module\Module->_doAction()` method.
+* Deleted `Eliasis\Module\Module::_add()` method.
+* Deleted `Eliasis\Module\Module::remove()` method.
+* Deleted `Eliasis\Module\Module::_deleteDir()` method.
+* Deleted `Eliasis\Module\Module->_getSettings()` method.
+* Deleted `Eliasis\Module\Module->_addResources()` method.
+* Deleted `Eliasis\Module\Module->get()` method.
+* Deleted `Eliasis\Module\Module->set()` method.
+
+* Added `Eliasis\Module\Module::loadModule()` method.
+* Added `Eliasis\Module\Module::script()` method.
+* Added `Eliasis\Module\Module::style()` method.
+* Added `Eliasis\Module\Module::getLibraryPath()` method.
+* Added `Eliasis\Module\Module::getLibraryVersion()` method.
+* Added `Eliasis\Module\Module::render()` method.
+
+* Added `Eliasis\Module\ModuleAction` trait.
+* Added `Eliasis\Module\ModuleAction->getAction()` method.
+* Added `Eliasis\Module\ModuleAction->setAction()` method.
+* Added `Eliasis\Module\ModuleAction->doAction()` method.
+* Added `Eliasis\Module\ModuleAction->_addActions()` method.
+* Added `Eliasis\Module\ModuleAction->_doActions()` method.
+
+* Added `Eliasis\Module\ModuleHandler` trait.
+* Added `Eliasis\Module\ModuleHandler->setModule()` method.
+* Added `Eliasis\Module\ModuleHandler->set()` method.
+* Added `Eliasis\Module\ModuleHandler->get()` method.
+* Added `Eliasis\Module\ModuleHandler->instance()` method.
+* Added `Eliasis\Module\ModuleHandler->_setModuleParams()` method.
+* Added `Eliasis\Module\ModuleHandler->_getSettings()` method.
+* Added `Eliasis\Module\ModuleHandler->_setImage()` method.
+* Added `Eliasis\Module\ModuleHandler->_addRoutes()` method.
+
+* Added `Eliasis\Module\ModuleImport` trait.
+* Added `Eliasis\Module\ModuleImport->hasNewVersion()` method.
+* Added `Eliasis\Module\ModuleImport->getRepositoryVersion()` method.
+* Added `Eliasis\Module\ModuleImport->install()` method.
+* Added `Eliasis\Module\ModuleImport->remove()` method.
+* Added `Eliasis\Module\ModuleImport->_deleteDirectory()` method.
+* Added `Eliasis\Module\ModuleImport->_installModule()` method.
+* Added `Eliasis\Module\ModuleImport->_saveRemoteFile()` method.
+* Added `Eliasis\Module\ModuleImport->_validateRoute()` method.
+
+* Added `Eliasis\Module\ModuleRequest` trait.
+* Added `Eliasis\Module\ModuleRequest::requestHandler()` method.
+* Added `Eliasis\Module\ModuleRequest::_loadExternalModules()` method.
+* Added `Eliasis\Module\ModuleRequest::_modulesLoadRequest()` method.
+* Added `Eliasis\Module\ModuleRequest::_installRequest()` method.
+* Added `Eliasis\Module\ModuleRequest::_uninstallRequest()` method.
+
+* Added `Eliasis\Module\ModuleState` trait.
+* Added `Eliasis\Module\ModuleState->setState()` method.
+* Added `Eliasis\Module\ModuleState->changeState()` method.
+* Added `Eliasis\Module\ModuleState->getState()` method.
+* Added `Eliasis\Module\ModuleState->getStates()` method.
+* Added `Eliasis\Module\ModuleState->_setStates()` method.
+* Added `Eliasis\Module\ModuleState->_stateChanged()` method.
+* Added `Eliasis\Module\ModuleState->_getStatesFromFile()` method.
+* Added `Eliasis\Module\ModuleState->_getStatesFilePath()` method.
+
+* Added `Eliasis\Module\ModuleView` trait.
+* Added `Eliasis\Module\ModuleView->_setFile()` method.
+* Added `Eliasis\Module\ModuleView->_renderizate()` method.
+
+* Added `public/css/eliasis-module-min.css` file.
+
+* Added `public/images/default.png` file.
+
+* Added `public/js/vue/app/app.js` file.
+
+* Added `public/js/vue/vue.js` file.
+* Added `public/js/vue/vue.min.js` file.
+* Added `public/js/vue/vue-resource.min.js` file.
+
+* Added `public/js/eliasis-module.js` file.
+* Added `public/js/eliasis-module-min.js` file.
+
+* Added `public/sass/partials/_load-buttons.sass` file.
+* Added `public/sass/partials/_material-design-lite.sass` file.
+* Added `public/sass/partials/_modules.sass` file.
+
+* Added `public/sass/eliasis-module.sass` file.
+
+* Added `public/template/eliasis-module.php` file.
+
+* Added `Josantonius\File\File` library.
+
 ## 1.0.7 - 2017-07-25
 
 * Fixed a bug in `__callstatic()` method. Now save the module id before obtaining the module instance.

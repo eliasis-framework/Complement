@@ -14,11 +14,13 @@ namespace Eliasis\Module\Exception;
 /**
  * Exception class.
  *
- * You can use an exception and error handler with this library.
- *
  * @since 1.0.0
  *
+ * You can use an exception and error handler with this library.
+ *
  * @link https://github.com/Josantonius/PHP-ErrorHandler
+ *
+ * @return void
  */
 class ModuleException extends \Exception { 
 
