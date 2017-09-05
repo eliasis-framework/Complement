@@ -12,7 +12,8 @@
 namespace Eliasis\Module\Traits;
 
 use Eliasis\App\App,
-    Eliasis\View\View;
+    Eliasis\View\View,
+    Josantonius\File\File;
 
 /**
  * Module view handler.
@@ -56,7 +57,7 @@ trait ModuleView {
 
         if (!file_exists($toPath = $path . "$filename-$version.$ext")) {
 
-            self::_createDir($path);
+            File::createDir($path);
 
             $path = self::getLibraryPath();
 
