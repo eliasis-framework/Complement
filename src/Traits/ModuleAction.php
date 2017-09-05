@@ -11,7 +11,8 @@
 
 namespace Eliasis\Module\Traits;
 
-use Eliasis\App\App;
+use Eliasis\App\App,
+    Josantonius\Hook\Hook;
 
 /**
  * Module action handler.
