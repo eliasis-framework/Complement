@@ -220,16 +220,14 @@ trait ModuleHandler {
             throw new ModuleException($message . ': ' . $path . '.', 816);
         }
 
-        $folder = explode(App::DS, $path);
-
         $default['url-import'] = '';
 
         $default['hooks-controller'] = 'Launcher';
 
         $default['path']['root'] = rtrim($path, App::DS) . App::DS;
 
-        $default['folder'] = array_pop($folder) . App::DS;
-        
+        $default['folder'] = $default['slug'] . App::DS;
+
         $this->module = array_merge($default, $module);
 
         $this->_setImage();
