@@ -1,30 +1,30 @@
 <?php
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
- * @since      1.0.8
+ * @link       https://github.com/Eliasis-Framework/Complement
+ * @since      1.0.9
  */
 
-namespace Eliasis\Module\Traits;
+namespace Eliasis\Complement\Traits;
 
 use Eliasis\App\App,
     Josantonius\Json\Json;
 
 /**
- * Module requests handler class.
+ * Complement requests handler class.
  *
- * @since 1.0.8
+ * @since 1.0.9
  */
-trait ModuleRequest {
+trait ComplementRequest {
                                                           
     /**
      * HTTP request handler.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @uses string App::id() → set application id
      *
@@ -39,13 +39,13 @@ trait ModuleRequest {
 
         App::id(filter_var($_GET['app'], FILTER_SANITIZE_STRING));
 
-        self::_loadExternalModules();
+        self::_loadExternalComplements();
         
         switch ($_GET['request']) {
 
-            case 'load-modules':
+            case 'load-complements':
 
-                self::_modulesLoadRequest();
+                self::_complementsLoadRequest();
 
                 break;
 
@@ -81,30 +81,30 @@ trait ModuleRequest {
     }
                                                                    
     /**
-     * Load external modules.
+     * Load external complements.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses array  Module->$instances   → module instances
-     * @uses string App::$id             → application id
-     * @uses void   Module::loadModule() → load module configuration
-     * @uses array Module::$errors       → module errors
+     * @uses array  Complement->$instances → complement instances
+     * @uses string App::$id               → application id
+     * @uses void   Complement::load()     → load complement configuration
+     * @uses array  Complement::$errors    → complement errors
      *
      * @return void
      */
-    private static function _loadExternalModules() {
+    private static function _loadExternalComplements() {
 
         $external = json_decode($_GET['external'], true);
 
-        $modules = array_keys(self::$instances[App::$id]);
+        $complements = array_keys(self::$instances[App::$id]);
 
-        foreach ($external as $module => $url) {
+        foreach ($external as $complement => $url) {
 
-            if (!in_array($module, $modules)) {
+            if (!in_array($complement, $complements)) {
 
                 if ($url = filter_var($url, FILTER_VALIDATE_URL)) {
                 
-                    self::loadModule($url);
+                    self::load($url);
                 
                 } else {
 
@@ -115,30 +115,30 @@ trait ModuleRequest {
                 }
             }
 
-            self::$module()->set('config-url', $url);
+            self::$complement()->set('config-url', $url);
         }   
     }
 
     /**
-     * Modules load request.
+     * Complements load request.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses array Module::getModulesInfo() → get modules info
-     * @uses array Module::$errors          → module errors
+     * @uses array Complement::getInfo() → get complements info
+     * @uses array Complement::$errors   → complement errors
      *
      * @return void
      */
-    private static function _modulesLoadRequest() {
+    private static function _complementsLoadRequest() {
 
-        $modules = [];
+        $complements = [];
 
         if (isset($_GET['filter'], $_GET['sort'])) {
 
             $sort   = filter_var($_GET['sort'],   FILTER_SANITIZE_STRING);
             $filter = filter_var($_GET['filter'], FILTER_SANITIZE_STRING);
 
-            $modules = self::getModulesInfo($filter, $sort);
+            $complements = self::getInfo($filter, $sort);
         
         } else {
 
@@ -149,19 +149,19 @@ trait ModuleRequest {
 
         echo json_encode([
 
-            'modules' => $modules,
-            'errors'  => self::$errors
+            'complements' => $complements,
+            'errors'      => self::$errors
         ]);
     }
                                                           
     /**
      * Change state request.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses object Module::getInstance()      → get module instance
-     * @uses string ModuleState->changeState() → change module state
-     * @uses array  Module::$errors            → module errors
+     * @uses object Complement::getInstance()      → get complement instance
+     * @uses string ComplementState->changeState() → change complement state
+     * @uses array  Complement::$errors            → complement errors
      *
      * @return void
      */
@@ -195,12 +195,11 @@ trait ModuleRequest {
     /**
      * Install request.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses object Module::getInstance()                → get module instance
-     * @uses string ModuleImport->install()              → install module
-     * @uses string ModuleImport->getRepositoryVersion() → repository version
-     * @uses array Module::$errors                       → module errors
+     * @uses object Complement::getInstance()   → get complement instance
+     * @uses string ComplementImport->install() → install complement
+     * @uses array  Complement::$errors         → complement errors
      *
      * @return void
      */
@@ -224,10 +223,12 @@ trait ModuleRequest {
             ];
         }
 
+        $config = Json::fileToArray($that->complement['config-file']);
+
         echo json_encode([
 
             'state'   => $state,
-            'version' => Json::fileToArray($that->module['config-file'])['version'],
+            'version' => $config['version'],
             'errors'  => self::$errors
         ]);
     }
@@ -235,11 +236,11 @@ trait ModuleRequest {
     /**
      * Uninstall request.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses object Module::getInstance()  → get module instance
-     * @uses string ModuleImport->remove() → remove module
-     * @uses array Module::$errors         → module errors
+     * @uses object Complement::getInstance()  → get complement instance
+     * @uses string ComplementImport->remove() → remove complement
+     * @uses array Complement::$errors         → complement errors
      *
      * @return void
      */

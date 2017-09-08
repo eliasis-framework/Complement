@@ -1,39 +1,39 @@
 <?php
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
- * @since      1.0.8
+ * @link       https://github.com/Eliasis-Framework/Complement
+ * @since      1.0.9
  */
 
-namespace Eliasis\Module\Traits;
+namespace Eliasis\Complement\Traits;
 
 use Eliasis\App\App,
     Josantonius\Json\Json;
 
 /**
- * Module states handler.
+ * Complement states handler.
  *
- * @since 1.0.8
+ * @since 1.0.9
  */
-trait ModuleState {
+trait ComplementState {
 
     /**
-     * List of modules (status indicators).
+     * List of complements (status indicators).
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @var array
      */
     protected $states;
 
     /**
-     * States and actions that will be executed when a module changes state.
+     * States/actions that will be executed when a complement changes state.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @var array
      */
@@ -69,17 +69,33 @@ trait ModuleState {
     ];
 
     /**
-     * Set module state.
+     * Default states.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @param string $state → module state
+     * @var array
+     */
+    protected $defaultStates = [
+
+        'component' => 'active',
+        'plugin'    => 'active',
+        'module'    => 'active',
+        'template'  => 'active',
+    ];
+
+    /**
+     * Set complement state.
+     *
+     * @since 1.0.9
+     *
+     * @param string $state → complement state
      *
      * @return string → state
      */
     public function setState($state) {
 
-        $this->module['state'] = $state;
+        $this->complement['state'] = $state;
+
         $this->states['state'] = $state;
 
         $this->_setStates();
@@ -88,11 +104,11 @@ trait ModuleState {
     }
 
     /**
-     * Change module state.
+     * Change complement state.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses void ModuleAction::doAction() → execute action hooks
+     * @uses void ComplementAction::doAction() → execute action hooks
      *
      * @return string → new state
      */
@@ -113,13 +129,14 @@ trait ModuleState {
     }
 
     /**
-     * Get module state.
+     * Get complement state.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses string App::modules() → default state module
+     * @uses string App::complements() → default state complement
+     * @uses string Complement::$type  → complement type
      *
-     * @return string → module state
+     * @return string → complement state
      */
     public function getState() {
 
@@ -127,23 +144,23 @@ trait ModuleState {
 
             return $this->states['state'];
         
-        } else if (isset($this->module['state'])) {
+        } else if (isset($this->complement['state'])) {
 
-            return $this->module['state'];
+            return $this->complement['state'];
         }
 
-        return App::modules('default-state');
+        return $this->defaultStates[self::$type];
     }
 
     /**
-     * Get modules states.
+     * Get complements states.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses string App::$id    → application ID
-     * @uses string Module::$id → module ID
+     * @uses string App::$id        → application ID
+     * @uses string Complement::$id → complement ID
      *
-     * @return array → modules states
+     * @return array → complements states
      */
     public function getStates() {
 
@@ -158,12 +175,12 @@ trait ModuleState {
     }
 
     /**
-     * Set modules states.
+     * Set complements states.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @uses string App::$id            → application ID
-     * @uses string Module::$id         → module ID
+     * @uses string Complement::$id     → complement ID
      * @uses array  Json::arrayToFile() → convert array to json file
      *
      * @return void
@@ -184,14 +201,14 @@ trait ModuleState {
     }
 
     /**
-     * Check if module state has changed.
+     * Check if complement state has changed.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @param string $states → module states
+     * @param string $states → complement states
      *
-     * @uses string App::$id    → application ID
-     * @uses string Module::$id → module ID
+     * @uses string App::$id        → application ID
+     * @uses string Complement::$id → complement ID
      *
      * @return boolean
      */
@@ -213,11 +230,11 @@ trait ModuleState {
     /**
      * Get states from json file.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @uses array Json::fileToArray() → convert json file to array
      *
-     * @return array → modules states
+     * @return array → complements states
      */
     private function _getStatesFromFile() {
 
@@ -225,17 +242,19 @@ trait ModuleState {
     }
 
     /**
-     * Get modules file path.
+     * Get complements file path.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses string App::MODULES() → modules path
-     * @uses string App::modules() → modules file
+     * @uses string App::COMPLEMENT() → complement path
+     * @uses string Complement::$type → complement type
      *
-     * @return string → modules file path
+     * @return string → complements file path
      */
     private function _getStatesFilePath() {
 
-        return App::MODULES() . App::modules('states-file');
+        $complementType = strtoupper(self::$type);
+
+        return App::$complementType() . '.' . self::$type . '-states.jsond';
     }
 }

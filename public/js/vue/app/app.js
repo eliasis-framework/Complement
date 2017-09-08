@@ -1,5 +1,5 @@
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
@@ -38,11 +38,11 @@ var states = {
 
 var lang = navigator.language || navigator.userLanguage || 'en';
 
-var setting = document.getElementById('modules-filter');
+var setting = document.getElementById('complements-filter');
 
 var appID        = setting.getAttribute('data-app');
-var moduleSort   = setting.getAttribute('data-sort');
-var moduleFilter = setting.getAttribute('data-filter');
+var complementSort   = setting.getAttribute('data-sort');
+var complementFilter = setting.getAttribute('data-filter');
 var externalUrls = setting.getAttribute('data-external');
 
 
@@ -119,7 +119,7 @@ Vue.component('state-buttons', {
 
 	  changeState: function(){
 
-	  	this.id = this.moduleId;
+	  	this.id = this.complementId;
 
       var request = 'change-state';
 
@@ -162,7 +162,7 @@ Vue.component('state-buttons', {
 
 	  uninstall: function() {
 
-      this.id = this.moduleId;
+      this.id = this.complementId;
 
 	  	this.isUninstall = true;
 
@@ -198,7 +198,7 @@ Vue.component('state-buttons', {
       
       this.resetStates();
       
-      this.state = this.state ? this.state : this.moduleState;
+      this.state = this.state ? this.state : this.complementState;
 
 		  this.message = states[this.state][lang];
 
@@ -214,15 +214,15 @@ Vue.component('state-buttons', {
 	  }
 	},
 
-	props: ['moduleId', 'moduleState', 'errors', 'module.version'],
+	props: ['complementId', 'complementState', 'errors', 'complement.version'],
 })
 
 var app = new Vue({
 
-  el: '#eliasis-modules',
+  el: '#eliasis-complements',
 
   data: { 
-    modules: [],
+    complements: [],
     errors:  []
   },
 
@@ -230,17 +230,17 @@ var app = new Vue({
 
 		var url = setUrl({
 
-      request: 'load-modules',
+      request: 'load-complements',
       app:      appID,
-      sort:     moduleSort,
-      filter:   moduleFilter,
+      sort:     complementSort,
+      filter:   complementFilter,
       external: externalUrls
 
    	});
 
 		this.$http.get(url).then(function(response) {
 
-			this.modules = response.body.modules;
+			this.complements = response.body.complements;
 
 	    this.errors = response.body.errors;
 

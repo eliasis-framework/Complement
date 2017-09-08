@@ -1,6 +1,6 @@
 <?php
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
@@ -13,7 +13,7 @@ use Eliasis\View\View;
 
 $data = View::get();
 ?>
-<div id="eliasis-modules">
+<div id="eliasis-complements">
 
     <transition-group name="list" tag="div">
         <div v-for="error in errors" v-bind:key="error">
@@ -26,12 +26,12 @@ $data = View::get();
     </transition-group>
 
     <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing-off">
-        <div v-for="(module, key) in modules" class="eliasis-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-tablet mdl-cell--12-col-phone ">
-            <div class="mdl-card__title mdl-card--expand mdl-color--blue-200" :style="module.image_style">
-                <a :href="module.uri" title="" target="_blank">
+        <div v-for="(complement, key) in complements" class="eliasis-complement mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-tablet mdl-cell--12-col-phone ">
+            <div class="mdl-card__title mdl-card--expand mdl-color--blue-200" :style="complement.image_style">
+                <a :href="complement.uri" title="" target="_blank">
                     <transition name="component-fade" mode="out-in">
-                        <div class="module-version" v-bind:key="module.version">
-                            {{ module.version }}
+                        <div class="complement-version" v-bind:key="complement.version">
+                            {{ complement.version }}
                         </div>
                     </transition>
                 </a>
@@ -40,25 +40,25 @@ $data = View::get();
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
             
                 <h2 class="mdl-card__title-text card-title">
-                    {{ module.name }}
+                    {{ complement.name }}
                 </h2>
             </transition>
                 <br>
-                {{ module.description }}
+                {{ complement.description }}
                 <div class="mdl-list__item">
                    <div class="custom-fields">
-                        <div class="module-state-btn">
-                            <state-buttons :module-id="module.id" :module-state='module.state' :module-version='module.version' v-model="module.version" v-model="errors" inline-template>
+                        <div class="complement-state-btn">
+                            <state-buttons :complement-id="complement.id" :complement-state='complement.state' :complement-version='complement.version' v-model="complement.version" v-model="errors" inline-template>
                                 <div class="state-buttons">
                                     <transition name="fade" mode="out-in">
-                                        <button v-bind:class="['mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--accent', 'mod-btn', 'module-btn', 'module-btn-left', { 'module-btn-active': isActive, 'module-btn-outdated': isOutdated, 'module-btn-uninstalled': isUninstalled }]" v-on:click="changeState()" :disabled="isUninstall || isInstall">
-                                            <span class="module-load module-open module-load-install" v-if="isInstall"></span>
+                                        <button v-bind:class="['mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--accent', 'mod-btn', 'complement-btn', 'complement-btn-left', { 'complement-btn-active': isActive, 'complement-btn-outdated': isOutdated, 'complement-btn-uninstalled': isUninstalled }]" v-on:click="changeState()" :disabled="isUninstall || isInstall">
+                                            <span class="complement-load complement-open complement-load-install" v-if="isInstall"></span>
                                             {{ isInstall ? '' : changeButtonState }}
                                         </button>
                                     </transition>
                                     <transition name="fade" mode="out-in">
-                                        <button class=" mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mod-btn mdl-button--accent module-btn module-btn-uninstall" v-if="isInactive" v-on:click="uninstall()" :disabled="isUninstall">
-                                            <span class="module-load module-open module-load-remove" v-if="isUninstall"></span>
+                                        <button class=" mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mod-btn mdl-button--accent complement-btn complement-btn-uninstall" v-if="isInactive" v-on:click="uninstall()" :disabled="isUninstall">
+                                            <span class="complement-load complement-open complement-load-remove" v-if="isUninstall"></span>
                                             {{ isUninstall ? '' : removeButton }}
                                         </button>
                                     </transition>
@@ -71,7 +71,7 @@ $data = View::get();
         </div>
     </div>
 
-    <div id='modules-filter'
+    <div id='complements-filter'
          data-app='<?= $data["app"] ?>'
          data-sort='<?= $data["sort"] ?>'
          data-filter='<?= $data["filter"] ?>' 

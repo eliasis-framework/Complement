@@ -1,5 +1,100 @@
 # CHANGELOG
 
+## 1.0.9 - 2017-09-07
+
+* Renamed class `Eliasis\Module\Module` to `Eliasis\Complement\Complement`.
+* Renamed trait `Eliasis\Module\ModuleAction` to `Eliasis\Complement\ComplementAction`.
+* Renamed trait `Eliasis\Module\ModuleHandler` to `Eliasis\Complement\ComplementHandler`.
+* Renamed trait `Eliasis\Module\ModuleImport` to `Eliasis\Complement\ComplementImport`.
+* Renamed trait `Eliasis\Module\ModuleRequest` to `Eliasis\Complement\ComplementRequest`.
+* Renamed trait `Eliasis\Module\ModuleState` to `Eliasis\Complement\ComplementState`.
+* Renamed trait `Eliasis\Module\ModuleView` to `Eliasis\Complement\ComplementView`.
+
+* Added `Eliasis\Complement\Type\Component\Component` class.
+* Added `Eliasis\Complement\Type\Plugin\Plugin` class.
+* Added `Eliasis\Complement\Type\Module\Module` class.
+* Added `Eliasis\Complement\Type\Template\Template` class.
+
+* Added `Eliasis\Complement\Complement` class.
+* Added `Eliasis\Complement\Complement::run()` method.
+* Added `Eliasis\Complement\Complement::load()` method.
+* Added `Eliasis\Complement\Complement::getInfo()` method.
+* Added `Eliasis\Complement\Complement::script()` method.
+* Added `Eliasis\Complement\Complement::style()` method.
+* Added `Eliasis\Complement\Complement::getLibraryPath()` method.
+* Added `Eliasis\Complement\Complement::getLibraryVersion()` method.
+* Added `Eliasis\Complement\Complement::__callstatic()` method.
+* Added `Eliasis\Complement\Complement::render()` method.
+
+* Added `Eliasis\Complement\ComplementAction` trait.
+* Added `Eliasis\Complement\ComplementAction->getAction()` method.
+* Added `Eliasis\Complement\ComplementAction->setAction()` method.
+* Added `Eliasis\Complement\ComplementAction->doAction()` method.
+* Added `Eliasis\Complement\ComplementAction->_addActions()` method.
+* Added `Eliasis\Complement\ComplementAction->_doActions()` method.
+
+* Added `Eliasis\Complement\ComplementHandler` trait.
+* Added `Eliasis\Complement\ComplementHandler->_setComplement()` method.
+* Added `Eliasis\Complement\ComplementHandler->set()` method.
+* Added `Eliasis\Complement\ComplementHandler->get()` method.
+* Added `Eliasis\Complement\ComplementHandler->instance()` method.
+* Added `Eliasis\Complement\ComplementHandler->_setComplementParams()` method.
+* Added `Eliasis\Complement\ComplementHandler->_getSettings()` method.
+* Added `Eliasis\Complement\ComplementHandler->_setImage()` method.
+* Added `Eliasis\Complement\ComplementHandler->_addRoutes()` method.
+
+* Added `Eliasis\Complement\ComplementImport` trait.
+* Added `Eliasis\Complement\ComplementImport->hasNewVersion()` method.
+* Added `Eliasis\Complement\ComplementImport->getRepositoryVersion()` method.
+* Added `Eliasis\Complement\ComplementImport->install()` method.
+* Added `Eliasis\Complement\ComplementImport->remove()` method.
+* Added `Eliasis\Complement\ComplementImport->_deleteDirectory()` method.
+* Added `Eliasis\Complement\ComplementImport->_installComplement()` method.
+* Added `Eliasis\Complement\ComplementImport->_saveRemoteFile()` method.
+* Added `Eliasis\Complement\ComplementImport->_validateRoute()` method.
+
+* Added `Eliasis\Complement\ComplementRequest` trait.
+* Added `Eliasis\Complement\ComplementRequest::requestHandler()` method.
+* Added `Eliasis\Complement\ComplementRequest::_loadExternalComplements()` method.
+* Added `Eliasis\Complement\ComplementRequest::_modulesLoadRequest()` method.
+* Added `Eliasis\Complement\ComplementRequest::_installRequest()` method.
+* Added `Eliasis\Complement\ComplementRequest::_uninstallRequest()` method.
+
+* Added `Eliasis\Complement\ComplementState` trait.
+* Added `Eliasis\Complement\ComplementState->setState()` method.
+* Added `Eliasis\Complement\ComplementState->changeState()` method.
+* Added `Eliasis\Complement\ComplementState->getState()` method.
+* Added `Eliasis\Complement\ComplementState->getStates()` method.
+* Added `Eliasis\Complement\ComplementState->_setStates()` method.
+* Added `Eliasis\Complement\ComplementState->_stateChanged()` method.
+* Added `Eliasis\Complement\ComplementState->_getStatesFromFile()` method.
+* Added `Eliasis\Complement\ComplementState->_getStatesFilePath()` method.
+
+* Added `Eliasis\Complement\ComplementView` trait.
+* Added `Eliasis\Complement\ComplementView->_setFile()` method.
+* Added `Eliasis\Complement\ComplementView->_renderizate()` method.
+
+* Added `Eliasis\Complement\Exception\ComplementException` class.
+* Added `Eliasis\Complement\Exception\ComplementException::__construct()` method.
+
+* Added `Eliasis\Module\ModuleView` trait.
+* Added `Eliasis\Module\ModuleView->_setFile()` method.
+* Added `Eliasis\Module\ModuleView->_renderizate()` method.
+
+* Deleted `public/css/eliasis-module-min.css` file.
+* Deleted `public/js/eliasis-module.js` file.
+* Deleted `public/js/eliasis-module-min.js` file.
+* Deleted `public/sass/partials/_modules.sass` file.
+* Deleted `public/sass/eliasis-module.sass` file.
+* Deleted `public/template/eliasis-module.php` file.
+
+* Added `public/css/eliasis-complement-min.css` file.
+* Added `public/js/eliasis-complement.js` file.
+* Added `public/js/eliasis-complement-min.js` file.
+* Added `public/sass/partials/_complements.sass` file.
+* Added `public/sass/eliasis-complement.sass` file.
+* Added `public/template/eliasis-complement.php` file.
+
 ## 1.0.8 - 2017-09-05
 
 * The library was optimized and some errors corrected.

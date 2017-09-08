@@ -1,10 +1,10 @@
-# Module PHP library for Eliasis Framework
+# Complement PHP library for Eliasis Framework
 
-[![Latest Stable Version](https://poser.pugx.org/eliasis-framework/module/v/stable)](https://packagist.org/packages/eliasis-framework/module) [![Total Downloads](https://poser.pugx.org/eliasis-framework/module/downloads)](https://packagist.org/packages/eliasis-framework/module) [![Latest Unstable Version](https://poser.pugx.org/eliasis-framework/module/v/unstable)](https://packagist.org/packages/eliasis-framework/module) [![License](https://poser.pugx.org/eliasis-framework/module/license)](https://packagist.org/packages/eliasis-framework/module)
+[![Latest Stable Version](https://poser.pugx.org/eliasis-framework/complement/v/stable)](https://packagist.org/packages/eliasis-framework/complement) [![Total Downloads](https://poser.pugx.org/eliasis-framework/complement/downloads)](https://packagist.org/packages/eliasis-framework/complement) [![Latest Unstable Version](https://poser.pugx.org/eliasis-framework/complement/v/unstable)](https://packagist.org/packages/eliasis-framework/complement) [![License](https://poser.pugx.org/eliasis-framework/complement/license)](https://packagist.org/packages/eliasis-framework/complement)
 
 [Versión en español](README-ES.md)
 
-PHP library for adding addition of modules for Eliasis Framework.
+PHP library for adding addition of complements (components, plugins, modules, templates) for Eliasis Framework.
 
 ---
 
@@ -23,7 +23,7 @@ PHP library for adding addition of modules for Eliasis Framework.
 
 ---
 
-<p align="center"><strong>Modules view</strong></p>
+<p align="center"><strong>Complements view (Módules)</strong></p>
 
 <p align="center">
   <a href="https://youtu.be/EJi_TXa28Mc" title="Take a look at the code">
@@ -37,17 +37,17 @@ PHP library for adding addition of modules for Eliasis Framework.
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-To install PHP Module library, simply:
+To install PHP Complement library, simply:
 
-    $ composer require eliasis-framework/Module
+    $ composer require eliasis-framework/Complement
 
 The previous command will only install the necessary files, if you prefer to download the entire source code (including tests, vendor folder, exceptions not used, docs...) you can use:
 
-    $ composer require eliasis-framework/Module --prefer-source
+    $ composer require eliasis-framework/Complement --prefer-source
 
 Or you can also clone the complete repository with Git:
 
-	$ git clone https://github.com/eliasis-framework/Module.git
+	$ git clone https://github.com/eliasis-framework/Complement.git
 	
 ### Requirements
 
@@ -59,8 +59,6 @@ To use this class, simply:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
-
-use Eliasis\Module\Module;
 ```
 
 ### Available Methods
@@ -68,10 +66,72 @@ use Eliasis\Module\Module;
 Available methods in this library:
 
 ```php
+use Eliasis\Complement\Type\Component;
+
+Component::getInstance();
+Component::run();
+Component::load();
+Component::getInfo();
+Component::script();
+Component::style();
+Component::exists();
+Component::getLibraryPath();
+Component::getLibraryVersion();
+Component::render();
+
+Component::Identifier()->set();
+Component::Identifier()->get();
+Component::Identifier()->instance();
+Component::Identifier()->getAction();
+Component::Identifier()->setAction();
+Component::Identifier()->doAction();
+Component::Identifier()->hasNewVersion()` method.
+Component::Identifier()->getRepositoryVersion()` method.
+Component::Identifier()->install()` method.
+Component::Identifier()->remove()` method.
+Component::Identifier()->setState()` method.
+Component::Identifier()->changeState()` method.
+Component::Identifier()->getState()` method.
+Component::Identifier()->getStates()` method.
+```
+
+```php
+use Eliasis\Complement\Type\Plugin;
+
+Plugin::getInstance();
+Plugin::run();
+Plugin::load();
+Plugin::getInfo();
+Plugin::script();
+Plugin::style();
+Plugin::exists();
+Plugin::getLibraryPath();
+Plugin::getLibraryVersion();
+Plugin::render();
+
+Plugin::Identifier()->set();
+Plugin::Identifier()->get();
+Plugin::Identifier()->instance();
+Plugin::Identifier()->getAction();
+Plugin::Identifier()->setAction();
+Plugin::Identifier()->doAction();
+Plugin::Identifier()->hasNewVersion()` method.
+Plugin::Identifier()->getRepositoryVersion()` method.
+Plugin::Identifier()->install()` method.
+Plugin::Identifier()->remove()` method.
+Plugin::Identifier()->setState()` method.
+Plugin::Identifier()->changeState()` method.
+Plugin::Identifier()->getState()` method.
+Plugin::Identifier()->getStates()` method.
+```
+
+```php
+use Eliasis\Complement\Type\Module;
+
 Module::getInstance();
-Module::loadModules();
-Module::loadModule();
-Module::getModulesInfo();
+Module::run();
+Module::load();
+Module::getInfo();
 Module::script();
 Module::style();
 Module::exists();
@@ -79,7 +139,6 @@ Module::getLibraryPath();
 Module::getLibraryVersion();
 Module::render();
 
-Module::Identifier()->setModule();
 Module::Identifier()->set();
 Module::Identifier()->get();
 Module::Identifier()->instance();
@@ -96,13 +155,43 @@ Module::Identifier()->getState()` method.
 Module::Identifier()->getStates()` method.
 ```
 
+```php
+use Eliasis\Complement\Type\Template;
+
+Template::getInstance();
+Template::run();
+Template::load();
+Template::getInfo();
+Template::script();
+Template::style();
+Template::exists();
+Template::getLibraryPath();
+Template::getLibraryVersion();
+Template::render();
+
+Template::Identifier()->set();
+Template::Identifier()->get();
+Template::Identifier()->instance();
+Template::Identifier()->getAction();
+Template::Identifier()->setAction();
+Template::Identifier()->doAction();
+Template::Identifier()->hasNewVersion()` method.
+Template::Identifier()->getRepositoryVersion()` method.
+Template::Identifier()->install()` method.
+Template::Identifier()->remove()` method.
+Template::Identifier()->setState()` method.
+Template::Identifier()->changeState()` method.
+Template::Identifier()->getState()` method.
+Template::Identifier()->getStates()` method.
+```
+
 ### Images
 
-![image](resources/eliasis-module-1.png)
+![image](resources/eliasis-complement-1.png)
 
-![image](resources/eliasis-module-2.png)
+![image](resources/eliasis-complement-2.png)
 
-![image](resources/eliasis-module-3.png)
+![image](resources/eliasis-complement-3.png)
 
 ### Usage
 

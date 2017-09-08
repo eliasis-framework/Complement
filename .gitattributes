@@ -1,6 +1,6 @@
 /resources export-ignore
 /public/js/vue export-ignore
-/public/js/eliasis-module.js export-ignore
+/public/js/eliasis-complement.js export-ignore
 /public/sass export-ignore
 /public/images export-ignore
 /tests export-ignore

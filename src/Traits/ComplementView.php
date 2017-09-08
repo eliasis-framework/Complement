@@ -1,41 +1,41 @@
 <?php
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
- * @since      1.0.8
+ * @link       https://github.com/Eliasis-Framework/Complement
+ * @since      1.0.9
  */
 
-namespace Eliasis\Module\Traits;
+namespace Eliasis\Complement\Traits;
 
 use Eliasis\App\App,
     Eliasis\View\View,
     Josantonius\File\File;
 
 /**
- * Module view handler.
+ * Complement view handler.
  *
- * @since 1.0.8
+ * @since 1.0.9
  */
-trait ModuleView {
+trait ComplementView {
 
     /**
      * Creating files (css/js/php) in custom locations.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @param string $filename → file name
      * @param string $type     → script|style
      * @param string $pathUrl  → path url where file will be created
      *
-     * @uses string App::DS                     → directory separator
-     * @uses string App::get()                  → get option
-     * @uses string Module::getLibraryPath()    → get library path
-     * @uses string Module::getLibraryVersion() → get library version
-     * @uses string ModuleImport::_createdir()  → create directory
+     * @uses string App::DS                         → directory separator
+     * @uses string App::get()                      → get option
+     * @uses string Complement::getLibraryPath()    → get library path
+     * @uses string Complement::getLibraryVersion() → get library version
+     * @uses string ComplementImport::_createdir()  → create directory
      *
      * @return string → file url
      */
@@ -72,19 +72,19 @@ trait ModuleView {
     }
 
     /**
-     * Get modules view.
+     * Get complements view.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @param string $filter   → modules category to display
-     * @param array  $external → urls of the external optional modules
-     * @param string $sort     → PHP sorting function to modules sort
+     * @param string $filter   → complements category to display
+     * @param array  $external → urls of the external optional complements
+     * @param string $sort     → PHP sorting function to complements sort
      *
-     * @uses string App::$id                 → application id
-     * @uses string App::DS                  → directory separator
-     * @uses string Module::getLibraryPath() → get library path
-     * @uses object View:getInstance()       → View instance
-     * @uses void   View:renderizate()       → render view
+     * @uses string App::$id                     → application id
+     * @uses string App::DS                      → directory separator
+     * @uses string Complement::getLibraryPath() → get library path
+     * @uses object View:getInstance()           → View instance
+     * @uses void   View:renderizate()           → render view
      *
      * @return void
      */
@@ -104,6 +104,6 @@ trait ModuleView {
 
         $template = $path . 'public' . App::DS . 'template' . App::DS;
 
-        $View->renderizate($template, 'eliasis-module', $data);
+        $View->renderizate($template, 'eliasis-complement', $data);
     }
 }

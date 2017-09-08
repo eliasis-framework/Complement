@@ -1,30 +1,30 @@
 <?php
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
- * @since      1.0.8
+ * @link       https://github.com/Eliasis-Framework/Complement
+ * @since      1.0.9
  */
 
-namespace Eliasis\Module\Traits;
+namespace Eliasis\Complement\Traits;
 
 use Eliasis\App\App,
     Josantonius\Hook\Hook;
 
 /**
- * Module action handler.
+ * Complement action handler.
  *
- * @since 1.0.8
+ * @since 1.0.9
  */
-trait ModuleAction { 
+trait ComplementAction { 
 
     /**
      * Action hooks.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @var array
      */
@@ -36,20 +36,35 @@ trait ModuleAction {
     ];
 
     /**
-     * Get module action.
+     * Default actions.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @param string $state → module state
+     * @var array
+     */
+    protected $defaultAction = [
+
+        'component' => 'activation',
+        'plugin'    => 'activation',
+        'module'    => 'activation',
+        'template'  => 'activation',
+    ];
+
+    /**
+     * Get complement action.
      *
-     * @uses string App::modules()       → module default action
-     * @uses array  ModuleState->$states → modules states
+     * @since 1.0.9
+     *
+     * @param string $state → complement state
+     *
+     * @uses array  ComplementState->$states → complements states
+     * @uses string Complement::$type        → complement type
      *
      * @return boolean
      */
     public function getAction($state) {
 
-        $action = App::modules('default-action');
+        $action = $this->defaultAction[self::$type];
 
         if (isset($this->states['action'])) {
 
@@ -60,15 +75,15 @@ trait ModuleAction {
     }
 
     /**
-     * Set module action.
+     * Set complement action.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @param string $action
      *
-     * @uses array ModuleState->$states → modules states
+     * @uses array ComplementState->$states → complements states
      *
-     * @return string → module action
+     * @return string → complement action
      */
     public function setAction($action) {
 
@@ -78,13 +93,13 @@ trait ModuleAction {
     /**
      * Execute action hook.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @param string $action → action hook to execute
-     * @param string $state  → module state
+     * @param string $state  → complement state
      *
-     * @uses object Module::getInstance()     → Module instance
-     * @uses string ModuleAction::setAction() → set module action
+     * @uses object Complement::getInstance()     → Complement instance
+     * @uses string ComplementAction::setAction() → set complement action
      *
      * @return boolean
      */
@@ -105,24 +120,24 @@ trait ModuleAction {
     }
 
     /**
-     * Add module action hooks.
+     * Add complement action hooks.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
-     * @uses string App::$id          → application ID
-     * @uses array  Module->$module   → module settings
-     * @uses object Hook::getInstance → get Hook instance
-     * @uses mixed  Hook::addActions  → add module action hooks
+     * @uses string App::$id                → application ID
+     * @uses array  Complement->$complement → complement settings
+     * @uses object Hook::getInstance       → get Hook instance
+     * @uses mixed  Hook::addActions        → add complement action hooks
      *
      * @return void
      */
     private function _addActions() {
 
-        if (isset($this->module['hooks'])) {
+        if (isset($this->complement['hooks'])) {
 
             Hook::getInstance(App::$id);
                 
-            return Hook::addActions($this->module['hooks']);
+            return Hook::addActions($this->complement['hooks']);
         }
 
         return false;
@@ -131,14 +146,15 @@ trait ModuleAction {
     /**
      * Execute action hooks.
      *
-     * @since 1.0.8
+     * @since 1.0.9
      *
      * @param string $action → action hook to execute
-     * @param string $state  → module state
+     * @param string $state  → complement state
      *
      * @uses string App::$id          → application ID
      * @uses object Hook::getInstance → get Hook instance
      * @uses mixed  Hook::doAction    → run hooks
+     * @uses string Complement::$type → complement type
      *
      * @return void
      */
@@ -146,7 +162,7 @@ trait ModuleAction {
 
         Hook::getInstance(App::$id);
 
-        Hook::doAction('module-load');
+        Hook::doAction(self::$type . '-load');
 
         if (in_array($action, $this->hooks)) {
 

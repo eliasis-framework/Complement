@@ -1,4 +1,23 @@
 /**
+ * PHP library for adding addition of complements for Eliasis Framework.
+ *
+ * @author     Josantonius - hello@josantonius.com
+ * @copyright  Copyright (c) 2017
+ * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
+ * @link       https://github.com/Eliasis-Framework/Module
+ * @since      1.0.8
+ *
+ * material-design-lite - Material Design Components in CSS, JS and HTML
+ * @version v1.1.3
+ * @license Apache-2.0
+ * @copyright 2015 Google, Inc.
+ * @link https://github.com/google/material-design-lite
+ *
+ * Load Button
+ * @author Igor Oliveira
+ * @link https://codepen.io/devigor/pen/oZXozG
+ */
+/**
  * material-design-lite - Material Design Components in CSS, JS and HTML
  * @version v1.1.3
  * @license Apache-2.0
@@ -917,7 +936,7 @@ input.mdl-button[type="submit"] {
   .mdl-grid.mdl-grid--no-spacing > .mdl-cell--11-offset, .mdl-grid.mdl-grid--no-spacing > .mdl-cell--11-offset-desktop.mdl-cell--11-offset-desktop {
     margin-left: 91.66667%; } }
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
@@ -960,23 +979,23 @@ a:hover, a:active, a:focus {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   width: 100% !important; }
 
-.eliasis-module > .mdl-card__title {
+.eliasis-complement > .mdl-card__title {
   color: #fff;
   height: 177px; }
 
 #custom-section {
   padding: 16px 0px; }
 
-.module-btn {
+.complement-btn {
   float: left; }
 
-.module-btn-left {
+.complement-btn-left {
   min-width: 99.44px; }
 
-.module-btn:hover {
+.complement-btn:hover {
   opacity: 0.9; }
 
-.module-version {
+.complement-version {
   display: none;
   top: 8px;
   position: absolute;
@@ -986,55 +1005,55 @@ a:hover, a:active, a:focus {
   border-radius: 3px;
   background: #1abc9c;
   padding: 6px; }
-  .module-version:hover {
+  .complement-version:hover {
     opacity: 0.9; }
 
-.eliasis-module:hover .module-version {
+.eliasis-complement:hover .complement-version {
   display: block; }
 
-.module-btn-active {
+.complement-btn-active {
   background-color: #009688 !important; }
 
-.module-btn-uninstall {
+.complement-btn-uninstall {
   background-color: #d91e18 !important;
   min-width: 99.44px;
   margin-left: 8px;
   position: absolute; }
 
-.module-btn-outdated, .module-btn-uninstalled {
+.complement-btn-outdated, .complement-btn-uninstalled {
   background-color: #0073aa !important;
   width: initial; }
 
-.module-state-btn {
+.complement-state-btn {
   margin: 5px 0px -13px -15px;
   display: -webkit-box;
   display: -webkit-inline-box;
   display: contents; }
 
-.module-btn[disabled][disabled] {
+.complement-btn[disabled][disabled] {
   background-color: #f1f1f1 !important; }
 
 @media (min-width: 840px) and (max-width: 927px) {
-  .module-btn-uninstall {
+  .complement-btn-uninstall {
     font-size: 13px;
     width: 103px;
     padding: 0px; }
 
-  .module-btn {
+  .complement-btn {
     font-size: 13px; }
 
-  .module-btn-left {
+  .complement-btn-left {
     min-width: 90.44px; } }
 @media (min-width: 960px) and (max-width: 1054px) {
-  .module-btn-uninstall {
+  .complement-btn-uninstall {
     font-size: 13px;
     width: 103px;
     padding: 0px; }
 
-  .module-btn {
+  .complement-btn {
     font-size: 13px; }
 
-  .module-btn-left {
+  .complement-btn-left {
     min-width: 90.44px; } }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease; }
@@ -1061,20 +1080,20 @@ a:hover, a:active, a:focus {
  * @author Igor Oliveira
  * @link https://codepen.io/devigor/pen/oZXozG
  */
-.module-load {
+.complement-load {
   display: inline-block;
   width: 14px;
   height: 14px;
   margin-top: 6px;
   border-radius: 100%; }
 
-.module-load-remove {
+.complement-load-remove {
   border: 5px solid #d91e18; }
 
-.module-load-install {
+.complement-load-install {
   border: 5px solid #0073aa; }
 
-.module-open {
+.complement-open {
   border-top: 5px solid transparent;
   -webkit-animation: load-animate infinite linear 1s;
   animation: load-animate infinite linear 1s; }
@@ -1102,4 +1121,4 @@ a:hover, a:active, a:focus {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 
-/*# sourceMappingURL=eliasis-module.css.map */
+/*# sourceMappingURL=eliasis-complement.css.map */
