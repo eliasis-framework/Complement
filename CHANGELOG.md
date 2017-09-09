@@ -16,6 +16,7 @@
 * Added `Eliasis\Complement\Type\Template\Template` class.
 
 * Added `Eliasis\Complement\Complement` class.
+* Added `Eliasis\Complement\Complement::getInstance()` method.
 * Added `Eliasis\Complement\Complement::run()` method.
 * Added `Eliasis\Complement\Complement::load()` method.
 * Added `Eliasis\Complement\Complement::getInfo()` method.
@@ -41,6 +42,7 @@
 * Added `Eliasis\Complement\ComplementHandler->_setComplementParams()` method.
 * Added `Eliasis\Complement\ComplementHandler->_getSettings()` method.
 * Added `Eliasis\Complement\ComplementHandler->_setImage()` method.
+* Added `Eliasis\Complement\ComplementHandler->_getType()` method.
 * Added `Eliasis\Complement\ComplementHandler->_addRoutes()` method.
 
 * Added `Eliasis\Complement\ComplementImport` trait.

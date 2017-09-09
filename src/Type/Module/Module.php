@@ -18,41 +18,4 @@ use Eliasis\Complement\Complement;
  *
  * @since 1.0.9
  */
-class Module extends Complement { 
-
-    /**
-     * Module instances.
-     *
-     * @since 1.0.9
-     *
-     * @var array
-     */
-    protected static $instances;
-
-    /**
-     * Complement type.
-     *
-     * @since 1.0.9
-     *
-     * @var string
-     */
-    protected $type = 'module';
-
-    /**
-     * Id of current module called.
-     *
-     * @since 1.0.9
-     *
-     * @var array
-     */
-    public static $id = 'unknown';
-
-    /**
-     * Errors for file management.
-     *
-     * @since 1.0.9
-     *
-     * @var array
-     */
-    protected static $errors = [];
-}
+final class Module extends Complement {}

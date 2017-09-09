@@ -26,16 +26,21 @@ trait ComplementRequest {
      *
      * @since 1.0.9
      *
+     * @param string $complementType → complement type
+     *
      * @uses string App::id() → set application id
      *
      * @return void
      */
-    public static function requestHandler() {
+    public static function requestHandler($complementType) {
 
-        if (!isset($_GET['vue'], 
-                   $_GET['app'], 
+        if (!isset($_GET['vue'],
+                   $_GET['app'],
                    $_GET['external'], 
-                   $_GET['request'])) { return; }
+                   $_GET['request'],
+                   $_GET['complement'])) { return; }
+
+        if ($_GET['complement'] !== $complementType) { return; }
 
         App::id(filter_var($_GET['app'], FILTER_SANITIZE_STRING));
 

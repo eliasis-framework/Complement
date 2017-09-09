@@ -40,15 +40,6 @@ abstract class Complement {
     protected static $instances;
 
     /**
-     * Complement type.
-     *
-     * @since 1.0.9
-     *
-     * @var string
-     */
-    protected static $type;
-
-    /**
      * Available complements.
      *
      * @since 1.0.9
@@ -64,7 +55,16 @@ abstract class Complement {
      *
      * @var array
      */
-    public static $id = 'unknown';
+    protected static $id = 'unknown';
+
+    /**
+     * Complement type.
+     *
+     * @since 1.0.9
+     *
+     * @var string
+     */
+    private static $type = 'unknown';
 
     /**
      * Errors for file management.
@@ -80,20 +80,25 @@ abstract class Complement {
      *
      * @since 1.0.9
      *
-     * @uses string App::$id → application ID
+     * @uses string App::$id                      → application ID
+     * @uses string ComplementHandler::_getType() → get complement type
      *
      * @return object → complement instance
      */
-    public static function getInstance() {
+    protected static function getInstance() {
 
-        if (!isset(self::$instances[App::$id][self::$id])) { 
+        $type = self::_getType();
 
-            self::$instances[App::$id][self::$id] = new self;
+        $complement = get_called_class();
+
+        if (!isset(self::$instances[App::$id][$type][self::$id])) { 
+
+            self::$instances[App::$id][$type][self::$id] = new $complement;
         }
 
-        return self::$instances[App::$id][self::$id];
+        return self::$instances[App::$id][$type][self::$id];
     }
-                                                                         
+
     /**
      * Load all complements found in the directory.
      *
@@ -102,15 +107,16 @@ abstract class Complement {
      * @uses string App::DS                             → directory separator
      * @uses string App::COMPLEMENT()                   → complement path
      * @uses string ComplementRequest::requestHandler() → HTTP request handler
+     * @uses string ComplementHandler::_getType()       → get complement type
      *
      * @return void
      */
     public static function run() {
 
-    	$complementType = strtoupper(self::$type);
+    	$complementType = self::_getType('strtoupper');
 
         $path = App::$complementType();
-    
+
         if ($paths = File::getFilesFromDir($path)) {
 
             foreach($paths as $path) {
@@ -130,7 +136,7 @@ abstract class Complement {
             }
         }
 
-        self::requestHandler();
+        self::requestHandler(self::_getType('strtolower', false));
     }
 
     /**
@@ -168,6 +174,8 @@ abstract class Complement {
      * @param string $filter → complement category filter
      * @param string $sort   → PHP sorting function to complements sort
      *
+     * @uses string ComplementHandler::_getType() → get complement type
+     *
      * @uses string App::$id → application ID
      *
      * @return array $data → complements info
@@ -176,9 +184,11 @@ abstract class Complement {
 
         $data = [];
 
+        $type = self::_getType();
+
         $complementID = self::$id;
 
-        $complements = array_keys(self::$instances[App::$id]);
+        $complements = array_keys(self::$instances[App::$id][$type]);
 
         foreach ($complements as $id) {
 
@@ -188,9 +198,9 @@ abstract class Complement {
 
             $complement = $that->complement;
 
-            isset($complement['category']) OR continue;
+            if (!isset($complement['category'])) { continue; }
 
-            $skip = ($filter != 'all' && $category != $filter);
+            $skip = ($filter != 'all' && $complement['category'] != $filter);
 
             if ($skip || $id == 'unknown' || !$complement) {
 
@@ -224,7 +234,7 @@ abstract class Complement {
             ];
         }
 
-        self::$id = $complementID;
+        self::$id = $id;
 
         $that->complement = $complement;
 
@@ -278,13 +288,20 @@ abstract class Complement {
      *
      * @param string $complementID → complement id
      *
-     * @uses string App::$id → application ID
+     * @uses string App::$id                      → application ID
+     * @uses string ComplementHandler::_getType() → get complement type
      *
      * @return boolean
      */
     public static function exists($complementID) {
 
-        return array_key_exists($complementID, self::$instances[App::$id]);
+        $type = self::_getType();
+
+        return array_key_exists(
+
+            $complementID, 
+            self::$instances[App::$id][$type]
+        );
     }
 
     /**
@@ -327,7 +344,8 @@ abstract class Complement {
      * @param string $index  → complement name
      * @param array  $params → params
      *
-     * @uses string App::$id → application ID
+     * @uses string App::$id                      → application ID
+     * @uses string ComplementHandler::_getType() → get complement type
      *
      * @throws ComplementException → complement not found
      *
@@ -335,11 +353,13 @@ abstract class Complement {
      */
     public static function __callstatic($index, $params = false) {
 
-        if (!array_key_exists($index, self::$instances[App::$id])) {
+        $type = self::_getType();
 
-            $message = ucfirst(self::$type) . ' not found';
+        if (!array_key_exists($index, self::$instances[App::$id][$type])) {
 
-            throw new ComplementException($message .': '. $index . '.', 817);
+            $msg = self::_getType('ucfirst', false) . ' not found';
+
+            throw new ComplementException($msg . ': ' . $index . '.', 817);
         }
 
         self::$id = $index;

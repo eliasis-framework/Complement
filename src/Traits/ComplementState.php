@@ -37,7 +37,7 @@ trait ComplementState {
      *
      * @var array
      */
-    protected $statesHandler = [
+    protected static $statesHandler = [
         'active' => [
             'action' => 'deactivation',
             'state'  => 'inactive'
@@ -75,7 +75,7 @@ trait ComplementState {
      *
      * @var array
      */
-    protected $defaultStates = [
+    protected static $defaultStates = [
 
         'component' => 'active',
         'plugin'    => 'active',
@@ -118,8 +118,8 @@ trait ComplementState {
 
         $actualState = $this->getState();
 
-        $newState = $this->statesHandler[$actualState]['state'];
-        $action   = $this->statesHandler[$actualState]['action'];
+        $newState = self::$statesHandler[$actualState]['state'];
+        $action   = self::$statesHandler[$actualState]['action'];
 
         $this->setState($newState);
 
@@ -133,8 +133,8 @@ trait ComplementState {
      *
      * @since 1.0.9
      *
-     * @uses string App::complements() → default state complement
-     * @uses string Complement::$type  → complement type
+     * @uses string App::complements()            → default state complement
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return string → complement state
      */
@@ -149,7 +149,9 @@ trait ComplementState {
             return $this->complement['state'];
         }
 
-        return $this->defaultStates[self::$type];
+        $type = self::_getType();
+
+        return self::$defaultStates[$type];
     }
 
     /**
@@ -246,15 +248,17 @@ trait ComplementState {
      *
      * @since 1.0.9
      *
-     * @uses string App::COMPLEMENT() → complement path
-     * @uses string Complement::$type → complement type
+     * @uses string App::COMPLEMENT()             → complement path
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return string → complements file path
      */
     private function _getStatesFilePath() {
 
-        $complementType = strtoupper(self::$type);
+        $type = self::_getType();
 
-        return App::$complementType() . '.' . self::$type . '-states.jsond';
+        $complementType = self::_getType('strtoupper');
+
+        return App::$complementType() . '.' . $type . '-states.jsond';
     }
 }

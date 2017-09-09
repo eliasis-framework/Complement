@@ -48,9 +48,12 @@ trait ComplementImport {
 
         $version = $this->complement['version'];
 
-        isset($this->complement['config-url']) OR return $version;     
+        if (!isset($this->complement['config-url'])) { return $version; }     
 
-        File::exists($this->complement['config-url']) OR return $version; 
+        if (!File::exists($this->complement['config-url'])) {
+
+            return $version;
+        } 
 
         $config = Json::fileToArray($this->complement['config-url']);
 
@@ -131,7 +134,7 @@ trait ComplementImport {
      *
      * @uses array   Complement->$complement      → complement settings
      * @uses array   Complement::$errors          → complement errors
-     * @uses string  Complement::$type            → complement type
+     * @uses string ComplementHandler::_getType() → complement type
      * @uses boolean File::deleteDirRecursively() → delete directory
      *
      * @return string → complement state
@@ -140,13 +143,13 @@ trait ComplementImport {
 
         $path = $this->complement['path']['root'];
 
-        $this->_validateRoute($path) OR return false;
+        if (!$this->_validateRoute($path)) { return false; }
 
         $isUninstall = ($this->getState() === 'inactive');
 
         if (!File::deleteDirRecursively($path) && $isUninstall) {
 
-            $type = ucfirst(self::$type);
+            $type = self::_getType('ucfirst', false);
 
             $msg = $type." doesn't exist in '$path' or couldn't be deleted.";
 
@@ -168,10 +171,10 @@ trait ComplementImport {
      * @param string  $slug       → complement slug
      * @param boolean $root       → root folder
      *
-     * @uses string  App::DS               → directory separator
-     * @uses string  App::COMPLEMENT_URL() → complement url
-     * @uses string  Complement::$type     → complement type
-     * @uses boolean File::createDir()     → create directory
+     * @uses string  App::DS                      → directory separator
+     * @uses string  App::COMPLEMENT_URL()        → complement url
+     * @uses string ComplementHandler::_getType() → complement type
+     * @uses boolean File::createDir()            → create directory
      *
      * @return boolean
      */
@@ -179,7 +182,7 @@ trait ComplementImport {
 
         $path = ($root) ? $path : $path . key($complement) . App::DS;
 
-        $this->_validateRoute($path) OR return false;
+        if (!$this->_validateRoute($path)) { return false; }
 
         if (!File::createDir($path)) {
 
@@ -203,7 +206,7 @@ trait ComplementImport {
                 
                 $filePath = $path . $value;
 
-                $complementType = strtoupper(self::$type);
+                $complementType = self::_getType('strtoupper');
 
                 $complementPath = App::$complementType() . $slug . App::DS;
 
@@ -262,20 +265,22 @@ trait ComplementImport {
      *
      * @param string $path → complement path
      *
-     * @uses string App::COMPLEMENT() → complement path
-     * @uses string Complement::$type → complement type
+     * @uses string App::COMPLEMENT()             → complement path
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return boolean
      */
     private function _validateRoute($path) {
 
-        $complementType = strtoupper(self::$type);
+        $complementType = self::_getType('strtoupper');
 
         $thePath = App::$complementType();
 
         if ($thePath == $path || strpos($path, $thePath) === false) {
 
-            $msg = ucfirst(self::$type) . " path: '$path' isn't a valid.";
+            $type = self::_getType('ucfirst', false);
+
+            $msg = 'The ' . $type . " path: '$path' isn't a valid route.";
 
             self::$errors[] = ['message' => $msg];
 

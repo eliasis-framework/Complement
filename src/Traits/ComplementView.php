@@ -80,11 +80,12 @@ trait ComplementView {
      * @param array  $external → urls of the external optional complements
      * @param string $sort     → PHP sorting function to complements sort
      *
-     * @uses string App::$id                     → application id
-     * @uses string App::DS                      → directory separator
-     * @uses string Complement::getLibraryPath() → get library path
-     * @uses object View:getInstance()           → View instance
-     * @uses void   View:renderizate()           → render view
+     * @uses string App::$id                      → application id
+     * @uses string App::DS                       → directory separator
+     * @uses string Complement::getLibraryPath()  → get library path
+     * @uses string ComplementHandler::_getType() → complement type
+     * @uses object View:getInstance()            → View instance
+     * @uses void   View:renderizate()            → render view
      *
      * @return void
      */
@@ -92,10 +93,11 @@ trait ComplementView {
 
         $data = [
 
-            'app'      => App::$id,
-            'filter'   => $filter,
-            'external' => urlencode(json_encode($external, true)),
-            'sort'     => $sort,
+            'app'        => App::$id,
+            'complement' => self::_getType('strtolower', false),
+            'filter'     => $filter,
+            'external'   => urlencode(json_encode($external, true)),
+            'sort'       => $sort,
         ];
 
         $View = View::getInstance();

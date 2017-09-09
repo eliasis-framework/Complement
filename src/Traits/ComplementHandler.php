@@ -29,7 +29,7 @@ trait ComplementHandler {
      *
      * @var array
      */
-    protected $required = [
+    protected static $required = [
         'id',
         'name',
         'version',
@@ -178,7 +178,7 @@ trait ComplementHandler {
 
         $states = ['active', 'outdated'];
 
-        if (in_array($action, $this->hooks) || in_array($state, $states)) {
+        if (in_array($action, self::$hooks) || in_array($state, $states)) {
 
             $this->_addRoutes();
 
@@ -196,11 +196,11 @@ trait ComplementHandler {
      * @param string $complement → complement settings
      * @param string $path       → complement path
      *
-     * @uses string App::DS                  → directory separator
-     * @uses string App::COMPLEMENT()        → complement path
-     * @uses array  Complement->$complement  → complement settings
-     * @uses string Complement::$type        → complement type
-     * @uses string ComplementAction->$hooks → action hooks
+     * @uses string App::DS                       → directory separator
+     * @uses string App::COMPLEMENT()             → complement path
+     * @uses array  Complement->$complement       → complement settings
+     * @uses string ComplementHandler::_getType() → complement type
+     * @uses string ComplementAction->$hooks      → action hooks
      *
      * @throws ComplementException → complement configuration file error
      *
@@ -210,7 +210,7 @@ trait ComplementHandler {
 
         $params = array_intersect_key(
 
-            array_flip($this->required), 
+            array_flip(self::$required), 
             $complement
         );
 
@@ -218,13 +218,15 @@ trait ComplementHandler {
 
         $default['slug'] = $slug[0];
 
-        $complementType = strtoupper(self::$type);
+        $complementType = self::_getType('strtoupper');
 
         $path = App::$complementType() . $default['slug'] . App::DS;
 
         if (count($params) != 10) {
 
-            $msg = ucfirst(self::$type) . " configuration file isn't correct";
+            $type = self::_getType('ucfirst');
+
+            $msg = $type . " configuration file isn't correct";
 
             throw new ComplementException($msg . ': ' . $path . '.', 816);
         }
@@ -281,10 +283,10 @@ trait ComplementHandler {
      * @since 1.0.9
      *
      * @uses string App::DS
-     * @uses string App::COMPLEMENT()       → complement path
-     * @uses string App::COMPLEMENT_URL()   → complement url
-     * @uses array  Complement->$complement → complement settings
-     * @uses string Complement::$type       → complement type
+     * @uses string App::COMPLEMENT()             → complement path
+     * @uses string App::COMPLEMENT_URL()         → complement url
+     * @uses array  Complement->$complement       → complement settings
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return void
      */
@@ -292,13 +294,13 @@ trait ComplementHandler {
 
         $slug = $this->complement['slug'];
 
-        $complementType = strtoupper(self::$type);
+        $complementType = self::_getType('strtoupper');
 
         $complementPath = App::$complementType();
 
-        $complementType .= '_URL';
+        $complementUrl = $complementType . '_URL';
 
-        $complementUrl = App::$complementType();
+        $complementUrl = App::$complementUrl();
 
         $file = 'public/images/' . $slug . '.png';
 
@@ -306,7 +308,7 @@ trait ComplementHandler {
 
         $url = 'https://raw.githubusercontent.com/Eliasis-Framework/Complement/';
 
-        $directory = App::$complementUrl() . $slug . '/' . $file;
+        $directory = $complementUrl . $slug . '/' . $file;
 
         $repository = rtrim($this->complement['url-import'], '/') . "/$file";
         
@@ -323,6 +325,34 @@ trait ComplementHandler {
         } else {
 
             $this->complement['image'] = $default;
+        }
+    }
+
+    /**
+     * Get complement type.
+     *
+     * @since 1.0.9
+     *
+     * @param string  $mode   → ucfirst|strtoupper|strtolower
+     * @param boolean $plural → plural|singular
+     *
+     * @uses string App::$id → application ID
+     *
+     * @return object → complement instance
+     */
+    private static function _getType($mode = 'strtolower', $plural = true) {
+
+        $namespace = get_called_class();
+
+        $class = explode('\\', $namespace);
+
+        $component = strtolower(array_pop($class) . ($plural ? 's' : ''));
+
+        switch ($mode) {
+
+            case 'ucfirst':    return ucfirst($component);
+            case 'strtoupper': return strtoupper($component);
+            default:           return $component;
         }
     }
 

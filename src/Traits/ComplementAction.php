@@ -28,7 +28,7 @@ trait ComplementAction {
      *
      * @var array
      */
-    protected $hooks = [
+    protected static $hooks = [
         'activation', 
         'deactivation',
         'installation',
@@ -42,7 +42,7 @@ trait ComplementAction {
      *
      * @var array
      */
-    protected $defaultAction = [
+    protected static $defaultAction = [
 
         'component' => 'activation',
         'plugin'    => 'activation',
@@ -57,14 +57,16 @@ trait ComplementAction {
      *
      * @param string $state → complement state
      *
-     * @uses array  ComplementState->$states → complements states
-     * @uses string Complement::$type        → complement type
+     * @uses array  ComplementState->$states      → complements states
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return boolean
      */
     public function getAction($state) {
 
-        $action = $this->defaultAction[self::$type];
+        $type = self::_getType('strtolower', false);
+
+        $action = self::$defaultAction[$type];
 
         if (isset($this->states['action'])) {
 
@@ -151,20 +153,22 @@ trait ComplementAction {
      * @param string $action → action hook to execute
      * @param string $state  → complement state
      *
-     * @uses string App::$id          → application ID
-     * @uses object Hook::getInstance → get Hook instance
-     * @uses mixed  Hook::doAction    → run hooks
-     * @uses string Complement::$type → complement type
+     * @uses string App::$id                      → application ID
+     * @uses object Hook::getInstance             → get Hook instance
+     * @uses mixed  Hook::doAction                → run hooks
+     * @uses string ComplementHandler::_getType() → complement type
      *
      * @return void
      */
     private function _doActions($action, $state) {
 
+        $type = self::_getType('strtolower', false);
+
         Hook::getInstance(App::$id);
 
-        Hook::doAction(self::$type . '-load');
+        Hook::doAction($type . '-load');
 
-        if (in_array($action, $this->hooks)) {
+        if (in_array($action, self::$hooks)) {
 
             $this->doAction($action, $state);
         }

@@ -75,7 +75,8 @@ $data = View::get();
          data-app='<?= $data["app"] ?>'
          data-sort='<?= $data["sort"] ?>'
          data-filter='<?= $data["filter"] ?>' 
-         data-external='<?= $data["external"] ?>'>
+         data-external='<?= $data["external"] ?>'
+         data-complement='<?= $data["complement"] ?>'>
     </div>
 
 </div>
