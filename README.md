@@ -85,14 +85,14 @@ Component::Identifier()->instance();
 Component::Identifier()->getAction();
 Component::Identifier()->setAction();
 Component::Identifier()->doAction();
-Component::Identifier()->hasNewVersion()` method.
-Component::Identifier()->getRepositoryVersion()` method.
-Component::Identifier()->install()` method.
-Component::Identifier()->remove()` method.
-Component::Identifier()->setState()` method.
-Component::Identifier()->changeState()` method.
-Component::Identifier()->getState()` method.
-Component::Identifier()->getStates()` method.
+Component::Identifier()->hasNewVersion();
+Component::Identifier()->getRepositoryVersion();
+Component::Identifier()->install();
+Component::Identifier()->remove();
+Component::Identifier()->setState();
+Component::Identifier()->changeState();
+Component::Identifier()->getState();
+Component::Identifier()->getStates();
 ```
 
 ```php
@@ -115,14 +115,14 @@ Plugin::Identifier()->instance();
 Plugin::Identifier()->getAction();
 Plugin::Identifier()->setAction();
 Plugin::Identifier()->doAction();
-Plugin::Identifier()->hasNewVersion()` method.
-Plugin::Identifier()->getRepositoryVersion()` method.
-Plugin::Identifier()->install()` method.
-Plugin::Identifier()->remove()` method.
-Plugin::Identifier()->setState()` method.
-Plugin::Identifier()->changeState()` method.
-Plugin::Identifier()->getState()` method.
-Plugin::Identifier()->getStates()` method.
+Plugin::Identifier()->hasNewVersion();
+Plugin::Identifier()->getRepositoryVersion();
+Plugin::Identifier()->install();
+Plugin::Identifier()->remove();
+Plugin::Identifier()->setState();
+Plugin::Identifier()->changeState();
+Plugin::Identifier()->getState();
+Plugin::Identifier()->getStates();
 ```
 
 ```php
@@ -145,14 +145,14 @@ Module::Identifier()->instance();
 Module::Identifier()->getAction();
 Module::Identifier()->setAction();
 Module::Identifier()->doAction();
-Module::Identifier()->hasNewVersion()` method.
-Module::Identifier()->getRepositoryVersion()` method.
-Module::Identifier()->install()` method.
-Module::Identifier()->remove()` method.
-Module::Identifier()->setState()` method.
-Module::Identifier()->changeState()` method.
-Module::Identifier()->getState()` method.
-Module::Identifier()->getStates()` method.
+Module::Identifier()->hasNewVersion();
+Module::Identifier()->getRepositoryVersion();
+Module::Identifier()->install();
+Module::Identifier()->remove();
+Module::Identifier()->setState();
+Module::Identifier()->changeState();
+Module::Identifier()->getState();
+Module::Identifier()->getStates();
 ```
 
 ```php
@@ -175,14 +175,14 @@ Template::Identifier()->instance();
 Template::Identifier()->getAction();
 Template::Identifier()->setAction();
 Template::Identifier()->doAction();
-Template::Identifier()->hasNewVersion()` method.
-Template::Identifier()->getRepositoryVersion()` method.
-Template::Identifier()->install()` method.
-Template::Identifier()->remove()` method.
-Template::Identifier()->setState()` method.
-Template::Identifier()->changeState()` method.
-Template::Identifier()->getState()` method.
-Template::Identifier()->getStates()` method.
+Template::Identifier()->hasNewVersion();
+Template::Identifier()->getRepositoryVersion();
+Template::Identifier()->install();
+Template::Identifier()->remove();
+Template::Identifier()->setState();
+Template::Identifier()->changeState();
+Template::Identifier()->getState();
+Template::Identifier()->getStates();
 ```
 
 ### Images
