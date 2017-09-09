@@ -204,7 +204,7 @@ trait ComplementImport {
                     continue;  
                 }
                 
-                $filePath = $path . $value;
+                $filePath = $path . $val;
 
                 $complementType = self::_getType('strtoupper');
 

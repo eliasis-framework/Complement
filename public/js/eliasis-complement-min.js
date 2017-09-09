@@ -1,10 +1,10 @@
 /**
- * PHP library for adding addition of modules for Eliasis Framework.
+ * PHP library for adding addition of complements for Eliasis Framework.
  *
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
+ * @link       https://github.com/Eliasis-Framework/Complement
  * @since      1.0.8
  *
  * Vue.js v2.4.2

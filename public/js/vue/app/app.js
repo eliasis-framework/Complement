@@ -10,30 +10,30 @@
 
 var states = {
 
-  'active': {
+   'active': {
       'en': 'active',
       'es': 'activo',
-  },
-  'inactive': {
+   },
+   'inactive': {
       'en': 'activate',
       'es': 'activar',
-  },
-  'installed': {
+   },
+   'installed': {
       'en': 'activate',
       'es': 'activar',
-  },
-  'outdated': {
+   },
+   'outdated': {
       'en': 'update',
       'es': 'actualizar',
-  },
-  'uninstalled': {
+   },
+   'uninstalled': {
       'en': 'install',
       'es': 'instalar',
-  },
-  'uninstall': {
+   },
+   'uninstall': {
       'en': 'uninstall',
       'es': 'desinstalar',
-  }
+   }
 };
 
 var lang = navigator.language || navigator.userLanguage || 'en';
@@ -46,210 +46,199 @@ var complementSort   = setting.getAttribute('data-sort');
 var complementFilter = setting.getAttribute('data-filter');
 var externalUrls     = setting.getAttribute('data-external');
 
-
 function setUrl(params) {
 
-  var url = window.location.href;
+   var url = window.location.href;
 
-  url += (!url.indexOf('?') ? '?' : '&') + 'vue=true';
+   url += (!url.indexOf('?') ? '?' : '&') + 'vue=true';
 
-  Object.keys(params).forEach(function(key) {
+   Object.keys(params).forEach(function(key) {
 
-    url += '&' + key + '=' + params[key];
+      url += '&' + key + '=' + params[key];
+   });
 
-  });
-
-  return url;
+   return url;
 }
-
 
 Vue.component('state-buttons', {
 
-  data: function () {
+   data: function () {
 
-    return {
+      return {
 
-      id:            false,
-      state:         false,
-      message:       false,
-      removeButton:  false,
-    isActive:      false,
-    isInactive:    false,
-    isOutdated:    false,
-    isInstall:     false,
-    isUninstalled: false,
-    isUninstall:   false,
-        theErrors:     [],
-        theVersion:    ''
-    }
-  },
-
-  watch: {
-
-    'theErrors': function() {
-
-      this.$emit('input', this.theErrors);
-    },
-  },
-
-  watch: {
-
-    'theVersion': function() {
-
-      this.$emit('input', this.theVersion);
-    }
-  },
-
-  created: function() {
-
-    this.removeButton = states['uninstall'][lang];
-
-  },
-
-  methods: {
-
-    resetStates: function(){
-
-      this.isActive       = false;
-      this.isInactive     = false;
-      this.isOutdated     = false;
-      this.isInstall      = false;
-      this.isUninstalled  = false;
-      this.isUninstall    = false;
-    },
-
-    changeState: function(){
-
-      this.id = this.complementId;
-
-      var request = 'change-state';
-
-      if (this.state == 'uninstalled' || this.state == 'outdated') {
-
-        this.resetStates();
-
-        this.isInstall = true;
-
-        request = 'install';
+         id:            false,
+         state:         false,
+         message:       false,
+         removeButton:  false,
+         isActive:      false,
+         isInactive:    false,
+         isOutdated:    false,
+         isInstall:     false,
+         isUninstalled: false,
+         isUninstall:   false,
+         theErrors:     [],
+         theVersion:    ''
       }
+   },
 
-      var url = setUrl({
+   watch: {
 
-        request:    request,
-        app:        appID,
-        complement: complement,
-        id:         this.id,
-        state:      this.state,
-        external:   externalUrls
+      'theErrors': function() {
 
-      });
+         this.$emit('input', this.theErrors);
+      },
+   },
 
-      this.$http.get(url).then(function(response) {
+   watch: {
 
-        var state = response.body.state;
+      'theVersion': function() {
 
-        this.resetStates();
+         this.$emit('input', this.theVersion);
+      }
+   },
 
-        this.state = (state === false) ? this.state : state;
+   created: function() {
 
-        if (typeof response.body.version !== 'undefined') {
+      this.removeButton = states['uninstall'][lang];
+   },
+
+   methods: {
+
+      resetStates: function() {
+
+         this.isActive       = false;
+         this.isInactive     = false;
+         this.isOutdated     = false;
+         this.isInstall      = false;
+         this.isUninstalled  = false;
+         this.isUninstall    = false;
+      },
+
+      changeState: function() {
+
+         this.id = this.complementId;
+
+         var request = 'change-state';
+
+         if (this.state == 'uninstalled' || this.state == 'outdated') {
+
+            this.resetStates();
+
+            this.isInstall = true;
+
+            request = 'install';
+         }
+
+         var url = setUrl({
+
+            request:    request,
+            app:        appID,
+            complement: complement,
+            id:         this.id,
+            state:      this.state,
+            external:   externalUrls
+         });
+
+         this.$http.get(url).then(function(response) {
+
+            var state = response.body.state;
+
+            this.resetStates();
+
+            this.state = (state === false) ? this.state : state;
+
+            if (typeof response.body.version !== 'undefined') {
           
-          this.theVersion = response.body.version;
-        }
+               this.theVersion = response.body.version;
+            }
 
-        this.theErrors = response.body.errors;
+            this.theErrors = response.body.errors;
+         });
+      },
 
-      });
-    },
+      uninstall: function() {
 
-    uninstall: function() {
+         this.id = this.complementId;
 
-      this.id = this.complementId;
+         this.isUninstall = true;
 
-      this.isUninstall = true;
+         var url = setUrl({
 
-      var url = setUrl({
+            request:    'uninstall',
+            app:        appID,
+            complement: complement,
+            id:         this.id,
+            external:   externalUrls
+         });
 
-        request:    'uninstall',
-        app:        appID,
-        complement: complement,
-        id:         this.id,
-        external:   externalUrls
-
-      });
-
-      this.$http.get(url).then(function(response) {
+         this.$http.get(url).then(function(response) {
         
-        var that = this;
-        
-        setTimeout(function() {
+            var that = this;
+           
+            setTimeout(function() {
 
-          var state = response.body.state;
+               var state = response.body.state;
 
-          that.state = (state === false) ? that.state : state;
+               that.state = (state === false) ? that.state : state;
 
-          that.theErrors = response.body.errors;
+               that.theErrors = response.body.errors;
 
-        }, 1000);
-      });
-    },
-  },
+            }, 1000);
+         });
+      },
+   },
 
-  computed: {
+   computed: {
 
-    changeButtonState: function () {
+      changeButtonState: function () {
       
-      this.resetStates();
-      
-      this.state = this.state ? this.state : this.complementState;
+         this.resetStates();
+         
+         this.state = this.state ? this.state : this.complementState;
 
-      this.message = states[this.state][lang];
+         this.message = states[this.state][lang];
 
-      switch (this.state) {
+         switch (this.state) {
 
-        case 'active':      this.isActive      = true; break;
-        case 'inactive':    this.isInactive    = true; break;
-        case 'outdated':    this.isOutdated    = true; break;
-        case 'uninstalled': this.isUninstalled = true; break;
+            case 'active':      this.isActive      = true; break;
+            case 'inactive':    this.isInactive    = true; break;
+            case 'outdated':    this.isOutdated    = true; break;
+            case 'uninstalled': this.isUninstalled = true; break;
+         }
+
+         return this.message;
       }
+   },
 
-      return this.message;
-    }
-  },
-
-  props: ['complementId', 'complementState', 'errors', 'complement.version'],
+   props: ['complementId', 'complementState', 'errors', 'complement.version'],
 })
 
 var app = new Vue({
 
-  el: '#eliasis-complements',
+   el: '#eliasis-complements',
 
-  data: { 
-    complements: [],
-    errors:  []
-  },
+   data: { 
+      complements: [],
+      errors:  []
+   },
 
-  created: function() {
+   created: function() {
 
-  var url = setUrl({
+      var url = setUrl({
 
-      request:    'load-complements',
-      app:        appID,
-      complement: complement,
-      sort:       complementSort,
-      filter:     complementFilter,
-      external:   externalUrls
+         request:    'load-complements',
+         app:        appID,
+         complement: complement,
+         sort:       complementSort,
+         filter:     complementFilter,
+         external:   externalUrls
+      });
 
-    });
+      this.$http.get(url).then(function(response) {
 
-  this.$http.get(url).then(function(response) {
+         this.complements = response.body.complements;
 
-    this.complements = response.body.complements;
-
-     this.errors = response.body.errors;
-
-  });
-
-  }
-
+         this.errors = response.body.errors;
+      });
+   }
 });
