@@ -94,8 +94,19 @@ trait ComplementImport {
             $this->complement['path']['root'],
             $this->complement['slug']
         );
+        
+        if ($installed) {
 
-        return ($installed) ? $this->changeState() : false;
+            self::load(
+
+                $this->complement['config-file'], 
+                $this->complement['path']['root']
+            );
+
+            return $this->changeState();
+        }
+        
+        return false;
     }
 
     /**
@@ -110,18 +121,15 @@ trait ComplementImport {
      * @return string → complement state
      */
     public function remove() {
+        
+        $this->setState('uninstall');
 
-        $state = $this->getState();
+        $state = $this->changeState();
 
         if (!$this->_deleteDirectory()) {
 
             $state = $this->setState('uninstalled');
         
-        } else {
-
-            $this->setState('uninstall');
-
-            $state = $this->changeState();
         }
 
         return $state;
