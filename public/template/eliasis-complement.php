@@ -5,7 +5,7 @@
  * @author     Josantonius - hello@josantonius.com
  * @copyright  Copyright (c) 2017
  * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Complement
+ * @link       https://github.com/Eliasis-Framework/Module
  * @since      1.0.8
  */
 
@@ -29,8 +29,9 @@ $data = View::get();
         <div v-for="(complement, key) in complements" class="eliasis-complement mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-tablet mdl-cell--12-col-phone ">
             <div class="mdl-card__title mdl-card--expand mdl-color--blue-200" :style="complement.image_style">
                 <a :href="complement.uri" title="" target="_blank">
+                    <?php /* v-bind:key="complement.version" */ ?>
                     <transition name="component-fade" mode="out-in">
-                        <div class="complement-version" v-bind:key="complement.version">
+                        <div class="complement-version">
                             {{ complement.version }}
                         </div>
                     </transition>
@@ -42,13 +43,13 @@ $data = View::get();
                 <h2 class="mdl-card__title-text card-title">
                     {{ complement.name }}
                 </h2>
-            </transition>
                 <br>
                 {{ complement.description }}
                 <div class="mdl-list__item">
                    <div class="custom-fields">
                         <div class="complement-state-btn">
-                            <state-buttons :complement-id="complement.id" :complement-state='complement.state' :complement-version='complement.version' v-model="complement.version" v-model="errors" inline-template>
+                            <?php /* :complement-version='complement.version' v-model="complement.version" */ ?>
+                            <state-buttons :complement-id="complement.id" :complement-state='complement.state' v-model="errors" inline-template>
                                 <div class="state-buttons">
                                     <transition name="fade" mode="out-in">
                                         <button v-bind:class="['mdl-button', 'mdl-js-button', 'mdl-button--raised', 'mdl-js-ripple-effect', 'mdl-button--accent', 'mod-btn', 'complement-btn', 'complement-btn-left', { 'complement-btn-active': isActive, 'complement-btn-outdated': isOutdated, 'complement-btn-uninstalled': isUninstalled }]" v-on:click="changeState()" :disabled="isUninstall || isInstall">

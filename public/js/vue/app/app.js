@@ -87,14 +87,12 @@ Vue.component('state-buttons', {
 
          this.$emit('input', this.theErrors);
       },
-   },
-
-   watch: {
-
+/*
       'theVersion': function() {
 
          this.$emit('input', this.theVersion);
       }
+*/
    },
 
    created: function() {
@@ -210,14 +208,15 @@ Vue.component('state-buttons', {
       }
    },
 
-   props: ['complementId', 'complementState', 'errors', 'complement.version'],
+   props: ['complementId', 'complementState', 'errors'], // 'complement.version'
 })
 
 var app = new Vue({
 
    el: '#eliasis-complements',
 
-   data: { 
+   data: {
+
       complements: [],
       errors:  []
    },
