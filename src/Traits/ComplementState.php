@@ -12,6 +12,7 @@
 namespace Eliasis\Complement\Traits;
 
 use Eliasis\App\App,
+    Josantonius\Hook\Hook,
     Josantonius\Json\Json;
 
 /**
@@ -195,9 +196,17 @@ trait ComplementState {
 
             if ($this->_stateChanged($states)) {
 
+                $file = $this->_getStatesFilePath();
+
                 $states[App::$id][self::$id] = $this->states;
 
-                Json::arrayToFile($states, $this->_getStatesFilePath());
+                Json::arrayToFile($states, $file);
+
+                Hook::doAction(
+
+                    'Eliasis/Complement/after_set_states', 
+                    [$file]
+                );
             }
         }
     }

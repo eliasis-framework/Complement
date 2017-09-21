@@ -97,6 +97,8 @@
 * Added `public/sass/eliasis-complement.sass` file.
 * Added `public/template/eliasis-complement.php` file.
 
+* Added `Eliasis/Complement/after_set_states` hook in `Eliasis\Complement\ComplementState` trait.
+
 ## 1.0.8 - 2017-09-05
 
 * The library was optimized and some errors corrected.
