@@ -48,8 +48,8 @@ trait ComplementImport {
 
         $version = $this->complement['version'];
 
-        if (!isset($this->complement['config-url'])) { return $version; }     
-
+        if (!isset($this->complement['config-url'])) { return $version; }
+            
         if (!File::exists($this->complement['config-url'])) {
 
             return $version;

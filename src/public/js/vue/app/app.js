@@ -7,48 +7,50 @@
  * @link       https://github.com/Eliasis-Framework/Module
  * @since      1.0.8
  */
+var FILTERS = document.getElementById('complements-filter');
 
-var states = {
+var COMPLEMENT = {
 
-   'active': {
-      'en': 'active',
-      'es': 'activo',
-   },
-   'inactive': {
-      'en': 'activate',
-      'es': 'activar',
-   },
-   'installed': {
-      'en': 'activate',
-      'es': 'activar',
-   },
-   'outdated': {
-      'en': 'update',
-      'es': 'actualizar',
-   },
-   'uninstalled': {
-      'en': 'install',
-      'es': 'instalar',
-   },
-   'uninstall': {
-      'en': 'uninstall',
-      'es': 'desinstalar',
+   app:    FILTERS.getAttribute('data-app'),
+   type:   FILTERS.getAttribute('data-complement'),
+   lang:   FILTERS.getAttribute('data-language'),
+   sort:   FILTERS.getAttribute('data-sort'),
+   filter: FILTERS.getAttribute('data-filter'),
+   urls:   FILTERS.getAttribute('data-external'),
+   states: {
+
+      'active': {
+         'en': 'active',
+         'es': 'activo',
+      },
+      'inactive': {
+         'en': 'activate',
+         'es': 'activar',
+      },
+      'installed': {
+         'en': 'activate',
+         'es': 'activar',
+      },
+      'outdated': {
+         'en': 'update',
+         'es': 'actualizar',
+      },
+      'uninstalled': {
+         'en': 'install',
+         'es': 'instalar',
+      },
+      'uninstall': {
+         'en': 'uninstall',
+         'es': 'desinstalar',
+      }
    }
 };
-
-var lang = navigator.language || navigator.userLanguage || 'en';
-
-var setting = document.getElementById('complements-filter');
-
-var appID            = setting.getAttribute('data-app');
-var complement       = setting.getAttribute('data-complement');
-var complementSort   = setting.getAttribute('data-sort');
-var complementFilter = setting.getAttribute('data-filter');
-var externalUrls     = setting.getAttribute('data-external');
+ 
+COMPLEMENT = Object.freeze(COMPLEMENT);
 
 function setUrl(params) {
 
-   var url = window.location.href;
+   var url = window.location.href.split('#')[0];
 
    url += (!url.indexOf('?') ? '?' : '&') + 'vue=true';
 
@@ -76,8 +78,7 @@ Vue.component('state-buttons', {
          isInstall:     false,
          isUninstalled: false,
          isUninstall:   false,
-         theErrors:     [],
-         theVersion:    ''
+         theErrors:     []
       }
    },
 
@@ -86,18 +87,12 @@ Vue.component('state-buttons', {
       'theErrors': function() {
 
          this.$emit('input', this.theErrors);
-      },
-/*
-      'theVersion': function() {
-
-         this.$emit('input', this.theVersion);
       }
-*/
    },
 
    created: function() {
 
-      this.removeButton = states['uninstall'][lang];
+      this.removeButton = COMPLEMENT.states['uninstall'][COMPLEMENT.lang];
    },
 
    methods: {
@@ -130,11 +125,11 @@ Vue.component('state-buttons', {
          var url = setUrl({
 
             request:    request,
-            app:        appID,
-            complement: complement,
+            app:        COMPLEMENT.app,
+            complement: COMPLEMENT.type,
             id:         this.id,
             state:      this.state,
-            external:   externalUrls
+            external:   COMPLEMENT.urls
          });
 
          this.$http.get(url).then(function(response) {
@@ -146,8 +141,12 @@ Vue.component('state-buttons', {
             this.state = (state === false) ? this.state : state;
 
             if (typeof response.body.version !== 'undefined') {
-          
-               this.theVersion = response.body.version;
+
+               var version = document.getElementById(this.complementId).getElementsByClassName('complement-version')[0];
+
+               this.fadeIn(version);
+
+               version.innerHTML = response.body.version;
             }
 
             this.theErrors = response.body.errors;
@@ -163,10 +162,10 @@ Vue.component('state-buttons', {
          var url = setUrl({
 
             request:    'uninstall',
-            app:        appID,
-            complement: complement,
+            app:        COMPLEMENT.app,
+            complement: COMPLEMENT.type,
             id:         this.id,
-            external:   externalUrls
+            external:   COMPLEMENT.urls
          });
 
          this.$http.get(url).then(function(response) {
@@ -184,6 +183,28 @@ Vue.component('state-buttons', {
             }, 1000);
          });
       },
+
+      /**
+       * @author @zackbloom
+       * @author @adamfschwartz 
+       * @link http://youmightnotneedjquery.com/
+       */
+      fadeIn: function(el) {
+
+        el.style.opacity = 0;
+
+        var tick = function() {
+
+          el.style.opacity = +el.style.opacity + 0.01;
+
+          if (+el.style.opacity < 1) {
+
+            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16)
+          }
+        };
+
+        tick();
+      }
    },
 
    computed: {
@@ -194,7 +215,7 @@ Vue.component('state-buttons', {
          
          this.state = this.state ? this.state : this.complementState;
 
-         this.message = states[this.state][lang];
+         this.message = COMPLEMENT.states[this.state][COMPLEMENT.lang];
 
          switch (this.state) {
 
@@ -208,7 +229,7 @@ Vue.component('state-buttons', {
       }
    },
 
-   props: ['complementId', 'complementState', 'errors'], // 'complement.version'
+   props: ['complementId', 'complementState', 'errors'],
 })
 
 var app = new Vue({
@@ -226,11 +247,11 @@ var app = new Vue({
       var url = setUrl({
 
          request:    'load-complements',
-         app:        appID,
-         complement: complement,
-         sort:       complementSort,
-         filter:     complementFilter,
-         external:   externalUrls
+         app:        COMPLEMENT.app,
+         complement: COMPLEMENT.type,
+         sort:       COMPLEMENT.sort,
+         filter:     COMPLEMENT.filter,
+         external:   COMPLEMENT.urls
       });
 
       this.$http.get(url).then(function(response) {

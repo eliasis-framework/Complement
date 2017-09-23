@@ -61,9 +61,9 @@ trait ComplementView {
 
             $path = self::getLibraryPath();
 
-            $fromPath = $path . 'public' .$DS. $ext .$DS. "$filename.$ext";
+            $from = $path.'src'.$DS.'public'.$DS.$ext.$DS."$filename.$ext";
 
-            $file = file_get_contents($fromPath);
+            $file = file_get_contents($from);
 
             file_put_contents($toPath, $file);
         }
@@ -96,6 +96,7 @@ trait ComplementView {
             'app'        => App::$id,
             'complement' => self::_getType('strtolower', false),
             'filter'     => $filter,
+            'language'   => $this->_getLanguage(),
             'external'   => urlencode(json_encode($external, true)),
             'sort'       => $sort,
         ];
@@ -104,7 +105,7 @@ trait ComplementView {
 
         $path = self::getLibraryPath();
 
-        $template = $path . 'public' . App::DS . 'template' . App::DS;
+        $template = $path.'src'.App::DS.'public'.App::DS.'template'.App::DS;
 
         $View->renderizate($template, 'eliasis-complement', $data);
     }

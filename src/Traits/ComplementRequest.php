@@ -99,9 +99,11 @@ trait ComplementRequest {
      */
     private static function _loadExternalComplements() {
 
+        $complement = self::_getType();
+        
         $external = json_decode($_GET['external'], true);
 
-        $complements = array_keys(self::$instances[App::$id]);
+        $complements = array_keys(self::$instances[App::$id][$complement]);
 
         foreach ($external as $complement => $url) {
 

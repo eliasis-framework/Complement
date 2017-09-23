@@ -42,6 +42,7 @@
 * Added `Eliasis\Complement\ComplementHandler->_setComplementParams()` method.
 * Added `Eliasis\Complement\ComplementHandler->_getSettings()` method.
 * Added `Eliasis\Complement\ComplementHandler->_setImage()` method.
+* Added `Eliasis\Complement\ComplementHandler->_getLanguage()` method.
 * Added `Eliasis\Complement\ComplementHandler->_getType()` method.
 * Added `Eliasis\Complement\ComplementHandler->_addRoutes()` method.
 
@@ -90,12 +91,12 @@
 * Deleted `public/sass/eliasis-module.sass` file.
 * Deleted `public/template/eliasis-module.php` file.
 
-* Added `public/css/eliasis-complement-min.css` file.
-* Added `public/js/eliasis-complement.js` file.
-* Added `public/js/eliasis-complement-min.js` file.
-* Added `public/sass/partials/_complements.sass` file.
-* Added `public/sass/eliasis-complement.sass` file.
-* Added `public/template/eliasis-complement.php` file.
+* Added `src/public/css/eliasis-complement-min.css` file.
+* Added `src/public/js/eliasis-complement.js` file.
+* Added `src/public/js/eliasis-complement-min.js` file.
+* Added `src/public/sass/partials/_complements.sass` file.
+* Added `src/public/sass/eliasis-complement.sass` file.
+* Added `src/public/template/eliasis-complement.php` file.
 
 * Added `Eliasis/Complement/after_set_states` hook in `Eliasis\Complement\ComplementState` trait.
 

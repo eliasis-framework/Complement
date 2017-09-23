@@ -26,15 +26,13 @@ $data = View::get();
     </transition-group>
 
     <div class="mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing-off">
-        <div v-for="(complement, key) in complements" class="eliasis-complement mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-tablet mdl-cell--12-col-phone ">
+        <div v-for="(complement, key) in complements" :id="complement.id" class="eliasis-complement mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-tablet mdl-cell--12-col-phone ">
+            <div ></div>
             <div class="mdl-card__title mdl-card--expand mdl-color--blue-200" :style="complement.image_style">
                 <a :href="complement.uri" title="" target="_blank">
-                    <?php /* v-bind:key="complement.version" */ ?>
-                    <transition name="component-fade" mode="out-in">
-                        <div class="complement-version">
-                            {{ complement.version }}
-                        </div>
-                    </transition>
+                    <div class="complement-version">
+                        {{ complement.version }}
+                    </div>
                 </a>
             </div>
             <div class="jst-card--border"></div>
@@ -48,7 +46,6 @@ $data = View::get();
                 <div class="mdl-list__item">
                    <div class="custom-fields">
                         <div class="complement-state-btn">
-                            <?php /* :complement-version='complement.version' v-model="complement.version" */ ?>
                             <state-buttons :complement-id="complement.id" :complement-state='complement.state' v-model="errors" inline-template>
                                 <div class="state-buttons">
                                     <transition name="fade" mode="out-in">
@@ -75,7 +72,8 @@ $data = View::get();
     <div id='complements-filter'
          data-app='<?= $data["app"] ?>'
          data-sort='<?= $data["sort"] ?>'
-         data-filter='<?= $data["filter"] ?>' 
+         data-filter='<?= $data["filter"] ?>'
+         data-language='<?= $data["language"] ?>'
          data-external='<?= $data["external"] ?>'
          data-complement='<?= $data["complement"] ?>'>
     </div>

@@ -239,6 +239,18 @@ trait ComplementHandler {
 
         $default['folder'] = $default['slug'] . App::DS;
 
+        $lang = $this->_getLanguage();
+
+        if (isset($complement['name'][$lang])) {
+
+            $complement['name'] = $complement['name'][$lang];
+        }
+
+        if (isset($complement['description'][$lang])) {
+            
+            $complement['description'] = $complement['description'][$lang];
+        }
+
         $this->complement = array_merge($default, $complement);
 
         $this->_setImage();
@@ -278,6 +290,24 @@ trait ComplementHandler {
     }
 
     /**
+     * Gets the current locale.
+     *
+     * @since 1.0.9
+     *
+     * @uses string get_locale() → gets the current locale in WordPress
+     *
+     * @return void
+     */
+    private function _getLanguage() {
+
+        $wpLang = (function_exists('get_locale')) ? get_locale() : null;
+
+        $browserLang = @$_SERVER['HTTP_ACCEPT_LANGUAGE'] ?: null;
+
+        return  substr($wpLang ?: $browserLang ?: 'en', 0, 2);
+    }
+
+    /**
      * Set image url.
      *
      * @since 1.0.9
@@ -310,9 +340,9 @@ trait ComplementHandler {
 
         $directory = $complementUrl . $slug . '/' . $file;
 
-        $repository = rtrim($this->complement['url-import'], '/') . "/$file";
+        $repository = rtrim($this->complement['url-import'], '/')."/$file";
         
-        $default = $url . 'master/public/images/default.png';
+        $default = $url . 'master/src/public/images/default.png';
 
         if (File::exists($filepath)) {
 
