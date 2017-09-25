@@ -124,7 +124,7 @@ trait ComplementState {
 
         $this->setState($newState);
 
-        $this->doAction($action, $newState);
+        $this->doAction($action);
 
         return $newState;
     }
@@ -182,9 +182,10 @@ trait ComplementState {
      *
      * @since 1.0.9
      *
-     * @uses string App::$id            → application ID
-     * @uses string Complement::$id     → complement ID
-     * @uses array  Json::arrayToFile() → convert array to json file
+     * @uses string   App::$id            → application ID
+     * @uses string   Complement::$id     → complement ID
+     * @uses array    Json::arrayToFile() → convert array to json file
+     * @uses callable Hook::doAction()    → do action
      *
      * @return void
      */
@@ -202,11 +203,7 @@ trait ComplementState {
 
                 Json::arrayToFile($states, $file);
 
-                Hook::doAction(
-
-                    'Eliasis/Complement/after_set_states', 
-                    [$file]
-                );
+                Hook::doAction('Eliasis/Complement/after_set_states',$states);
             }
         }
     }

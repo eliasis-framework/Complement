@@ -184,7 +184,7 @@ trait ComplementHandler {
 
             $this->_addActions();
 
-            $this->_doActions($action, $state);
+            $this->_doActions($action);
         }
     }
 

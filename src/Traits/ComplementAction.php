@@ -98,14 +98,13 @@ trait ComplementAction {
      * @since 1.0.9
      *
      * @param string $action → action hook to execute
-     * @param string $state  → complement state
      *
      * @uses object Complement::getInstance()     → Complement instance
      * @uses string ComplementAction::setAction() → set complement action
      *
      * @return boolean
      */
-    public function doAction($action, $state) {
+    public function doAction($action) {
 
         $controller = $this->get('hooks-controller');
 
@@ -151,7 +150,6 @@ trait ComplementAction {
      * @since 1.0.9
      *
      * @param string $action → action hook to execute
-     * @param string $state  → complement state
      *
      * @uses string App::$id                      → application ID
      * @uses object Hook::getInstance             → get Hook instance
@@ -160,7 +158,7 @@ trait ComplementAction {
      *
      * @return void
      */
-    private function _doActions($action, $state) {
+    private function _doActions($action) {
 
         $type = self::_getType('strtolower', false);
 
@@ -170,7 +168,7 @@ trait ComplementAction {
 
         if (in_array($action, self::$hooks)) {
 
-            $this->doAction($action, $state);
+            $this->doAction($action);
         }
     }
 }
