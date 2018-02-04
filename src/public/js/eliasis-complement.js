@@ -277,3 +277,118 @@ var app = new Vue({
       });
    }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+  created: function created () {
+self = this
+  },
+  mounted () {
+    //this.normalizeFields()
+    //this.launcher()
+  },
+  methods: {
+    launcher: function launcher (){
+      
+      if (!this.logs) {
+        if (!this.url) {
+          return this.error('You need to provide "logs" or "url" prop.')
+        }
+        this.data = this.data ? this.data : {}
+        this.getFromUrl()
+        return this.startUpdates()
+      } 
+      this.availableLogs = this.normalizeLogs(this.logs)
+    },
+    normalizeLogs: function normalizeLogs (logs) {
+      return logs.map(function(obj){
+        obj.expanded = false
+        return obj
+      })
+    },
+    normalizeFields: function normalizeFields () {
+      this.postParams = this.post ? this.post : {}
+      this.hiddenFields.push(this.hide ? this.hide : [])
+    },
+    getFromUrl: function getFromUrl (){
+      this.$http[this.method](this.url, this.postParams, this.http).then(
+        function (response) {
+          this.successUpdate()
+          this.prepareAndDisplay(
+            this.normalizeLogs(response.body)
+          )
+        }, function (response) {
+          this.wrongUpdate()
+        }
+      )
+    },
+    prepareAndDisplay: function prepareAndDisplay (logs) {
+      var availableLogs = this.availableLogs.length
+      var newLogs = logs.length - availableLogs
+      if (availableLogs === 0 || newLogs < 0) {
+        return this.availableLogs = logs
+      }
+      for (var i = newLogs - 1; i >= 0; i--) {
+        this.add(logs[i], i)
+      }
+      this.pauseUpdates(newLogs * this.waitToAdd)
+    },
+    add: function add (log, i) {
+      setTimeout(function() { 
+        self.availableLogs.unshift(log) 
+      }, i * this.waitToAdd)
+    },
+    update: function update (){
+      for(var index in this.availableLogs) {
+        if(this.availableLogs[index].expanded) {
+          return false // Update only if there is no expanded log
+        }
+      }
+      this.getFromUrl()
+    },
+    startUpdates: function startUpdates () {
+      this.updatesInterval = setInterval(self.update, self.refreshTime)
+    },
+    stopUpdates: function stopUpdates () {
+      clearInterval(this.updatesInterval)
+    },
+    pauseUpdates: function pauseUpdates (time) {
+      this.stopUpdates()
+      setTimeout(function() { 
+        self.startUpdates() 
+      }, time)
+    },
+    successUpdate: function successUpdate (){
+      this.isUpdating = true
+      setTimeout(function() { 
+        self.isUpdating = false 
+      }, this.blinkDuring)
+    },
+    wrongUpdate: function wrongUpdate (){
+      this.isUpdatingError = true
+      setTimeout(function() { 
+        self.isUpdatingError = false 
+      }, this.blinkDuring)
+    },
+    getClassState: function getClassState () {
+      return this.isUpdating 
+             ? 'vlv-blink'
+             : (this.isUpdatingError ? 'vlv-blink-error' : '')
+    },
+    isVisible: function isVisible (index) {
+      return this.hiddenFields.indexOf(index) === -1
+    },
+    error (msg) {
+      console.error(msg)
+    }
+  }

@@ -2,14 +2,13 @@
 /**
  * PHP library for adding addition of complements for Eliasis Framework.
  *
- * @author     Josantonius - hello@josantonius.com
- * @copyright  Copyright (c) 2017
- * @license    https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link       https://github.com/Eliasis-Framework/Module
- * @since      1.0.8
+ * @author    Josantonius <hello@josantonius.com>
+ * @copyright 2017 - 2018 (c) Josantonius - Eliasis Complement
+ * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
+ * @link      https://github.com/Eliasis-Framework/Complement
+ * @since     1.0.8
  */
-
-use Eliasis\View\View;
+use Eliasis\Framework\View;
 
 $data = View::get();
 ?>
@@ -70,12 +69,12 @@ $data = View::get();
     </div>
 
     <div id='complements-filter'
-         data-app='<?= $data["app"] ?>'
-         data-sort='<?= $data["sort"] ?>'
-         data-filter='<?= $data["filter"] ?>'
-         data-language='<?= $data["language"] ?>'
-         data-external='<?= $data["external"] ?>'
-         data-complement='<?= $data["complement"] ?>'>
+         data-app='<?= $data['app'] ?>'
+         data-sort='<?= $data['sort'] ?>'
+         data-filter='<?= $data['filter'] ?>'
+         data-language='<?= $data['language'] ?>'
+         data-external='<?= $data['external'] ?>'
+         data-complement='<?= $data['complement'] ?>'>
     </div>
 
 </div>

@@ -4,8 +4,16 @@ composer.lock
 composer-test.lock
 build/artifacts/
 artifacts/
+tests/sample-app/components/.components-states.jsond
+tests/sample-app/modules/.modules-states.jsond
+tests/sample-app/plugins/.plugins-states.jsond
+tests/sample-app/templates/.templates-states.jsond
 docs/_build
 docs/*.pyc
+package-lock.json
 .git*/
+node_modules/
+_docpress/
+vendor/
 .idea
 .DS_STORE

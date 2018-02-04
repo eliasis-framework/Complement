@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 1.1.0 - 2018-01-17
+
+* Unit tests supported by `PHPUnit` were added.
+
+* The repository was synchronized with Travis CI to implement continuous integration.
+
+* Implemented `PHP Mess Detector` to detect inconsistencies in code styles.
+
+* Implemented `PHP Code Beautifier and Fixer` to fixing errors automatically.
+
+* Implemented `PHP Coding Standards Fixer` to organize PHP code automatically according to PSR standards.
+
+* Implemented `PSR2 code standard` from all library PHP files.
+
+* Implemented `Codacy` to automates code reviews and monitors code quality over time.
+
+* Implemented `Codecov` to coverage reports.
+
+* Added `Eliasis\Complement\Complement::getCurrentID()` method.
+
+* Added `Eliasis\Complement\Complement::setCurrentID()` method.
+
+* Deprecated `Eliasis\Complement\Traits\ComplementHandler::get()` method.
+
+* Added `Eliasis\Complement\Traits\ComplementHandler::getOption()` method.
+
+* Deprecated `Eliasis\Complement\Traits\ComplementHandler::set()` method.
+
+* Added `Eliasis\Complement\Traits\ComplementHandler::setOption()` method.
+
+* Deprecated `Eliasis\Complement\Complement\Traits\ComplementHandler::instance()` method.
+
+* Added `Eliasis\Complement\Complement\Traits\ComplementHandler::getControllerInstance()` method.
+
 ## 1.0.9 - 2017-09-07
 
 * Renamed class `Eliasis\Module\Module` to `Eliasis\Complement\Complement`.
