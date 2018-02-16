@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.1.0 - 2018-01-17
+## 1.1.1 - 2018-02-16
 
 * Unit tests supported by `PHPUnit` were added.
 
@@ -17,6 +17,8 @@
 * Implemented `Codacy` to automates code reviews and monitors code quality over time.
 
 * Implemented `Codecov` to coverage reports.
+
+## 1.1.0 - 2018-01-17
 
 * Added `Eliasis\Complement\Complement::getCurrentID()` method.
 

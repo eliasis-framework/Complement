@@ -91,7 +91,7 @@ trait ComplementAction
     public function doAction($action)
     {
         $controller = $this->getOption('hooks-controller');
-        $instance = $this->instance($controller, 'controller');
+        $instance = $this->getControllerInstance($controller);
 
         if (is_object($instance) && method_exists($instance, $action)) {
             $response = call_user_func([$instance, $action]);

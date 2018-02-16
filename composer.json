@@ -1,6 +1,5 @@
 {
     "name":        "eliasis-framework/complement",
-    "version":     "1.0.9",
     "description": "PHP library for adding addition of complements for Eliasis Framework.",
     "type":        "library",
     "keywords": [

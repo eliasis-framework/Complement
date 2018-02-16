@@ -146,7 +146,7 @@ trait ComplementHandler
             if (isset($this->complement['namespaces'][$namespace])) {
                 $namespace = $this->complement['namespaces'][$namespace];
 
-                $_class = $namespace . $class . '\\' . $class;
+                $_class = $namespace . $class;
 
                 if (class_exists($_class)) {
                     return call_user_func([$_class, 'getInstance']);
@@ -156,7 +156,7 @@ trait ComplementHandler
             }
 
             foreach ($this->complement['namespaces'] as $key => $namespace) {
-                $instance = $namespace . $class . '\\' . $class;
+                $instance = $namespace . $class;
 
                 if (class_exists($instance)) {
                     return call_user_func([$instance, 'getInstance']);
@@ -182,7 +182,7 @@ trait ComplementHandler
     public function instance($class, $namespace = '')
     {
         trigger_error(
-            'The "Complement->getInstance()" is deprecated, instead you should use "Complement->getControllerInstance()".',
+            'The "Complement->instance()" is deprecated, instead you should use "Complement->getControllerInstance()".',
             E_USER_ERROR
         );
 
@@ -250,14 +250,14 @@ trait ComplementHandler
 
         if (count($params) != 10) {
             $msg = self::getType('ucfirst') . " configuration file isn't correct";
-            throw new ComplementException($msg . ': ' . $path . '.', 816);
+            throw new ComplementException($msg . ': ' . $path . '.');
         }
 
         $default['url-import'] = '';
         $default['hooks-controller'] = 'Launcher';
         $default['path']['root'] = Url::addBackSlash($path);
         $default['folder'] = $default['slug'] . '/';
-        $lang = $this->_getLanguage();
+        $lang = $this->getLanguage();
 
         if (isset($complement['name'][$lang])) {
             $complement['name'] = $complement['name'][$lang];
@@ -269,7 +269,7 @@ trait ComplementHandler
 
         $this->complement = array_merge($default, $complement);
 
-        $this->_setImage();
+        $this->setImage();
     }
 
     /**
@@ -301,7 +301,7 @@ trait ComplementHandler
      *
      * @uses \get_locale() → gets the current locale in WordPress
      */
-    private function _getLanguage()
+    private function getLanguage()
     {
         $wpLang = (function_exists('get_locale')) ? get_locale() : null;
         $browserLang = @$_SERVER['HTTP_ACCEPT_LANGUAGE'] ?: null;
@@ -317,7 +317,7 @@ trait ComplementHandler
      * @uses \Eliasis\Complement\Complement->$complement
      * @uses \Eliasis\Complement\Traits\ComplementHandler::getType()
      */
-    private function _setImage()
+    private function setImage()
     {
         $slug = $this->complement['slug'];
 

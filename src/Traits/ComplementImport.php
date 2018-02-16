@@ -13,6 +13,7 @@ namespace Eliasis\Complement\Traits;
 use Eliasis\Framework\App;
 use Josantonius\File\File;
 use Josantonius\Json\Json;
+use Josantonius\Url\Url;
 
 /**
  * Complement import class.

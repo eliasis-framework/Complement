@@ -13,6 +13,7 @@ namespace Eliasis\Complement\Traits;
 use Eliasis\Framework\App;
 use Eliasis\Framework\View;
 use Josantonius\File\File;
+use Josantonius\Url\Url;
 
 /**
  * Complement view handler.
@@ -33,7 +34,7 @@ trait ComplementView
      *
      * @return string → file url
      */
-    private function _setFile($filename, $type, $pathUrl)
+    private function setFile($filename, $type, $pathUrl)
     {
         $ext = ($type == 'script') ? 'js' : 'css';
         $documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -46,7 +47,7 @@ trait ComplementView
             File::createDir($path);
 
             $path = self::getLibraryPath();
-            $from = $path . 'src/public/' . $ext . "/$filename.$ext";
+            $from = $path . 'src/static/' . $ext . "/$filename.$ext";
             $file = file_get_contents($from);
 
             file_put_contents($toPath, $file);
@@ -68,21 +69,29 @@ trait ComplementView
      * @uses \Eliasis\Framework\View:getInstance()
      * @uses \Eliasis\Framework\View:renderizate()
      */
-    private function _renderizate($filter, $external, $sort)
+    private function renderizate($filter, $external, $sort)
     {
+        $uid = uniqid();
+        
         $data = [
             'app' => App::getCurrentID(),
+            'id' => null,
+            'state' => null,
+            'request' => 'load-complements',
             'complement' => self::getType('strtolower', false),
             'filter' => $filter,
             'language' => $this->getLanguage(),
-            'external' => urlencode(json_encode($external, true)),
-            'sort' => $sort,
+            'external' => $external,
+            'nonce' => $uid,
+            'sort' => $sort
         ];
+
+        $_SESSION['efc'] = $uid;
 
         $View = View::getInstance();
         $path = self::getLibraryPath();
 
-        $template = $path . 'src/public/template/';
+        $template = $path . 'src/static/template/';
 
         $View->renderizate($template, 'eliasis-complement', $data);
     }

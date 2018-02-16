@@ -83,7 +83,7 @@ abstract class Complement
 
         if (! array_key_exists($index, self::$instances[$appID][$type])) {
             $msg = self::getType('ucfirst', false) . ' not found';
-            throw new ComplementException($msg . ': ' . $index . '.');
+            throw new ComplementException($msg . ': ' . $index);
         }
 
         self::$id = $index;
@@ -110,6 +110,10 @@ abstract class Complement
      */
     public static function run()
     {
+        if (!session_id()) {
+            session_start();
+        }
+
         $complementType = self::getType('strtoupper');
 
         $path = App::$complementType();
@@ -120,7 +124,6 @@ abstract class Complement
                     $_path = Url::addBackSlash($path->getPath());
                     $slug = $path->getBasename();
                     $file = $_path . $slug . '/' . $slug . '.jsond';
-
                     if (! File::exists($file)) {
                         continue;
                     }
@@ -139,15 +142,15 @@ abstract class Complement
      * @param string $path → complement path
      *
      * @uses \Josantonius\Json\Json::fileToArray()
-     * @uses \Eliasis\Complement\ComplementHandler->_setComplement()
+     * @uses \Eliasis\Complement\ComplementHandler->setComplement()
      */
     public static function load($file, $path = false)
     {
         $complement = Json::fileToArray($file);
         $complement['config-file'] = $file;
-        self::setCurrentID(isset($complement['id']) ? $complement['id'] : 'unknown');
+        self::$id = isset($complement['id']) ? $complement['id'] : 'unknown';
         $that = self::getInstance();
-        $that->_setComplement($complement, $path);
+        $that->setComplement($complement, $path);
     }
 
     /**
@@ -203,14 +206,13 @@ abstract class Complement
                 'license' => $complement['license'],
                 'state' => $complement['state'],
                 'slug' => $complement['slug'],
-                'image' => $img = $complement['image'],
-                'image_style' => "background: url(\"$img\") center / cover;",
+                'image' => $img = $complement['image']
             ];
         }
 
-        self::setCurrentID($id);
+        self::setCurrentID($complementID);
 
-        $that->complement = $complement;
+        self::getInstance();
 
         $sorting = '|asort|arsort|krsort|ksort|natsort|rsort|shuffle|sort|';
 
@@ -242,7 +244,9 @@ abstract class Complement
      */
     public static function setCurrentID($id)
     {
-        if (array_key_exists($id, self::$instances)) {
+        $type = self::getType();
+        $appID = App::getCurrentID();
+        if (array_key_exists($id, self::$instances[$appID][$type])) {
             self::$id = $id;
 
             return true;
@@ -254,17 +258,22 @@ abstract class Complement
     /**
      * Set and get url script and vue file.
      *
-     * @param string $pathUrl → url where JS files will be created & loaded
+     * @param string  $pathUrl     → url where JS files will be created & loaded
+     * @param boolean $vue         → include Vue.js in the script
+     * @param boolean $vueResource → include vue-resource in the script
      *
-     * @uses \Eliasis\Complement\ComplementView::_setFile()
+     * @uses \Eliasis\Complement\ComplementView::setFile()
      *
      * @return array → urls of the scripts
      */
-    public static function script($pathUrl = null)
+    public static function script($pathUrl = null, $vue = true, $vueResource = true)
     {
         $that = self::getInstance();
 
-        return $that->_setFile('eliasis-complement-min', 'script', $pathUrl);
+        $file = $vue ? 'vue+' : '';
+        $file .= $vueResource ? 'vue-resource+' : '';
+
+        return $that->setFile($file . 'eliasis-complement.min', 'script', $pathUrl);
     }
 
     /**
@@ -272,7 +281,7 @@ abstract class Complement
      *
      * @param string $pathUrl → url where CSS files will be created & loaded
      *
-     * @uses \Eliasis\Complement\ComplementView::_setFile()
+     * @uses \Eliasis\Complement\ComplementView::setFile()
      *
      * @return array → urls of the styles
      */
@@ -280,7 +289,7 @@ abstract class Complement
     {
         $that = self::getInstance();
 
-        return $that->_setFile('eliasis-complement-min', 'style', $pathUrl);
+        return $that->setFile('eliasis-complement.min', 'style', $pathUrl);
     }
 
     /**
@@ -335,12 +344,12 @@ abstract class Complement
      * @param array  $external → urls of the external optional complements
      * @param string $sort     → PHP sorting function to complements sort
      *
-     * @uses \Eliasis\Complement\ComplementView::_renderizate()
+     * @uses \Eliasis\Complement\ComplementView::renderizate()
      */
     public static function render($filter = 'all', $external = 0, $sort = 'asort')
     {
         $that = self::getInstance();
-        $that->_renderizate($filter, $external, $sort);
+        $that->renderizate($filter, $external, $sort);
     }
 
     /**
@@ -357,9 +366,8 @@ abstract class Complement
         $appID = App::getCurrentID();
         $complementID = self::getCurrentID();
         $complement = get_called_class();
-
         if (! isset(self::$instances[$appID][$type][$complementID])) {
-            self::$instances[$appID][$type][$complementID] = new $complement;
+            self::$instances[$appID][$type][$complementID] = new $complement();
         }
 
         return self::$instances[$appID][$type][$complementID];
