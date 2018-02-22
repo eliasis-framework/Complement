@@ -96,8 +96,6 @@ trait ComplementRequest
             return false;
         }
 
-        self::sanitizeParams();
-
         if (self::$config['complement'] !== $type) {
             return false;
         }
