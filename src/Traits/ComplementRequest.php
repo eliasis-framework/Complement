@@ -122,7 +122,8 @@ trait ComplementRequest
     {
         self::$config['external'] = [];
 
-        foreach ($_POST['external'] as $complement => $url) {
+        $remote = is_array($_POST['external']) ? $_POST['external'] : [];
+        foreach ($remote as $complement => $url) {
             $url = filter_var($url, FILTER_VALIDATE_URL);
             if ($url === false) {
                 return false;
