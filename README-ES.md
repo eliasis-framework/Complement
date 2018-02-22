@@ -21,7 +21,7 @@
 
 ## Requisitos
 
-Este framework es soportada por versiones de **PHP 5.6** o superiores y es compatible con versiones de **HHVM 3.0** o superiores.
+Este framework es soportado por versiones de **PHP 5.6** o superiores y es compatible con versiones de **HHVM 3.0** o superiores.
 
 ## Installation
 
