@@ -32,7 +32,7 @@ new Vue({
         'state': options['state'],
         'filter': options['filter'],
         'request': options['request'],
-        'external': options['external'],
+        'remote': options['remote'],
         'language': options['language'],
         'complement': options['complement'],
         'translations': options['translations']

@@ -39,7 +39,7 @@ trait ComplementRequest
 
         App::setCurrentID(self::$config['app']);
 
-        self::loadExternalComplements();
+        self::loadRemoteComplements();
 
         switch (self::$config['request']) {
             case 'load-complements':
@@ -82,7 +82,7 @@ trait ComplementRequest
         $hasValidParams = isset(
             $_POST['id'],
             $_POST['app'],
-            $_POST['external'],
+            $_POST['remote'],
             $_POST['request'],
             $_POST['complement'],
             $_POST['nonce'],
@@ -120,15 +120,15 @@ trait ComplementRequest
      */
     public static function sanitizeParams()
     {
-        self::$config['external'] = [];
+        self::$config['remote'] = [];
 
-        $remote = is_array($_POST['external']) ? $_POST['external'] : [];
+        $remote = is_array($_POST['remote']) ? $_POST['remote'] : [];
         foreach ($remote as $complement => $url) {
             $url = filter_var($url, FILTER_VALIDATE_URL);
             if ($url === false) {
                 return false;
             }
-            self::$config['external'][$complement] = $url;
+            self::$config['remote'][$complement] = $url;
         }
 
         $params = ['id', 'app', 'request', 'filter', 'sort', 'nonce', 'complement'];
@@ -145,21 +145,21 @@ trait ComplementRequest
     }
 
     /**
-     * Load external complements.
+     * Load remote complements.
      *
      * @uses \Eliasis\Complement\Complement->$instances
      * @uses \Eliasis\Complement\Complement::load()
      * @uses \Eliasis\Complement\Complement::$errors
      */
-    private static function loadExternalComplements()
+    private static function loadRemoteComplements()
     {
         $currentID = App::getCurrentID();
         $complement = self::getType();
-        $external = self::$config['external'];
+        $remote = self::$config['remote'];
 
         $complements = array_keys(self::$instances[$currentID][$complement]);
 
-        foreach ($external as $complement => $url) {
+        foreach ($remote as $complement => $url) {
             if (! in_array($complement, $complements, true)) {
                 self::load($url);
             }

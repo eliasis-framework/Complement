@@ -60,7 +60,7 @@ trait ComplementView
      * Get complements view.
      *
      * @param string $filter       → complements category to display
-     * @param array  $external     → urls of the external optional complements
+     * @param array  $remote       → urls of the remote optional complements
      * @param string $sort         → PHP sorting function to complements sort
      * @param array  $translations → translations for button texts
      *
@@ -72,7 +72,7 @@ trait ComplementView
      *
      * @return bool true
      */
-    private function renderizate($filter, $external, $sort, $translations)
+    private function renderizate($filter, $remote, $sort, $translations)
     {
         $uid = uniqid();
 
@@ -84,7 +84,7 @@ trait ComplementView
             'complement' => self::getType('strtolower', false),
             'filter' => $filter,
             'language' => $this->getLanguage(),
-            'external' => $external,
+            'remote' => $remote,
             'nonce' => $uid,
             'sort' => $sort,
             'translations' => $translations
