@@ -264,7 +264,7 @@ final class RenderTest extends TestCase
         $this->assertContains("\"complement\":\"$type\"", $default);
         $this->assertContains('"filter":"all"', $default);
         $this->assertContains('"language":"en"', $default);
-        $this->assertContains('"external":null', $default);
+        $this->assertContains('"remote":null', $default);
         $this->assertContains('"nonce"', $default);
         $this->assertContains('"sort":"asort"', $default);
         $this->assertContains('"translations"', $default);

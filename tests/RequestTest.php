@@ -76,7 +76,7 @@ final class RequestTest extends TestCase
 
         $_POST['id'] = '';
         $_POST['app'] = 'Default';
-        $_POST['external'] = [];
+        $_POST['remote'] = [];
         $_POST['request'] = 'load-complements';
         $_POST['complement'] = $type;
         $_POST['nonce'] = 'test_nonce';

@@ -106,7 +106,7 @@ final class ConfigurationFileTest extends TestCase
         $this->assertSame($complement['author-url'], '');
         $this->assertSame($complement['license'], 'MIT');
         $this->assertSame($complement['slug'], 'basic-local-complement');
-        $this->assertContains('src/public/images/default.png', $complement['image']);
+        $this->assertContains('src/static/images/default.png', $complement['image']);
         $this->assertSame($complement['hooks-controller'], 'Launcher');
         $this->assertSame($complement['url-import'], '');
         $this->assertSame($complement['extra'], []);
@@ -139,7 +139,7 @@ final class ConfigurationFileTest extends TestCase
         $this->assertSame($complement['author-url'], 'https://josantonius.com/');
         $this->assertSame($complement['license'], 'GPL-2.0+');
         $this->assertSame($complement['slug'], 'advanced-local-complement');
-        $this->assertContains('src/public/images/default.png', $complement['image']);
+        $this->assertContains('src/static/images/default.png', $complement['image']);
         $this->assertSame($complement['hooks-controller'], 'Hooks');
         $this->assertSame($complement['url-import'], '');
 
@@ -183,7 +183,7 @@ final class ConfigurationFileTest extends TestCase
         $this->assertSame($complement['author-url'], '');
         $this->assertSame($complement['license'], 'MIT');
         $this->assertSame($complement['slug'], 'remote-complement');
-        $this->assertContains('src/public/images/default.png', $complement['image']);
+        $this->assertContains('src/static/images/default.png', $complement['image']);
         $this->assertSame($complement['hooks-controller'], 'Launcher');
         $this->assertContains('raw.githubusercontent.com', $complement['url-import']);
 
