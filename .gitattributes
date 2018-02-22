@@ -1,7 +1,10 @@
+/src/static/images export-ignore
+/src/static/js/source export-ignore
 /src/public/js/vue export-ignore
 /src/public/js/eliasis-complement.js export-ignore
 /src/public/sass export-ignore
 /src/public/images export-ignore
+/bin export-ignore
 /tests export-ignore
 /docs export-ignore
 /src/bootstrap.php export-ignore
@@ -21,3 +24,7 @@ README-ES.md export-ignore
 composer.lock export-ignore
 package.json export-ignore
 index.js export-ignore
+gulpfile.js export-ignore
+phpcs.xml export-ignore
+phpmd.xml export-ignore
+.php_cs.dist export-ignore
