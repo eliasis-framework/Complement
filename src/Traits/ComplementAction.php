@@ -36,10 +36,10 @@ trait ComplementAction
      * @var array
      */
     protected static $defaultAction = [
-        'component' => 'activation',
-        'plugin' => 'activation',
-        'module' => 'activation',
-        'template' => 'activation',
+        'component' => '',
+        'plugin' => '',
+        'module' => '',
+        'template' => '',
     ];
 
     /**
@@ -50,7 +50,7 @@ trait ComplementAction
      * @uses \Eliasis\Complement\ComplementState->$states
      * @uses \Eliasis\Complement\Traits\ComplementHandler::getType()
      *
-     * @return bool
+     * @return string → complement action
      */
     public function getAction($state)
     {

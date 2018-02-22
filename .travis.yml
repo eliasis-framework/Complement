@@ -8,25 +8,21 @@ cache:
 
 dist: trusty
 
-branches:
-  only:
-    - master
+git:
+  depth: 5
 
 notifications:
   email:
     on_success: never
     on_failure: change
 
-git:
-  depth: 5
-
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - hhvm
-  - nightly
+branches:
+  only:
+    - master
+    
+cache:
+  - composer
+  - $HOME/.composer/cache
 
 env:
   - WP_PROJECT_TYPE=plugin WP_VERSION=latest WP_MULTISITE=0 WP_TEST_URL=http://localhost:12000 WP_TEST_USER=test WP_TEST_USER_PASS=test
@@ -34,6 +30,20 @@ env:
 matrix:
   include:
     - php: 7.2
+      env: WP_VERSION=latest
+    - php: 7.1
+      env: WP_VERSION=latest
+    - php: 7.0
+      env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_VERSION=4.4
+    - php: 5.6
+      env: WP_VERSION=latest
+    - php: 5.6
+      env: WP_VERSION=trunk
+    - php: hhvm
+      env: WP_VERSION=latest
+    - php: nightly
       env: WP_VERSION=latest
   allow_failures:
     - php: nightly
@@ -48,13 +58,17 @@ before_script:
     fi
 
 script:
-  - phpunit
   - |
-    if [[ "$WP_VERSION" ]] ; then
-      phpunit --coverage-clover=coverage.xml
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      phpunit Component --coverage-clover=coverage.xml
+      phpunit Module --coverage-clover=coverage.xml
+      phpunit Plugin --coverage-clover=coverage.xml
+      phpunit Template --coverage-clover=coverage.xml
+      WP_MULTISITE=1 phpunit --coverage-clover=coverage.xml
       phpcs --standard=phpcs.xml $(find . -name '*.php')
       phpmd src,tests text ./phpmd.xml
     fi
 
 after_success:
  - bash <(curl -s https://codecov.io/bash)
+ 

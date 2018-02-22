@@ -4,8 +4,8 @@
         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
     <!--codesize-->
-    <rule ref="rulesets/codesize.xml/CyclomaticComplexity"/>
-    <rule ref="rulesets/codesize.xml/NPathComplexity"/>
+    <!--<rule ref="rulesets/codesize.xml/CyclomaticComplexity"/>-->
+    <!--<rule ref="rulesets/codesize.xml/NPathComplexity"/>-->
     <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity"/>
     <rule ref="rulesets/codesize.xml/ExcessiveClassLength"/>
     <rule ref="rulesets/codesize.xml/ExcessiveMethodLength"/>
@@ -15,7 +15,7 @@
     <rule ref="rulesets/codesize.xml/TooManyMethods"/>
     <!--design-->
     <rule ref="rulesets/design.xml/EvalExpression"/>
-    <rule ref="rulesets/design.xml/ExitExpression"/>
+    <!--<rule ref="rulesets/design.xml/ExitExpression"/>-->
     <rule ref="rulesets/design.xml/GotoStatement"/>
     <rule ref="rulesets/design.xml/NumberOfChildren"/>
     <rule ref="rulesets/design.xml/DepthOfInheritance"/>
@@ -26,15 +26,15 @@
     </rule>
     <!--naming-->
     <rule ref="rulesets/naming.xml/ConstantNamingConventions"/>
-    <rule ref="rulesets/naming.xml/BooleanGetMethodName"/>
+    <!--<rule ref="rulesets/naming.xml/BooleanGetMethodName"/>-->
     <!--unusedcode-->
     <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter"/>
-    <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable"/>
-    <rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>
-    <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/>
+    <!--<rule ref="rulesets/unusedcode.xml/UnusedLocalVariable"/>-->
+    <!--<rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>-->
+    <!--<rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/>-->
     <!--controversial-->
-    <rule ref="rulesets/controversial.xml/Superglobals"/>
+    <!--<rule ref="rulesets/controversial.xml/Superglobals"/>-->
     <!--cleancode-->
-    <rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>
-    <rule ref="rulesets/cleancode.xml/ElseExpression"/>
+    <!--<rule ref="rulesets/cleancode.xml/BooleanArgumentFlag"/>-->
+    <!--<rule ref="rulesets/cleancode.xml/ElseExpression"/>-->
 </ruleset>

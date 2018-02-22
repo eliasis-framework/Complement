@@ -32,10 +32,7 @@ trait ComplementHandler
         'description',
         'state',
         'category',
-        'uri',
-        'author',
-        'author-uri',
-        'license',
+        'url'
     ];
 
     /**
@@ -69,28 +66,6 @@ trait ComplementHandler
     }
 
     /**
-     * Set complement option/s.
-     *
-     * This method will be removed in future versions, instead you should use setOption().
-     *
-     * @deprecated 1.0.9
-     *
-     * @param string $option → option name or options array
-     * @param mixed  $value  → value/s
-     *
-     * @return mixed
-     */
-    public function set($option, $value)
-    {
-        trigger_error(
-            'The "Complement->set()" is deprecated, instead you should use "Complement->setOption()".',
-            E_USER_ERROR
-        );
-
-        return $this->setOption($option, $value);
-    }
-
-    /**
      * Get complement option/s.
      *
      * @param mixed $param/s
@@ -112,22 +87,6 @@ trait ComplementHandler
         }
 
         return (isset($col[0])) ? $col[0] : '';
-    }
-
-    /**
-     * Get complement option/s.
-     *
-     * This method will be removed in future versions, instead you should use getOption().
-     *
-     * @deprecated 1.0.9
-     *
-     * @param mixed $param/s
-     *
-     * @return mixed
-     */
-    public function get(...$params)
-    {
-        return $this->getOption(...$params);
     }
 
     /**
@@ -157,7 +116,6 @@ trait ComplementHandler
 
             foreach ($this->complement['namespaces'] as $key => $namespace) {
                 $instance = $namespace . $class;
-
                 if (class_exists($instance)) {
                     return call_user_func([$instance, 'getInstance']);
                 }
@@ -168,32 +126,9 @@ trait ComplementHandler
     }
 
     /**
-     * Get complement controller instance.
-     *
-     * This method will be removed in future versions, instead you should use getControllerInstance().
-     *
-     * @deprecated 1.0.9
-     *
-     * @param array $class     → class name
-     * @param array $namespace → namespace index
-     *
-     * @return object|false → class instance or false
-     */
-    public function instance($class, $namespace = '')
-    {
-        trigger_error(
-            'The "Complement->instance()" is deprecated, instead you should use "Complement->getControllerInstance()".',
-            E_USER_ERROR
-        );
-
-        return $this->getControllerInstance($class, $namespace);
-    }
-
-    /**
      * Set complement.
      *
      * @param string $complement → complement settings
-     * @param string $path       → complement path
      *
      * @uses \Eliasis\Complement\Traits\ComplementState->getStates()
      * @uses \Eliasis\Complement\Traits\ComplementState->getState()
@@ -202,11 +137,13 @@ trait ComplementHandler
      * @uses \Eliasis\Complement\Traits\ComplementAction->setAction()
      * @uses \Eliasis\Complement\Traits\ComplementAction->addActions()
      * @uses \Eliasis\Complement\Traits\ComplementAction->doActions()
+     *
+     * @return bool true
      */
-    private function setComplement($complement, $path)
+    private function setComplement($complement)
     {
         $this->getStates();
-        $this->setComplementParams($complement, $path);
+        $this->setComplementParams($complement);
 
         $state = $this->getState();
         $action = $this->getAction($state);
@@ -222,13 +159,14 @@ trait ComplementHandler
             $this->addActions();
             $this->doActions($action);
         }
+
+        return true;
     }
 
     /**
      * Check required params and set complement params.
      *
      * @param string $complement → complement settings
-     * @param string $path       → complement path
      *
      * @uses \Eliasis\Complement\Complement->$complement
      * @uses \Eliasis\Complement\Traits\ComplementHandler::getType()
@@ -236,7 +174,7 @@ trait ComplementHandler
      *
      * @throws ComplementException → complement configuration file error
      */
-    private function setComplementParams($complement, $path)
+    private function setComplementParams($complement)
     {
         $params = array_intersect_key(
             array_flip(self::$required),
@@ -248,7 +186,7 @@ trait ComplementHandler
         $complementType = self::getType('strtoupper');
         $path = App::$complementType() . $default['slug'] . '/';
 
-        if (count($params) != 10) {
+        if (count($params) != 7) {
             $msg = self::getType('ucfirst') . " configuration file isn't correct";
             throw new ComplementException($msg . ': ' . $path . '.');
         }
@@ -257,6 +195,11 @@ trait ComplementHandler
         $default['hooks-controller'] = 'Launcher';
         $default['path']['root'] = Url::addBackSlash($path);
         $default['folder'] = $default['slug'] . '/';
+        $default['license'] = 'MIT';
+        $default['author'] = '';
+        $default['author-url'] = '';
+        $default['extra'] = [];
+
         $lang = $this->getLanguage();
 
         if (isset($complement['name'][$lang])) {
@@ -373,14 +316,14 @@ trait ComplementHandler
     /**
      * Add complement routes if exists.
      *
-     * @uses \Josantonius\Router\Router::addRoute
+     * @uses \Josantonius\Router\Router::add
      * @uses \Eliasis\Complement\Complement->$complement
      */
     private function addRoutes()
     {
         if (class_exists($Router = 'Josantonius\Router\Router')) {
             if (isset($this->complement['routes'])) {
-                $Router::addRoute($this->complement['routes']);
+                $Router::add($this->complement['routes']);
             }
         }
     }

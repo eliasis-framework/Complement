@@ -1,232 +1,100 @@
-# Complement PHP library for Eliasis Framework
+# Eliasis PHP Framework
 
-[![Latest Stable Version](https://poser.pugx.org/eliasis-framework/complement/v/stable)](https://packagist.org/packages/eliasis-framework/complement) [![Total Downloads](https://poser.pugx.org/eliasis-framework/complement/downloads)](https://packagist.org/packages/eliasis-framework/complement) [![Latest Unstable Version](https://poser.pugx.org/eliasis-framework/complement/v/unstable)](https://packagist.org/packages/eliasis-framework/complement) [![License](https://poser.pugx.org/eliasis-framework/complement/license)](https://packagist.org/packages/eliasis-framework/complement)
+[![Packagist](https://img.shields.io/packagist/v/Eliasis-Framework/Complement.svg)](https://packagist.org/packages/Eliasis-Framework/Complement) [![Downloads](https://img.shields.io/packagist/dt/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement) [![kB](https://img.shields.io/badge/kB-~24.3-009688.svg)](https://github.com/Eliasis-Framework/Complement) [![License](https://img.shields.io/packagist/l/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4f65d7ad0ee14b53a8c30c70911903de)](https://www.codacy.com/app/Josantonius/Eliasis?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Eliasis-Framework/Complement&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/Eliasis-Framework/Complement.svg?branch=master)](https://travis-ci.org/Eliasis-Framework/Complement) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![codecov](https://codecov.io/gh/Eliasis-Framework/Complement/branch/master/graph/badge.svg)](https://codecov.io/gh/Eliasis-Framework/Complement)
 
 [Versión en español](README-ES.md)
 
-PHP library for adding addition of complements (components, plugins, modules, templates) for Eliasis Framework.
+![image](resources/eliasis-complement.png)
 
 ---
 
-- [Installation](#installation)
 - [Requirements](#requirements)
-- [Quick Start and Examples](#quick-start-and-examples)
-- [Available Methods](#available-methods)
-- [Images](#images)
-- [Usage](#usage)
+- [Installation](#installation)
+- [Documentation](#documentation)
 - [Tests](#tests)
-- [Exception Handler](#exception-handler)
+- [TODO](#-todo)
 - [Contribute](#contribute)
-- [Repository](#repository)
 - [License](#license)
 - [Copyright](#copyright)
 
 ---
 
-<p align="center"><strong>Complements view (Módules)</strong></p>
+## Requirements
 
-<p align="center">
-  <a href="https://youtu.be/EJi_TXa28Mc" title="Take a look at the code">
-  	<img src="https://raw.githubusercontent.com/Josantonius/PHP-Algorithm/master/resources/youtube-thumbnail.jpg">
-  </a>
-</p>
+This framework is supported by **PHP versions 5.6** or higher and is compatible with **HHVM versions 3.0** or higher.
 
----
+## Installation
 
-### Installation
+You can install **Eliasis PHP Framework** into your project using [Composer](http://getcomposer.org/download/). If you're starting a new project, we
+recommend using the [basic app](https://github.com/eliasis-framework/app) as
+a starting point. For existing applications you can run the following:
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+    $ composer require Eliasis-Framework/Complement
 
-To install PHP Complement library, simply:
+The previous command will only install the necessary files, if you prefer to **download the entire source code** you can use:
 
-    $ composer require eliasis-framework/Complement
+    $ composer require Eliasis-Framework/Complement --prefer-source
 
-The previous command will only install the necessary files, if you prefer to download the entire source code (including tests, vendor folder, exceptions not used, docs...) you can use:
+## Documentation
 
-    $ composer require eliasis-framework/Complement --prefer-source
+[Documentation and examples of use](https://eliasis-framework.github.io/Complement/v1.1.1/lang/en/).
 
-Or you can also clone the complete repository with Git:
+## Tests 
 
-	$ git clone https://github.com/eliasis-framework/Complement.git
-	
-### Requirements
+To run [tests](tests) you just need [composer](http://getcomposer.org/download/) and to execute the following:
 
-This library is supported by PHP versions 5.6 or higher and is compatible with HHVM versions 3.0 or higher.
+    $ git clone https://github.com/Eliasis-Framework/Complement.git
+    
+    $ cd Eliasis
 
-### Quick Start and Examples
+    $ composer install
 
-To use this class, simply:
+Run unit tests with [PHPUnit](https://phpunit.de/):
 
-```php
-require __DIR__ . '/vendor/autoload.php';
-```
+    $ composer phpunit
 
-### Available Methods
+Run [PSR2](http://www.php-fig.org/psr/psr-2/) code standard tests with [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer):
 
-Available methods in this library:
+    $ composer phpcs
 
-```php
-use Eliasis\Complement\Type\Component;
+Run [PHP Mess Detector](https://phpmd.org/) tests to detect inconsistencies in code style:
 
-Component::getInstance();
-Component::run();
-Component::load();
-Component::getInfo();
-Component::script();
-Component::style();
-Component::exists();
-Component::getLibraryPath();
-Component::getLibraryVersion();
-Component::render();
+    $ composer phpmd
 
-Component::Identifier()->set();
-Component::Identifier()->get();
-Component::Identifier()->instance();
-Component::Identifier()->getAction();
-Component::Identifier()->setAction();
-Component::Identifier()->doAction();
-Component::Identifier()->hasNewVersion();
-Component::Identifier()->getRepositoryVersion();
-Component::Identifier()->install();
-Component::Identifier()->remove();
-Component::Identifier()->setState();
-Component::Identifier()->changeState();
-Component::Identifier()->getState();
-Component::Identifier()->getStates();
-```
+Run all previous tests:
 
-```php
-use Eliasis\Complement\Type\Plugin;
+    $ composer tests
 
-Plugin::getInstance();
-Plugin::run();
-Plugin::load();
-Plugin::getInfo();
-Plugin::script();
-Plugin::style();
-Plugin::exists();
-Plugin::getLibraryPath();
-Plugin::getLibraryVersion();
-Plugin::render();
+## ☑ TODO
 
-Plugin::Identifier()->set();
-Plugin::Identifier()->get();
-Plugin::Identifier()->instance();
-Plugin::Identifier()->getAction();
-Plugin::Identifier()->setAction();
-Plugin::Identifier()->doAction();
-Plugin::Identifier()->hasNewVersion();
-Plugin::Identifier()->getRepositoryVersion();
-Plugin::Identifier()->install();
-Plugin::Identifier()->remove();
-Plugin::Identifier()->setState();
-Plugin::Identifier()->changeState();
-Plugin::Identifier()->getState();
-Plugin::Identifier()->getStates();
-```
+- [ ] Add new feature.
+- [ ] Add tests for Vue.
+- [ ] Improve PHP tests.
+- [ ] Improve documentation.
+- [ ] Refactor code for disabled code style rules. See [phpmd.xml](phpmd.xml) and [.php_cs.dist](.php_cs.dist).
 
-```php
-use Eliasis\Complement\Type\Module;
+## Contribute
 
-Module::getInstance();
-Module::run();
-Module::load();
-Module::getInfo();
-Module::script();
-Module::style();
-Module::exists();
-Module::getLibraryPath();
-Module::getLibraryVersion();
-Module::render();
+If you would like to help, please take a look at the list of
+[issues](https://github.com/Eliasis-Framework/Complement/issues) or the [To Do](#-todo) checklist.
 
-Module::Identifier()->set();
-Module::Identifier()->get();
-Module::Identifier()->instance();
-Module::Identifier()->getAction();
-Module::Identifier()->setAction();
-Module::Identifier()->doAction();
-Module::Identifier()->hasNewVersion();
-Module::Identifier()->getRepositoryVersion();
-Module::Identifier()->install();
-Module::Identifier()->remove();
-Module::Identifier()->setState();
-Module::Identifier()->changeState();
-Module::Identifier()->getState();
-Module::Identifier()->getStates();
-```
+**Pull requests**
 
-```php
-use Eliasis\Complement\Type\Template;
+* [Fork and clone](https://help.github.com/articles/fork-a-repo).
+* Run the command `composer install` to install the dependencies.
+  This will also install the [dev dependencies](https://getcomposer.org/doc/03-cli.md#install).
+* Run the command `composer fix` to excute code standard fixers.
+* Run the [tests](#tests).
+* Create a **branch**, **commit**, **push** and send me a
+  [pull request](https://help.github.com/articles/using-pull-requests).
 
-Template::getInstance();
-Template::run();
-Template::load();
-Template::getInfo();
-Template::script();
-Template::style();
-Template::exists();
-Template::getLibraryPath();
-Template::getLibraryVersion();
-Template::render();
-
-Template::Identifier()->set();
-Template::Identifier()->get();
-Template::Identifier()->instance();
-Template::Identifier()->getAction();
-Template::Identifier()->setAction();
-Template::Identifier()->doAction();
-Template::Identifier()->hasNewVersion();
-Template::Identifier()->getRepositoryVersion();
-Template::Identifier()->install();
-Template::Identifier()->remove();
-Template::Identifier()->setState();
-Template::Identifier()->changeState();
-Template::Identifier()->getState();
-Template::Identifier()->getStates();
-```
-
-### Images
-
-![image](resources/eliasis-complement-1.png)
-
-![image](resources/eliasis-complement-2.png)
-
-![image](resources/eliasis-complement-3.png)
-
-### Usage
-
-- The library will be loaded automatically from the Eliasis Framework core.
- 
-- [ ] Pending
-
-### Tests
-
-- [ ] Pending
-
-### Exception Handler
-
-This library uses [exception handler](src/Exception) that you can customize.
-
-### Contribute
-1. Check for open issues or open a new issue to start a discussion around a bug or feature.
-1. Fork the repository on GitHub to start making your changes.
-1. Write one or more tests for the new feature or that expose the bug.
-1. Make code changes to implement the feature or fix the bug.
-1. Send a pull request to get your changes merged and published.
-
-This is intended for large and long-lived objects.
-
-### Repository
-
-All files in this repository were created and uploaded automatically with [Reposgit Creator](https://github.com/Josantonius/BASH-Reposgit).
-
-### License
+## License
 
 This project is licensed under **MIT license**. See the [LICENSE](LICENSE) file for more info.
 
-### Copyright
+## Copyright
 
-2017 Josantonius, [josantonius.com](https://josantonius.com/)
+2016 - 2018 Josantonius, [josantonius.com](https://josantonius.com/)
 
 If you find it useful, let me know :wink:
 

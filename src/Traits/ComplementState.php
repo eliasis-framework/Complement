@@ -68,10 +68,10 @@ trait ComplementState
      * @var array
      */
     protected static $defaultStates = [
-        'component' => 'active',
-        'plugin' => 'active',
-        'module' => 'active',
-        'template' => 'active',
+        'component' => 'inactive',
+        'plugin' => 'inactive',
+        'module' => 'inactive',
+        'template' => 'inactive',
     ];
 
     /**

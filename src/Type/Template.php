@@ -15,6 +15,6 @@ use Eliasis\Complement\Complement;
 /**
  * Template complement.
  */
-final class Template extends Complement {
-
+final class Template extends Complement
+{
 }

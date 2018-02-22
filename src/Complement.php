@@ -21,12 +21,12 @@ use Josantonius\Url\Url;
  */
 abstract class Complement
 {
-    use Traits\ComplementHandler,
-        Traits\ComplementAction,
-        Traits\ComplementImport,
-        Traits\ComplementState,
-        Traits\ComplementRequest,
-        Traits\ComplementView;
+    use Traits\ComplementHandler;
+    use Traits\ComplementAction;
+    use Traits\ComplementImport;
+    use Traits\ComplementState;
+    use Traits\ComplementRequest;
+    use Traits\ComplementView;
 
     /**
      * Complement instances.
@@ -47,7 +47,7 @@ abstract class Complement
      *
      * @var array
      */
-    protected static $id = 'unknown';
+    protected static $id = 'Default';
 
     /**
      * Errors for file management.
@@ -61,7 +61,7 @@ abstract class Complement
      *
      * @var string
      */
-    private static $type = 'unknown';
+    private static $type = 'default';
 
     /**
      * Receives the name of the complement to execute: Complement::Name().
@@ -82,7 +82,7 @@ abstract class Complement
         $appID = App::getCurrentID();
 
         if (! array_key_exists($index, self::$instances[$appID][$type])) {
-            $msg = self::getType('ucfirst', false) . ' not found';
+            $msg = self::getType('ucfirst', false) . ' or method not found';
             throw new ComplementException($msg . ': ' . $index);
         }
 
@@ -110,7 +110,7 @@ abstract class Complement
      */
     public static function run()
     {
-        if (!session_id()) {
+        if (! session_id()) {
             session_start();
         }
 
@@ -127,7 +127,7 @@ abstract class Complement
                     if (! File::exists($file)) {
                         continue;
                     }
-                    self::load($file, $_path);
+                    self::load($file);
                 }
             }
         }
@@ -138,23 +138,25 @@ abstract class Complement
     /**
      * Load complement configuration from json file and set settings.
      *
-     * @param string $file → json file name
-     * @param string $path → complement path
+     * @param string $file → path or url to the complement configuration file
      *
      * @uses \Josantonius\Json\Json::fileToArray()
      * @uses \Eliasis\Complement\ComplementHandler->setComplement()
+     *
+     * @return bool true
      */
-    public static function load($file, $path = false)
+    public static function load($file)
     {
         $complement = Json::fileToArray($file);
         $complement['config-file'] = $file;
-        self::$id = isset($complement['id']) ? $complement['id'] : 'unknown';
+        self::$id = isset($complement['id']) ? $complement['id'] : 'Default';
         $that = self::getInstance();
-        $that->setComplement($complement, $path);
+
+        return $that->setComplement($complement);
     }
 
     /**
-     * Get components/plugins/modules/templates info.
+     * Get components/plugins/modules/templates list.
      *
      * @param string $filter → complement category filter
      * @param string $sort   → PHP sorting function to complements sort
@@ -162,9 +164,9 @@ abstract class Complement
      * @uses \Eliasis\Complement\ComplementHandler::getType()
      * @uses \Eliasis\Framework\App::getCurrentID()
      *
-     * @return array $data → complements info
+     * @return array $data → complements list
      */
-    public static function getInfo($filter = 'all', $sort = 'asort')
+    public static function getList($filter = 'all', $sort = 'asort')
     {
         $data = [];
         $type = self::getType();
@@ -183,7 +185,7 @@ abstract class Complement
 
             $skip = ($filter != 'all' && $complement['category'] != $filter);
 
-            if ($skip || $id == 'unknown' || ! $complement) {
+            if ($skip || $id == 'Default' || ! $complement) {
                 continue;
             }
 
@@ -200,13 +202,16 @@ abstract class Complement
                 'state' => $complement['state'],
                 'category' => $complement['category'],
                 'path' => $complement['path']['root'],
-                'uri' => $complement['uri'],
+                'url' => $complement['url'],
                 'author' => $complement['author'],
-                'author-uri' => $complement['author-uri'],
+                'author-url' => $complement['author-url'],
                 'license' => $complement['license'],
                 'state' => $complement['state'],
                 'slug' => $complement['slug'],
-                'image' => $img = $complement['image']
+                'image' => $complement['image'],
+                'hooks-controller' => $complement['hooks-controller'],
+                'url-import' => $complement['url-import'],
+                'extra' => $complement['extra']
             ];
         }
 
@@ -214,7 +219,7 @@ abstract class Complement
 
         self::getInstance();
 
-        $sorting = '|asort|arsort|krsort|ksort|natsort|rsort|shuffle|sort|';
+        $sorting = '|asort|arsort|krsort|ksort|rsort|shuffle|sort|';
 
         strpos($sorting, $sort) ? $sort($data) : asort($data);
 
@@ -256,15 +261,15 @@ abstract class Complement
     }
 
     /**
-     * Set and get url script and vue file.
+     * Set and get script url.
      *
-     * @param string  $pathUrl     → url where JS files will be created & loaded
-     * @param boolean $vue         → include Vue.js in the script
-     * @param boolean $vueResource → include vue-resource in the script
+     * @param string $pathUrl     → url where JS files will be created & loaded
+     * @param bool   $vue         → include Vue.js in the script
+     * @param bool   $vueResource → include vue-resource in the script
      *
      * @uses \Eliasis\Complement\ComplementView::setFile()
      *
-     * @return array → urls of the scripts
+     * @return string → script url
      */
     public static function script($pathUrl = null, $vue = true, $vueResource = true)
     {
@@ -334,22 +339,34 @@ abstract class Complement
         $path = self::getLibraryPath();
         $composer = Json::fileToArray($path . 'composer.json');
 
-        return isset($composer['version']) ? $composer['version'] : '1.1.0';
+        return isset($composer['version']) ? $composer['version'] : '1.1.1';
     }
 
     /**
      * Get complements view.
      *
-     * @param string $filter   → complements category to display
-     * @param array  $external → urls of the external optional complements
-     * @param string $sort     → PHP sorting function to complements sort
+     * @param string $filter       → complements category to display
+     * @param array  $remote       → urls of the remote optional complements
+     * @param string $sort         → PHP sorting function to complements sort
+     * @param array  $translations → translations for button texts
      *
      * @uses \Eliasis\Complement\ComplementView::renderizate()
+     *
+     * @return bool true
      */
-    public static function render($filter = 'all', $external = 0, $sort = 'asort')
+    public static function render($filter = 'all', $remote = null, $sort = 'asort', $translations = null)
     {
         $that = self::getInstance();
-        $that->renderizate($filter, $external, $sort);
+
+        $translations = $translations ?: [
+            'active' => 'active',
+            'activate' => 'activate',
+            'install' => 'install',
+            'update' => 'update',
+            'uninstall' => 'uninstall'
+        ];
+
+        return $that->renderizate($filter, $remote, $sort, $translations);
     }
 
     /**

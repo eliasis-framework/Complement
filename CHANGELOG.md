@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.1.1 - 2018-02-16
+## 1.1.1 - 2018-02-22
 
 * Unit tests supported by `PHPUnit` were added.
 

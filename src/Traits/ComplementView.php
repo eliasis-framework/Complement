@@ -38,7 +38,7 @@ trait ComplementView
     {
         $ext = ($type == 'script') ? 'js' : 'css';
         $documentRoot = $_SERVER['DOCUMENT_ROOT'];
-        $url = $pathUrl ?: App::getOption('url', $ext);
+        $url = $pathUrl ?: App::getOption('path-url', $ext);
         $url = empty($url) ? App::PUBLIC_URL() . $ext . '/' : $url;
         $version = str_replace('.', '-', self::getLibraryVersion());
         $path = Url::addBackSlash($documentRoot . parse_url($url)['path']);
@@ -59,20 +59,23 @@ trait ComplementView
     /**
      * Get complements view.
      *
-     * @param string $filter   → complements category to display
-     * @param array  $external → urls of the external optional complements
-     * @param string $sort     → PHP sorting function to complements sort
+     * @param string $filter       → complements category to display
+     * @param array  $external     → urls of the external optional complements
+     * @param string $sort         → PHP sorting function to complements sort
+     * @param array  $translations → translations for button texts
      *
      * @uses \Eliasis\Framework\App::getCurrentID()
      * @uses \Eliasis\Complement\Complement::getLibraryPath()
      * @uses \Eliasis\Complement\Traits\ComplementHandler::getType()
      * @uses \Eliasis\Framework\View:getInstance()
      * @uses \Eliasis\Framework\View:renderizate()
+     *
+     * @return bool true
      */
-    private function renderizate($filter, $external, $sort)
+    private function renderizate($filter, $external, $sort, $translations)
     {
         $uid = uniqid();
-        
+
         $data = [
             'app' => App::getCurrentID(),
             'id' => null,
@@ -83,7 +86,8 @@ trait ComplementView
             'language' => $this->getLanguage(),
             'external' => $external,
             'nonce' => $uid,
-            'sort' => $sort
+            'sort' => $sort,
+            'translations' => $translations
         ];
 
         $_SESSION['efc'] = $uid;
@@ -93,6 +97,6 @@ trait ComplementView
 
         $template = $path . 'src/static/template/';
 
-        $View->renderizate($template, 'eliasis-complement', $data);
+        return $View->renderizate($template, 'eliasis-complement', $data);
     }
 }

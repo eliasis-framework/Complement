@@ -74,10 +74,10 @@ trait ComplementImport
             return false;
         }
 
-        $this->_deleteDirectory();
+        $this->deleteDirectory();
         $this->changeState();
 
-        $installed = $this->_installComplement(
+        $installed = $this->installComplement(
             $this->complement['installation-files'],
             $this->complement['path']['root'],
             $this->complement['slug']
@@ -89,7 +89,9 @@ trait ComplementImport
                 $this->complement['path']['root']
             );
 
-            return $this->changeState();
+            $this->changeState();
+
+            return true;
         }
 
         return false;
@@ -102,19 +104,19 @@ trait ComplementImport
      * @uses \Eliasis\Complement\Traits\ComplementState->setState()
      * @uses \Eliasis\Complement\Traits\ComplementState->changeState()
      *
-     * @return string → complement state
+     * @return bool true
      */
     public function remove()
     {
         $this->setState('uninstall');
 
-        $state = $this->changeState();
+        $this->changeState();
 
-        if (! $this->_deleteDirectory()) {
-            $state = $this->setState('uninstalled');
+        if (! $this->deleteDirectory()) {
+            $this->setState('uninstalled');
         }
 
-        return $state;
+        return true;
     }
 
     /**
@@ -127,7 +129,7 @@ trait ComplementImport
      *
      * @return string → complement state
      */
-    private function _deleteDirectory()
+    private function deleteDirectory()
     {
         $path = $this->complement['path']['root'];
 
@@ -164,7 +166,7 @@ trait ComplementImport
      *
      * @return bool
      */
-    private function _installComplement($complement, $path, $slug, $root = true)
+    private function installComplement($complement, $path, $slug, $root = true)
     {
         $path = ($root) ? $path : $path . key($complement) . '/';
 
@@ -182,7 +184,7 @@ trait ComplementImport
         foreach ($complement as $folder => $file) {
             foreach ($file as $key => $val) {
                 if (is_array($val)) {
-                    $this->_installComplement([$key => $val], $path, $slug, 0);
+                    $this->installComplement([$key => $val], $path, $slug, 0);
                     continue;
                 }
 
@@ -192,12 +194,10 @@ trait ComplementImport
                 $complementPath = App::$complementType() . $slug . '/';
 
                 $url = Url::addBackSlash($this->complement['url-import']);
-
                 $route = str_replace($complementPath, '', $filePath);
-
                 $fileUrl = $url . '/' . $route;
 
-                $this->_saveRemoteFile($fileUrl, $filePath);
+                $this->saveRemoteFile($fileUrl, $filePath);
             }
         }
 
@@ -212,7 +212,7 @@ trait ComplementImport
      *
      * @return bool
      */
-    private function _saveRemoteFile($fileUrl, $filePath)
+    private function saveRemoteFile($fileUrl, $filePath)
     {
         if (! $file = @file_get_contents($fileUrl)) {
             self::$errors[] = [
@@ -251,9 +251,7 @@ trait ComplementImport
 
         if ($thePath == $path || strpos($path, $thePath) === false) {
             $type = self::getType('ucfirst', false);
-
             $msg = 'The ' . $type . " path: '$path' isn't a valid route.";
-
             self::$errors[] = ['message' => $msg];
 
             return false;

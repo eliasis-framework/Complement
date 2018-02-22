@@ -1,0 +1,18 @@
+{
+   "id": "AdvancedLocalComplement",
+   "name": "Advanced Local Complement",
+   "version": "2.0.0",
+   "description": "Description for 'Advanced Local Complement'.",
+   "state": "active",
+   "category": "advanced-local-complement",
+   "url": "https://github.com/Josantonius/",
+   "author": "Josantonius",
+   "author-url": "https://josantonius.com/",
+   "license": "GPL-2.0+",
+   "hooks-controller": "Hooks",
+   "extra": {
+      "a-custom-field": "Value",
+      "another-custom-field": "Value",
+      "more-custom-fields": "Value"
+   }
+}

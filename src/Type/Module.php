@@ -15,6 +15,6 @@ use Eliasis\Complement\Complement;
 /**
  * Module complement.
  */
-final class Module extends Complement {
-
+final class Module extends Complement
+{
 }

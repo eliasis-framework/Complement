@@ -11,13 +11,12 @@
 namespace Eliasis\Complement\Traits;
 
 use Eliasis\Framework\App;
-use Josantonius\Json\Json;
 
 /**
  * Complement requests handler class.
  */
-trait ComplementRequest {
-
+trait ComplementRequest
+{
     /**
      * Request parameters.
      *
@@ -25,101 +24,108 @@ trait ComplementRequest {
      */
     protected static $config;
 
-	/**
-	 * HTTP request handler.
-	 *
-	 * @param string $type → complement type
-	 *
-	 * @uses \Eliasis\Framework\App::setCurrentID()
-	 */
-	public static function requestHandler( $type ) {
-		if ( ! self::validateRequest( $type ) ) {
-			return false;
-		}
-
-		App::setCurrentID( self::$config['app'] );
-
-		self::loadExternalComplements();
-
-		switch ( self::$config['request'] ) {
-			case 'load-complements':
-				self::complementsLoadRequest();
-				break;
-			case 'change-state':
-				self::changeStateRequest();
-				break;
-			case 'install':
-				self::installRequest();
-				break;
-            case 'update':
-                self::installRequest(true);
-                break;
-			case 'uninstall':
-				self::uninstallRequest();
-				break;
-			default:
-				self::$errors[] = [
-					'message' => 'Unknown request: ' . self::$config['request'],
-				];
-				break;
-		}
-
-		die;
-	}
-
-	/**
-	 * Validate the request.
-	 *
-	 * @param string $type → complement type
+    /**
+     * HTTP request handler.
      *
-     * @return boolean
-	 */
-	public static function validateRequest( $type ) {
-		$hasValidParams = isset(
-            $_POST['id'],
-			$_POST['app'],
-			$_POST['external'],
-			$_POST['request'],
-			$_POST['complement'],
-			$_POST['nonce'],
-            $_POST['filter'],
-            $_POST['sort'],
-			$_SESSION['efc'],
-			$_SERVER['HTTP_X_REQUESTED_WITH']
-		);
-
-		if ( ! $hasValidParams || !self::sanitizeParams() ) {
-			return false;
-		}
-
-        self::sanitizeParams();
-
-        if ( self::$config['complement'] !== $type ) {
+     * @param string $type → complement type
+     *
+     * @uses \Eliasis\Framework\App::setCurrentID()
+     */
+    public static function requestHandler($type)
+    {
+        if (! self::validateRequest($type)) {
             return false;
         }
 
-		$isAjaxRequest = $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+        App::setCurrentID(self::$config['app']);
 
-		$isValidNonce = self::$config['nonce'] === $_SESSION['efc'];
+        self::loadExternalComplements();
 
-		if ( ! $isAjaxRequest || ! $isValidNonce ) {
-			return false;
-		}
+        switch (self::$config['request']) {
+            case 'load-complements':
+                self::complementsLoadRequest();
+                break;
+            case 'change-state':
+                self::changeStateRequest();
+                break;
+            case 'install':
+                self::installRequest();
+                break;
+            case 'update':
+                self::installRequest(true);
+                break;
+            case 'uninstall':
+                self::uninstallRequest();
+                break;
+            default:
+                self::$errors[] = [
+                    'message' => 'Unknown request: ' . self::$config['request'],
+                ];
+                echo json_encode(['errors' => self::$errors]);
+                break;
+        }
 
-		return true;
-	}
+        if (empty(App::getOption('development-environment'))) {
+            die;
+        }
+    }
+
+    /**
+     * Validate the request.
+     *
+     * @param string $type → complement type
+     *
+     * @return bool
+     */
+    public static function validateRequest($type)
+    {
+        $hasValidParams = isset(
+            $_POST['id'],
+            $_POST['app'],
+            $_POST['external'],
+            $_POST['request'],
+            $_POST['complement'],
+            $_POST['nonce'],
+            $_POST['filter'],
+            $_POST['sort'],
+            $_SESSION['efc'],
+            $_SERVER['HTTP_X_REQUESTED_WITH']
+        );
+
+        if (! $hasValidParams || ! self::sanitizeParams()) {
+            return false;
+        }
+
+        self::sanitizeParams();
+
+        if (self::$config['complement'] !== $type) {
+            return false;
+        }
+
+        $isAjaxRequest = $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+
+        $isValidNonce = self::$config['nonce'] === $_SESSION['efc'];
+
+        if (! $isAjaxRequest || ! $isValidNonce) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Sanitize request parameters.
      *
      * @since 1.1.0
      *
-     * @return boolean
+     * @return bool
      */
-    public static function sanitizeParams() {
-        
-        foreach ( $_POST['external'] as $complement => $url ) {
-            $url = filter_var( $url, FILTER_VALIDATE_URL );
+    public static function sanitizeParams()
+    {
+        self::$config['external'] = [];
+
+        foreach ($_POST['external'] as $complement => $url) {
+            $url = filter_var($url, FILTER_VALIDATE_URL);
             if ($url === false) {
                 return false;
             }
@@ -128,8 +134,8 @@ trait ComplementRequest {
 
         $params = ['id', 'app', 'request', 'filter', 'sort', 'nonce', 'complement'];
 
-        foreach ( $params as $param ) {
-            $value = filter_var( $_POST[$param], FILTER_SANITIZE_STRING );
+        foreach ($params as $param) {
+            $value = filter_var($_POST[$param], FILTER_SANITIZE_STRING);
             if ($value === false) {
                 return false;
             }
@@ -139,127 +145,119 @@ trait ComplementRequest {
         return true;
     }
 
-	/**
-	 * Load external complements.
-	 *
-	 * @uses \Eliasis\Complement\Complement->$instances
-	 * @uses \Eliasis\Complement\Complement::load()
-	 * @uses \Eliasis\Complement\Complement::$errors
-	 */
-	private static function loadExternalComplements() {
+    /**
+     * Load external complements.
+     *
+     * @uses \Eliasis\Complement\Complement->$instances
+     * @uses \Eliasis\Complement\Complement::load()
+     * @uses \Eliasis\Complement\Complement::$errors
+     */
+    private static function loadExternalComplements()
+    {
+        $currentID = App::getCurrentID();
+        $complement = self::getType();
+        $external = self::$config['external'];
 
-		$currentID = App::getCurrentID();
-		$complement = self::getType();
-		$external = self::$config['external'];
+        $complements = array_keys(self::$instances[$currentID][$complement]);
 
-		$complements = array_keys( self::$instances[ $currentID ][ $complement ] );
+        foreach ($external as $complement => $url) {
+            if (! in_array($complement, $complements, true)) {
+                self::load($url);
+            }
 
-		foreach ( $external as $complement => $url ) {
+            self::$complement()->setOption('config-url', $url);
+        }
+    }
 
-			if ( ! in_array( $complement, $complements, true ) ) {
-				self::load( $url );
-			}
+    /**
+     * Complements load request.
+     *
+     * @uses \Eliasis\Complement\Complement::getList()
+     * @uses \Eliasis\Complement\Complement::$errors
+     */
+    private static function complementsLoadRequest()
+    {
+        $complements = self::getList(self::$config['filter'], self::$config['sort']);
 
-			self::$complement()->setOption( 'config-url', $url );
-		}
-	}
+        $response = [
+            'complements' => array_values($complements),
+            'errors' => self::$errors,
+        ];
 
-	/**
-	 * Complements load request.
-	 *
-	 * @uses \Eliasis\Complement\Complement::getInfo()
-	 * @uses \Eliasis\Complement\Complement::$errors
-	 */
-	private static function complementsLoadRequest() {
+        echo json_encode($response);
+    }
 
-		$complements = self::getInfo( self::$config['filter'], self::$config['sort'] );
+    /**
+     * Change state request.
+     *
+     * @uses \Eliasis\Complement\Complement::getInstance()
+     * @uses \Eliasis\Complement\Traits\ComplementState->changeState()
+     * @uses \Eliasis\Complement\Complement::$errors
+     */
+    private static function changeStateRequest()
+    {
+        self::$id = self::$config['id'];
+        $that = self::getInstance();
+        $state = $that->changeState();
 
-		echo json_encode(
-			[
-				'complements' => array_values( $complements ),
-				'errors' => self::$errors,
-			]
-		);
+        $response = [
+            'state' => $state,
+            'errors' => self::$errors,
+        ];
 
-		die;
-	}
+        echo json_encode($response);
+    }
 
-	/**
-	 * Change state request.
-	 *
-	 * @uses \Eliasis\Complement\Complement::getInstance()
-	 * @uses \Eliasis\Complement\Traits\ComplementState->changeState()
-	 * @uses \Eliasis\Complement\Complement::$errors
-	 */
-	private static function changeStateRequest() {
-
-		self::$id = self::$config['id'];
-		$that = self::getInstance();
-		$state = $that->changeState();
-
-		echo json_encode(
-			[
-				'state' => $state,
-				'errors' => self::$errors,
-			]
-		);
-
-		die;
-	}
-
-	/**
-	 * Install request.
+    /**
+     * Install request.
      *
      * @param string $isUpdate → if it is an update
      *
-	 * @uses \Eliasis\Complement\Complement::getInstance()
-	 * @uses \Eliasis\Complement\Traits\ComplementImport->install()
-	 * @uses \Eliasis\Complement\Complement::$errors
-	 */
-	private static function installRequest($isUpdate = false) {
+     * @uses \Eliasis\Complement\Complement::getInstance()
+     * @uses \Eliasis\Complement\Traits\ComplementImport->install()
+     * @uses \Eliasis\Complement\Complement::$errors
+     */
+    private static function installRequest($isUpdate = false)
+    {
+        self::$id = self::$config['id'];
 
-		self::$id = self::$config['id'];
+        $that = self::getInstance();
 
-		$that = self::getInstance();
+        $that->install();
 
-		$state = $that->install();
+        $that->setState($isUpdate ? 'active' : 'inactive');
 
-        $that->setState($isUpdate ? 'active' : $state);
-
-        $complements = self::getInfo( self::$config['filter'], self::$config['sort'] );
+        $complements = self::getList(self::$config['filter'], self::$config['sort']);
 
         $complement = $complements[self::$id];
 
-		echo json_encode(
-			[
-				'complement' => $complement,
-				'errors' => self::$errors,
-			]
-		);
+        $response = [
+            'complement' => $complement,
+            'errors' => self::$errors,
+        ];
 
-		die;
-	}
+        echo json_encode($response);
+    }
 
-	/**
-	 * Uninstall request.
-	 *
-	 * @uses \Eliasis\Complement\Complement::getInstance()
-	 * @uses \string ComplementImport->remove()
-	 * @uses \Eliasis\Complement\Complement::$errors
-	 */
-	private static function uninstallRequest() {
+    /**
+     * Uninstall request.
+     *
+     * @uses \Eliasis\Complement\Complement::getInstance()
+     * @uses \string ComplementImport->remove()
+     * @uses \Eliasis\Complement\Complement::$errors
+     */
+    private static function uninstallRequest()
+    {
+        self::$id = self::$config['id'];
+        $that = self::getInstance();
+        $that->remove();
+        $state = 'uninstalled';
 
-		self::$id = self::$config['id'];
-		$that = self::getInstance();
-		$state = $that->remove();
+        $response = [
+            'state' => $state,
+            'errors' => self::$errors,
+        ];
 
-		echo json_encode(
-			[
-				'state' => $state,
-				'errors' => self::$errors,
-			]
-		);
-
-		die;
-	}
+        echo json_encode($response);
+    }
 }

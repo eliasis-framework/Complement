@@ -7,13 +7,7 @@ new Vue({
   data () {
     return {
       items: [],
-      translations: {
-        active: 'active',
-        activate: 'activate',
-        install: 'install',
-        update: 'update',
-        uninstall: 'uninstall'
-      },
+      translations: null,
       delay: 1000,
       complement: null,
       url: null,
@@ -25,6 +19,7 @@ new Vue({
     }
   },
   mounted: function mounted () {
+    this.translations = this.options.translations
     this.sendRequest('load-complements', null, null)
   },
   methods: {
@@ -39,7 +34,8 @@ new Vue({
         'request': options['request'],
         'external': options['external'],
         'language': options['language'],
-        'complement': options['complement']
+        'complement': options['complement'],
+        'translations': options['translations']
       }
     },
     sendRequest: function sendRequest(request, state, index) {
