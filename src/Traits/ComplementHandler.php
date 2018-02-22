@@ -278,7 +278,7 @@ trait ComplementHandler
 
         $repository = rtrim($this->complement['url-import'], '/') . "/$file";
 
-        $default = $url . 'master/src/public/images/default.png';
+        $default = $url . 'master/src/static/images/default.png';
 
         if (File::exists($filepath)) {
             $this->complement['image'] = $directory;
