@@ -1,6 +1,6 @@
 # Eliasis PHP Framework
 
-[![Packagist](https://img.shields.io/packagist/v/Eliasis-Framework/Complement.svg)](https://packagist.org/packages/Eliasis-Framework/Complement) [![Downloads](https://img.shields.io/packagist/dt/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement) [![License](https://img.shields.io/packagist/l/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ccc95bd114a451bb4fc2ef1884b0a66)](https://www.codacy.com/app/Josantonius/Complement?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Eliasis-Framework/Complement&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/Eliasis-Framework/Complement.svg?branch=master)](https://travis-ci.org/Eliasis-Framework/Complement) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![codecov](https://codecov.io/gh/Eliasis-Framework/Complement/branch/master/graph/badge.svg)](https://codecov.io/gh/Eliasis-Framework/Complement)
+[![Packagist](https://img.shields.io/packagist/v/eliasis-framework/complement.svg)](https://packagist.org/packages/eliasis-framework/complement) [![Downloads](https://img.shields.io/packagist/dt/eliasis-framework/complement.svg)](https://github.com/eliasis-framework/complement) [![License](https://img.shields.io/packagist/l/eliasis-framework/complement.svg)](https://github.com/eliasis-framework/complement/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ccc95bd114a451bb4fc2ef1884b0a66)](https://www.codacy.com/app/Josantonius/complement?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=eliasis-framework/complement&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/eliasis-framework/complement.svg?branch=master)](https://travis-ci.org/eliasis-framework/complement) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![codecov](https://codecov.io/gh/eliasis-framework/complement/branch/master/graph/badge.svg)](https://codecov.io/gh/eliasis-framework/complement)
 
 [English version](README.md)
 
@@ -27,23 +27,23 @@ Este framework es soportado por versiones de **PHP 5.6** o superiores y es compa
 
 Puedes instalar **Eliasis PHP Framework** en tu proyecto utilizando [Composer](http://getcomposer.org/download/). Si vas a empezar un nuevo proyecto, recomendamos utilizar nuestra [app básica](https://github.com/eliasis-framework/app) como punto de partida. Para aplicaciones existentes puedes ejecutar lo siguiente:
 
-    $ composer require Eliasis-Framework/Complement
+    $ composer require eliasis-framework/complement
 
 El comando anterior sólo instalará los archivos necesarios, si prefieres **descargar todo el código fuente** puedes utilizar:
 
-    $ composer require Eliasis-Framework/Complement --prefer-source
+    $ composer require eliasis-framework/complement --prefer-source
 
 ## Documentación
 
-[Documentación y ejemplos de uso](https://eliasis-framework.github.io/Complement/v1.1.1/lang/es/).
+[Documentación y ejemplos de uso](https://eliasis-framework.github.io/complement/v1.1.1/lang/es/).
 
 ## Tests 
 
 Para ejecutar las [pruebas](tests) necesitarás [Composer](http://getcomposer.org/download/) y seguir los siguientes pasos:
 
-    $ git clone https://github.com/Eliasis-Framework/Complement.git
+    $ git clone https://github.com/eliasis-framework/complement.git
     
-    $ cd Eliasis
+    $ cd complement
 
     $ bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
 
@@ -76,7 +76,7 @@ Ejecutar todas las pruebas anteriores:
 ## Contribuir
 
 Si deseas colaborar, puedes echar un vistazo a la lista de
-[issues](https://github.com/Eliasis-Framework/Complement/issues) o [tareas pendientes](#-tareas-pendientes).
+[issues](https://github.com/eliasis-framework/complement/issues) o [tareas pendientes](#-tareas-pendientes).
 
 **Pull requests**
 

@@ -5,7 +5,7 @@
  * @author    Josantonius <hello@josantonius.com>
  * @copyright 2017 - 2018 (c) Josantonius - Eliasis Complement
  * @license   https://opensource.org/licenses/MIT - The MIT License (MIT)
- * @link      https://github.com/Eliasis-Framework/Complement
+ * @link      https://github.com/eliasis-framework/complement
  * @since     1.0.8
  */
 use Eliasis\Framework\View;

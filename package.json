@@ -1,6 +1,6 @@
 {
-  "name": "complement",
-  "version": "1.1.0",
+  "name": "eliasis-framework/complement",
+  "version": "1.1.1",
   "description": "PHP library for adding addition of complements for Eliasis Framework.",
   "main": "gulpfile.js",
   "directories": {
@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eliasis-Framework/Complement.git"
+    "url": "git+https://github.com/eliasis-framework/complement.git"
   },
   "author": "Josantonius",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Eliasis-Framework/Complement/issues"
+    "url": "https://github.com/eliasis-framework/complement/issues"
   },
-  "homepage": "https://github.com/Eliasis-Framework/Complement#readme"
+  "homepage": "https://github.com/eliasis-framework/complement#readme"
 }

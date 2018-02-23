@@ -1,6 +1,6 @@
 # Eliasis PHP Framework
 
-[![Packagist](https://img.shields.io/packagist/v/Eliasis-Framework/Complement.svg)](https://packagist.org/packages/Eliasis-Framework/Complement) [![Downloads](https://img.shields.io/packagist/dt/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement) [![License](https://img.shields.io/packagist/l/Eliasis-Framework/Complement.svg)](https://github.com/Eliasis-Framework/Complement/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ccc95bd114a451bb4fc2ef1884b0a66)](https://www.codacy.com/app/Josantonius/Complement?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Eliasis-Framework/Complement&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/Eliasis-Framework/Complement.svg?branch=master)](https://travis-ci.org/Eliasis-Framework/Complement) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![codecov](https://codecov.io/gh/Eliasis-Framework/Complement/branch/master/graph/badge.svg)](https://codecov.io/gh/Eliasis-Framework/Complement)
+[![Packagist](https://img.shields.io/packagist/v/eliasis-framework/complement.svg)](https://packagist.org/packages/eliasis-framework/complement) [![Downloads](https://img.shields.io/packagist/dt/eliasis-framework/complement.svg)](https://github.com/eliasis-framework/complement) [![License](https://img.shields.io/packagist/l/eliasis-framework/complement.svg)](https://github.com/eliasis-framework/complement/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ccc95bd114a451bb4fc2ef1884b0a66)](https://www.codacy.com/app/Josantonius/complement?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=eliasis-framework/complement&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/eliasis-framework/complement.svg?branch=master)](https://travis-ci.org/eliasis-framework/complement) [![PSR2](https://img.shields.io/badge/PSR-2-1abc9c.svg)](http://www.php-fig.org/psr/psr-2/) [![PSR4](https://img.shields.io/badge/PSR-4-9b59b6.svg)](http://www.php-fig.org/psr/psr-4/) [![codecov](https://codecov.io/gh/eliasis-framework/complement/branch/master/graph/badge.svg)](https://codecov.io/gh/eliasis-framework/complement)
 
 [Versión en español](README-ES.md)
 
@@ -29,23 +29,23 @@ You can install **Eliasis PHP Framework** into your project using [Composer](htt
 recommend using the [basic app](https://github.com/eliasis-framework/app) as
 a starting point. For existing applications you can run the following:
 
-    $ composer require Eliasis-Framework/Complement
+    $ composer require eliasis-framework/complement
 
 The previous command will only install the necessary files, if you prefer to **download the entire source code** you can use:
 
-    $ composer require Eliasis-Framework/Complement --prefer-source
+    $ composer require eliasis-framework/complement --prefer-source
 
 ## Documentation
 
-[Documentation and examples of use](https://eliasis-framework.github.io/Complement/v1.1.1/lang/en/).
+[Documentation and examples of use](https://eliasis-framework.github.io/complement/v1.1.1/lang/en/).
 
 ## Tests 
 
 To run [tests](tests) you just need [composer](http://getcomposer.org/download/) and to execute the following:
 
-    $ git clone https://github.com/Eliasis-Framework/Complement.git
+    $ git clone https://github.com/eliasis-framework/complement.git
     
-    $ cd Eliasis
+    $ cd complement
 
     $ bash bin/install-wp-tests.sh wordpress_test root '' localhost latest
 
@@ -78,7 +78,7 @@ Run all previous tests:
 ## Contribute
 
 If you would like to help, please take a look at the list of
-[issues](https://github.com/Eliasis-Framework/Complement/issues) or the [To Do](#-todo) checklist.
+[issues](https://github.com/eliasis-framework/complement/issues) or the [To Do](#-todo) checklist.
 
 **Pull requests**
 
