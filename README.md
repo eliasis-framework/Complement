@@ -74,6 +74,10 @@ Run all previous tests:
 - [ ] Improve PHP tests.
 - [ ] Improve documentation.
 - [ ] Refactor code for disabled code style rules. See [phpmd.xml](phpmd.xml) and [.php_cs.dist](.php_cs.dist).
+- [ ] Add documentation for `component-load` action hook.
+- [ ] Add documentation for `module-load` action hook.
+- [ ] Add documentation for `plugin-load` action hook.
+- [ ] Add documentation for `template-load` action hook.
 
 ## Contribute
 

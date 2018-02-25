@@ -72,6 +72,10 @@ Ejecutar todas las pruebas anteriores:
 - [ ] Mejorar pruebas PHP.
 - [ ] Mejorar documentación.
 - [ ] Refactorizar código para las reglas de estilo de código deshabilitadas. Ver [phpmd.xml](phpmd.xml) y [.php_cs.dist](.php_cs.dist).
+- [ ] Agregar documentación para el gancho de acción: `component-load`.
+- [ ] Agregar documentación para el gancho de acción: `module-load`.
+- [ ] Agregar documentación para el gancho de acción: `plugin-load`.
+- [ ] Agregar documentación para el gancho de acción: `template-load`.
 
 ## Contribuir
 
