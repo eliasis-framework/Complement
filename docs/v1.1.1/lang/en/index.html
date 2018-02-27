@@ -3263,7 +3263,7 @@
                             composer require Josantonius/Database
                         </pre>
 
-                        <p>Eliasis will connect to the database using the first configuration found in the configuration parameter "db":</p>
+                        <p>Eliasis will connect to the database using the first configuration found in the app configuration parameter "db":</p>
 
                         <div class="box">
                             <ul class="directory-list">
@@ -3278,15 +3278,18 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="folder">config</li>
+                                        <li class="folder highlight">config
+                                            <ul>
+                                                <li><a class="highlight" href="#config-database-php">database.php</a></li>
+                                            </ul>
+                                        </li>
                                         <li class="folder">modules
                                             <ul>
                                                 <li class="folder">basic-module
                                                     <ul>
-                                                        <li class="folder highlight">config
+                                                        <li class="folder">config
                                                             <ul>
                                                                 <li><a href="#config-assets-php">assets.php</a>
-                                                                <li><a class="highlight" href="#config-database-php">database.php</a></li>
                                                                 <li><a href="#config-namespaces-php">namespaces.php</a></li>
                                                                 <li><a href="#config-paths-php">paths.php</a></li>
                                                                 <li><a href="#config-settings-php">settings.php</a></li>
@@ -3368,7 +3371,7 @@
 
                         <pre id="config-database-php" class="brush: php">
                             /**
-                             * basic-module/config/database.php
+                             * config/database.php
                              */
                             return [
                                 'db' => [
@@ -3378,15 +3381,23 @@
                                         'user' => 'db_user',
                                         'name' => 'db_name',
                                         'password' => 'db_password',
-                                        'settings' => ['charset' => DB_CHARSET],
+                                        'settings' => ['charset' => 'utf8'],
+                                    ],
+                                    'api-rest' => [
+                                        'provider' => 'PDOprovider',
+                                        'host' => 'localhost',
+                                        'user' => 'db_user',
+                                        'name' => 'db_name',
+                                        'password' => 'db_password',
+                                        'settings' => ['charset' => 'utf8'],
                                     ],
                                 ],
                             ];
                         </pre>
 
-                        <p>You can access the database instance using the "db" attribute in the models methods:</p>
+                        p>You can access the database instance using the "db" attribute in the models methods. To change the database connection simply use the "changeDatabaseConnection()" model method.</p>
                         
-                        <pre id="src-model-home-php" class="brush: php highlight: [18,19,20,22,23,24,25,26,27,28,29,30]">
+                        <pre id="src-model-home-php" class="brush: php highlight: [18,19,20,22,24,26,27,28,29,30,31,32]">
                             /**
                              * basic-module/src/Model/Home.php
                              */
@@ -3407,6 +3418,8 @@
                                     $this->db->create($params)
                                              ->table('test')
                                              ->execute();
+
+                                    $this-model->changeDatabaseConnection('api-rest');
 
                                     $this->db->create($params)
                                              ->table('test_two')
@@ -3493,7 +3506,11 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="folder">config</li>
+                                        <li class="folder">config
+                                            <ul>
+                                                <li><a href="#config-database-php">database.php</a></li>
+                                            </ul>
+                                        </li>
                                         <li class="folder">modules
                                             <ul>
                                                 <li class="folder">basic-module
@@ -3501,7 +3518,6 @@
                                                         <li class="folder highlight">config
                                                             <ul>
                                                                 <li><a href="#config-assets-php">assets.php</a>
-                                                                <li><a href="#config-database-php">database.php</a></li>
                                                                 <li><a href="#config-namespaces-php">namespaces.php</a></li>
                                                                 <li><a href="#config-paths-php">paths.php</a></li>
                                                                 <li><a class="highlight" href="#set-hooks-php">set-hooks.php</a></li>
@@ -3822,7 +3838,11 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li class="folder">config</li>
+                                        <li class="folder">config
+                                            <ul>
+                                                <li><a href="#config-database-php">database.php</a></li>
+                                            </ul>
+                                        </li>
                                         <li class="folder">modules
                                             <ul>
                                                 <li class="folder">basic-module
@@ -3830,7 +3850,6 @@
                                                         <li class="folder highlight">config
                                                             <ul>
                                                                 <li><a href="#config-assets-php">assets.php</a>
-                                                                <li><a href="#config-database-php">database.php</a></li>
                                                                 <li><a href="#config-namespaces-php">namespaces.php</a></li>
                                                                 <li><a href="#config-paths-php">paths.php</a></li>
                                                                 <li><a href="#set-hooks-php">set-hooks.php</a></li>
