@@ -36,10 +36,10 @@ trait ComplementAction
      * @var array
      */
     protected static $defaultAction = [
-        'component' => '',
-        'plugin' => '',
-        'module' => '',
-        'template' => '',
+        'component' => 'activation',
+        'plugin' => 'activation',
+        'module' => 'activation',
+        'template' => 'activation',
     ];
 
     /**

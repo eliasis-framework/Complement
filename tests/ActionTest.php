@@ -91,15 +91,11 @@ final class ActionTest extends TestCase
 
         $this->assertSame($action, $currentAction);
 
-        ob_start();
-
         $complement::AdvancedLocalComplement()->doAction($action);
 
-        $response = ob_get_contents();
+        global $activation;
 
-        ob_end_clean();
-
-        $this->assertSame("Response from $action hook", $response);
+        $this->assertSame("Response from $action hook", $activation);
     }
 
     /**
@@ -215,15 +211,11 @@ final class ActionTest extends TestCase
 
         $complement::AdvancedLocalComplement()->setState('inactive');
 
-        ob_start();
-
         $complement::AdvancedLocalComplement()->changeState();
 
-        $response = ob_get_contents();
+        global $activation;
 
-        ob_end_clean();
-
-        $this->assertSame('Response from activation hook', $response);
+        $this->assertSame('Response from activation hook', $activation);
     }
 
     /**

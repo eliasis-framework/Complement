@@ -108,11 +108,11 @@ final class LoadLocalItemsFromEliasisTest extends TestCase
         $this->assertCount(2, $complementsStates);
 
         $this->assertArrayHasKey('BasicLocalComplement', $complementsStates);
-        $this->assertSame($complementsStates['BasicLocalComplement']['action'], '');
+        $this->assertSame($complementsStates['BasicLocalComplement']['action'], 'activation');
         $this->assertSame($complementsStates['BasicLocalComplement']['state'], 'inactive');
 
         $this->assertArrayHasKey('AdvancedLocalComplement', $complementsStates);
-        $this->assertSame($complementsStates['AdvancedLocalComplement']['action'], '');
+        $this->assertSame($complementsStates['AdvancedLocalComplement']['action'], 'activation');
         $this->assertSame($complementsStates['AdvancedLocalComplement']['state'], 'active');
     }
 }

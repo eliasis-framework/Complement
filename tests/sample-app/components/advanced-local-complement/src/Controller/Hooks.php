@@ -22,7 +22,9 @@ class Hooks extends Controller
      */
     public function activation()
     {
-        echo 'Response from activation hook';
+        global $activation;
+
+        $activation = 'Response from activation hook';
     }
 
     /**
