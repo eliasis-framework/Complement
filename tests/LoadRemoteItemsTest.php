@@ -81,7 +81,7 @@ final class LoadRemoteItemsTest extends TestCase
 
         $type = $this->type;
 
-        File::delete($this->root . "{$type}s/.{$type}s-states.jsond");
+        File::delete($this->root . "{$type}s/.{$type}s-states.json");
 
         $app::run($this->root);
     }
@@ -99,7 +99,7 @@ final class LoadRemoteItemsTest extends TestCase
 
         $this->assertTrue(
             $complement::load(
-                $this->root . 'remote/remote-complement.jsond'
+                $this->root . 'remote/remote-complement.json'
             )
         );
 
@@ -122,7 +122,7 @@ final class LoadRemoteItemsTest extends TestCase
         $complement = $this->complement;
 
         $complement::load(
-            $this->root . 'remote/wrong-configuration.jsond'
+            $this->root . 'remote/wrong-configuration.json'
         );
     }
 }

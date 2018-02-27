@@ -119,7 +119,7 @@ final class RequestTest extends TestCase
     {
         $complement = $this->complement;
 
-        $complement::load($this->root . 'remote/remote-complement.jsond');
+        $complement::load($this->root . 'remote/remote-complement.json');
 
         ob_start();
 
@@ -145,7 +145,7 @@ final class RequestTest extends TestCase
 
         $type = $this->type;
 
-        File::delete($this->root . "{$type}s/.{$type}s-states.jsond");
+        File::delete($this->root . "{$type}s/.{$type}s-states.json");
     }
 
     /**
@@ -189,7 +189,7 @@ final class RequestTest extends TestCase
 
         $complement = $this->complement;
 
-        $complement::load($this->root . 'remote/remote-complement.jsond');
+        $complement::load($this->root . 'remote/remote-complement.json');
 
         ob_start();
 
@@ -263,7 +263,7 @@ final class RequestTest extends TestCase
 
         $type = $this->type;
 
-        File::delete($this->root . "{$type}s/.{$type}s-states.jsond");
+        File::delete($this->root . "{$type}s/.{$type}s-states.json");
     }
 
     /**

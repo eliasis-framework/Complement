@@ -75,7 +75,7 @@ final class CurrentIdTest extends TestCase
 
         $complement = $this->complement;
 
-        $complement::load($this->root . 'remote/remote-complement.jsond');
+        $complement::load($this->root . 'remote/remote-complement.json');
     }
 
     /**

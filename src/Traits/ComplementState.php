@@ -229,6 +229,6 @@ trait ComplementState
         $type = self::getType();
         $complementType = self::getType('strtoupper');
 
-        return App::$complementType() . '.' . $type . '-states.jsond';
+        return App::$complementType() . '.' . $type . '-states.json';
     }
 }

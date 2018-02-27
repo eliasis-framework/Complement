@@ -75,7 +75,7 @@ final class LoadLocalItemsFromEliasisTest extends TestCase
 
         $type = $this->type;
 
-        File::delete($this->root . "{$type}s/.{$type}s-states.jsond");
+        File::delete($this->root . "{$type}s/.{$type}s-states.json");
 
         $app::run($this->root);
     }
@@ -102,7 +102,7 @@ final class LoadLocalItemsFromEliasisTest extends TestCase
     {
         $type = $this->type;
 
-        $file = $this->root . "{$type}s/.{$type}s-states.jsond";
+        $file = $this->root . "{$type}s/.{$type}s-states.json";
         $complementsStates = Json::fileToArray($file)['Default'];
 
         $this->assertCount(2, $complementsStates);

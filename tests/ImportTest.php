@@ -84,7 +84,7 @@ final class ImportTest extends TestCase
 
         $complement = $this->complement;
 
-        $complement::load($this->root . 'remote/remote-complement.jsond');
+        $complement::load($this->root . 'remote/remote-complement.json');
 
         $this->assertTrue(
             $complement::RemoteComplement()->install()

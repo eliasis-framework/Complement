@@ -84,7 +84,7 @@ final class ConfigurationFileTest extends TestCase
     {
         $type = $this->type;
 
-        File::delete($this->root . "{$type}s/.{$type}s-states.jsond");
+        File::delete($this->root . "{$type}s/.{$type}s-states.json");
 
         $complement = $this->complement;
 
@@ -161,7 +161,7 @@ final class ConfigurationFileTest extends TestCase
 
         $this->assertTrue(
             $complement::load(
-                $this->root . 'remote/remote-complement.jsond'
+                $this->root . 'remote/remote-complement.json'
             )
         );
 

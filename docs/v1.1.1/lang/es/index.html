@@ -325,7 +325,7 @@
                                             <ul>
                                                 <li class="folder highlight">basic-component
                                                     <ul>
-                                                        <li><a class="highlight" href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a class="highlight" href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -335,7 +335,7 @@
                                             <ul>
                                                 <li class="folder highlight">basic-module
                                                     <ul>
-                                                        <li><a class="highlight" href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a class="highlight" href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -344,7 +344,7 @@
                                             <ul>
                                                 <li class="folder highlight">basic-plugin
                                                     <ul>
-                                                        <li><a class="highlight" href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a class="highlight" href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -355,7 +355,7 @@
                                             <ul>
                                                 <li class="folder highlight">basic-template
                                                     <ul>
-                                                        <li><a class="highlight" href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a class="highlight" href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -368,9 +368,9 @@
 
                         <p>Los parámetros básicos de los archivos de configuración son los siguientes:</p>
 
-                        <pre id="basic-component-jsond" id="basic-component-jsond" class="brush: php">
+                        <pre id="basic-component-json" id="basic-component-json" class="brush: php">
                             /**
-                             * components/basic-component/basic-component.jsond
+                             * components/basic-component/basic-component.json
                              */
                             
                             {
@@ -386,7 +386,7 @@
 
                         <pre class="brush: php">
                             /**
-                             * modules/basic-module/basic-module.jsond
+                             * modules/basic-module/basic-module.json
                              */
                             
                             {
@@ -400,9 +400,9 @@
                             }
                         </pre>
 
-                        <pre id="basic-plugin-jsond" class="brush: php">
+                        <pre id="basic-plugin-json" class="brush: php">
                             /**
-                             * plugins/basic-plugin/basic-plugin.jsond
+                             * plugins/basic-plugin/basic-plugin.json
                              */
                             
                             {
@@ -416,9 +416,9 @@
                             }
                         </pre>
 
-                        <pre id="basic-template-jsond" class="brush: php">
+                        <pre id="basic-template-json" class="brush: php">
                             /**
-                             * templates/basic-template/basic-template.jsond
+                             * templates/basic-template/basic-template.json
                              */
                             
                             {
@@ -436,7 +436,7 @@
 
                         <pre class="brush: php highlight: [13,14,15,16,17,18,19,20]">
                             /**
-                             * modules/basic-module/basic-module.jsond
+                             * modules/basic-module/basic-module.json
                              */
                             
                             {
@@ -529,9 +529,9 @@
                         <p>También puedes cargar complementos remotos en una aplicación con Eliasis.
                         </p>
 
-                        <pre id="remote-complement-jsond" class="brush: php highlight: [13,14,15,16,17,18,19,20,21,22]">
+                        <pre id="remote-complement-json" class="brush: php highlight: [13,14,15,16,17,18,19,20,21,22]">
                             /**
-                             * https://site.com/remote-complement.jsond
+                             * https://site.com/remote-complement.json
                              */
                             
                             {
@@ -547,7 +547,7 @@
                                   "remote-complement": {
                                      "0": "LICENSE",
                                      "1": "composer.json",
-                                     "2": "remote-complement.jsond",
+                                     "2": "remote-complement.json",
                                      "config": [],
                                      "public": [],
                                      "src": []
@@ -557,12 +557,12 @@
                         </pre>
 
                         <pre class="brush: php">
-                            Module::load('https://site.com/remote-complement.jsond');
+                            Module::load('https://site.com/remote-complement.json');
                         </pre>
 
                         <p>Para instalar complementos remotos deberás especificar la url del directorio base desde el que se importará (url-import) y la estructura de los ficheros (installation-files) a importar.<br><br>Una vez cargado el complemento puedes instalarlo utilizando el método install().</p>
 
-                        <pre id="remote-complement-jsond" class="brush: php">
+                        <pre id="remote-complement-json" class="brush: php">
                             Module::RemoteComplement()->install();
                         </pre>
 
@@ -579,7 +579,7 @@
                                                 <li class="folder">src</li>
                                                 <li>composer.json</li>
                                                 <li>LICENSE</li>
-                                                <li>remote-complement.jsond</li>
+                                                <li>remote-complement.json</li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -645,7 +645,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -661,7 +661,7 @@
                                                                 <li><a class="highlight" href="#config-settings-php">settings.php</a></li>
                                                             </ul>
                                                         </li>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -670,7 +670,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -681,7 +681,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -767,7 +767,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -791,7 +791,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -800,7 +800,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -811,7 +811,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -851,7 +851,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -876,7 +876,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -885,7 +885,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -896,7 +896,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -958,9 +958,9 @@
 
                         <p>Eliasis buscará estos métodos en el controlador "Launcher". Para utilizar otro controlador, tan solo tienes que especificarlo en la configuración.</p>
 
-                        <pre id="basic-module-jsond" class="brush: php highlight: [16]">
+                        <pre id="basic-module-json" class="brush: php highlight: [16]">
                             /**
-                             * modules/basic-module/basic-module.jsond
+                             * modules/basic-module/basic-module.json
                              */
                             
                             {
@@ -993,7 +993,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1019,7 +1019,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1028,7 +1028,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1039,7 +1039,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1106,7 +1106,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1137,7 +1137,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1146,7 +1146,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1157,7 +1157,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1209,7 +1209,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1254,7 +1254,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1263,7 +1263,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1274,7 +1274,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1463,13 +1463,13 @@
                         <p>Cargar complemento remoto:</p>
                         
                         <pre class="brush: php">
-                            Module::load('https://site.com/remote-complement.jsond');
+                            Module::load('https://site.com/remote-complement.json');
                         </pre>
 
                         <p>Cargar complemento local:</p>
                         
                         <pre class="brush: php">
-                            Module::load('var/www/site.com/remote-complement.jsond');
+                            Module::load('var/www/site.com/remote-complement.json');
                         </pre>
 
                         <div class="intro2 clearfix">
@@ -1664,7 +1664,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1710,7 +1710,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1719,7 +1719,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1730,7 +1730,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -1938,9 +1938,9 @@
                             Module::render(
                                 'basic-module',
                                 [
-                                    'ComplementOne' => http:/example.org/complement-one.jsond',
-                                    'ComplementTwo' => http:/example.org/complement-two.jsond',
-                                    'ComplementThree' => http:/example.org/complement-three.jsond'
+                                    'ComplementOne' => http:/example.org/complement-one.json',
+                                    'ComplementTwo' => http:/example.org/complement-two.json',
+                                    'ComplementThree' => http:/example.org/complement-three.json'
                                 ]
                             ); 
                         </pre>
@@ -3007,7 +3007,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3068,7 +3068,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3077,7 +3077,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3088,7 +3088,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3264,7 +3264,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3326,7 +3326,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3335,7 +3335,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3346,7 +3346,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3479,7 +3479,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3542,7 +3542,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3551,7 +3551,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3562,7 +3562,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3807,7 +3807,7 @@
                                             <ul>
                                                 <li class="folder">basic-component
                                                     <ul>
-                                                        <li><a href="#basic-component-jsond">basic-component.jsond</a></li>
+                                                        <li><a href="#basic-component-json">basic-component.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3871,7 +3871,7 @@
                                                                     </ul>
                                                                 </li>
                                                             </ul>
-                                                        <li><a href="#basic-module-jsond">basic-module.jsond</a></li>
+                                                        <li><a href="#basic-module-json">basic-module.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3880,7 +3880,7 @@
                                             <ul>
                                                 <li class="folder">basic-plugin
                                                     <ul>
-                                                        <li><a href="#basic-plugin-jsond">basic-plugin.jsond</a></li>
+                                                        <li><a href="#basic-plugin-json">basic-plugin.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -3891,7 +3891,7 @@
                                             <ul>
                                                 <li class="folder">basic-template
                                                     <ul>
-                                                        <li><a href="#basic-template-jsond">basic-template.jsond</a></li>
+                                                        <li><a href="#basic-template-json">basic-template.json</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>

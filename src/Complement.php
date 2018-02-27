@@ -123,7 +123,7 @@ abstract class Complement
                 if (! $path->isDot() && $path->isDir()) {
                     $_path = Url::addBackSlash($path->getPath());
                     $slug = $path->getBasename();
-                    $file = $_path . $slug . '/' . $slug . '.jsond';
+                    $file = $_path . $slug . '/' . $slug . '.json';
                     if (! File::exists($file)) {
                         continue;
                     }
