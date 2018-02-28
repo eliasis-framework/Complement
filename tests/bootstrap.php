@@ -12,8 +12,6 @@ session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$activation = '';
-
 /**
  * Load theme and plugins for testing environment.
  */
@@ -32,3 +30,5 @@ require_once WP_TESTS_DIR . '/includes/functions.php';
 tests_add_filter('muplugins_loaded', '_manually_load_environment');
 
 require_once WP_TESTS_DIR . '/includes/bootstrap.php';
+
+$activation = '';
