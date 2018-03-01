@@ -70,12 +70,17 @@ trait ComplementAction
      * @param string $action
      *
      * @uses \Eliasis\Complement\Traits\ComplementState->$states
+     * @uses \Eliasis\Complement\Traits\ComplementState->setStates()
      *
      * @return string → complement action
      */
     public function setAction($action)
     {
-        return $this->states['action'] = $action;
+        $this->states['action'] = $action;
+
+        $this->setStates();
+
+        return $action;
     }
 
     /**

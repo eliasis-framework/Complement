@@ -1,7 +1,7 @@
 {
     "Default": {
         "BasicLocalComplement": {
-            "action": "activation",
+            "action": "",
             "state": "inactive"
         },
         "AdvancedLocalComplement": {
@@ -9,8 +9,7 @@
             "state": "active"
         },
         "RemoteComplement": {
-            "action": "",
-            "state": "uninstalled"
+            "action": ""
         }
     }
 }
