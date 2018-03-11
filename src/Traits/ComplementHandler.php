@@ -247,7 +247,10 @@ trait ComplementHandler
     private function getLanguage()
     {
         $wpLang = (function_exists('get_locale')) ? get_locale() : null;
-        $browserLang = @$_SERVER['HTTP_ACCEPT_LANGUAGE'] ?: null;
+        $browserLang = null;
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $browserLang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+        }
 
         return  substr($wpLang ?: $browserLang ?: 'en', 0, 2);
     }
