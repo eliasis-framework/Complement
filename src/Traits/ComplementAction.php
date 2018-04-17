@@ -142,6 +142,7 @@ trait ComplementAction
 
         Hook::getInstance(App::getCurrentID());
         Hook::doAction($type . '-load');
+        Hook::doAction('after-loading-' . $this->complement['slug'] . '-' . $type);
 
         if (in_array($action, self::$hooks, true)) {
             $this->doAction($action);

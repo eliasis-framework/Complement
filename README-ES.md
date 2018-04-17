@@ -76,6 +76,7 @@ Ejecutar todas las pruebas anteriores:
 - [ ] Agregar documentación para el gancho de acción: `module-load`.
 - [ ] Agregar documentación para el gancho de acción: `plugin-load`.
 - [ ] Agregar documentación para el gancho de acción: `template-load`.
+- [ ] Agregar documentación para el gancho de acción: `after-loading-{complement_name}-{complement_type}`.
 - [ ] Agregar documentación para los diferentes tipos soportados por Eliasis Complement y compatibles con Composer Installers.
 
 ## Contribuir

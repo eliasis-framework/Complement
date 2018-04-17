@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2 - 2018-04-18
+
+* Added `after-loading-{complement_name}-{complement_type}` action hook.
+
 ## 1.1.1 - 2018-02-22
 
 * Unit tests supported by `PHPUnit` were added.

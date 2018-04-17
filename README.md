@@ -78,6 +78,7 @@ Run all previous tests:
 - [ ] Add documentation for `module-load` action hook.
 - [ ] Add documentation for `plugin-load` action hook.
 - [ ] Add documentation for `template-load` action hook.
+- [ ] Add documentation for `after-loading-{complement_name}-{complement_type}` action hook.
 - [ ] Add documentation for the different types supported by Eliasis Complement and compatible with Composer Installers.
 
 ## Contribute
