@@ -117,7 +117,7 @@ trait ComplementAction
      */
     private function addActions()
     {
-        if (isset($this->complement['hooks'])) {
+        if ($this->setSettings('hooks')) {
             Hook::getInstance(App::getCurrentID());
 
             return Hook::addActions($this->complement['hooks']);
@@ -141,8 +141,8 @@ trait ComplementAction
         $type = self::getType('strtolower', false);
 
         Hook::getInstance(App::getCurrentID());
-        Hook::doAction($type . '-load');
-        Hook::doAction('after-loading-' . $this->complement['slug'] . '-' . $type);
+        Hook::doAction('after_load_' . $type . 's');
+        Hook::doAction('after_load_' . $this->complement['slug'] . '_' . $type);
 
         if (in_array($action, self::$hooks, true)) {
             $this->doAction($action);

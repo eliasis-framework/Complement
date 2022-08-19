@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 1.1.3 - 2022-08-19
+
+* **The repository was archived.**
+
+* The option was enabled to add files in the `config` directory without having to return any value.
+
+* The `Eliasis\Complement\Traits\ComplementHandler::getOption()` method now returns null instead of an empty string if the option does not exist.
+
+* Deleted `after-loading-{complement_name}-{complement_type}` action hook.
+
+* Added `after_load_{complement_name}_{complement_type}` action hook.
+
+* Deleted `{complement_type}-load` action hook.
+
+* Added `after_load_{complement_type}s` action hook.
+
+* Now the configuration files will only be loaded when the option is requested.
+
+* `Eliasis\Complement\Traits\ComplementHandler::getSettings()` method was renamed to `Eliasis\Complement\Traits\ComplementHandler::setSettings()`.
+
+* `Eliasis\Complement\Complement::getInstance()` method was renamed to `Eliasis\Complement\Complement::getComplementInstance()`.
+
+* Deprecated `Eliasis\Complement\Traits\ComplementHandler::getControllerInstance()` method. It will be removed in future versions.
+
+* Added `Eliasis\Complement\Traits\ComplementHandler::getInstance()` method. Will be used instead of `Eliasis\Complement\Traits\ComplementHandler::getControllerInstance()` and any kind of instance can be obtained.
+
 ## 1.1.2 - 2018-04-18
 
 * Added `after-loading-{complement_name}-{complement_type}` action hook.
@@ -294,9 +320,9 @@ The `addOption()` method will be deleted in the next version. It will be replace
 
 * The following parameters were added for the module configuration file:
 
-	id       → Required → Unique identifier. Previously 'name' was used.
-	state    → Required → State: active, inactive, uninstalled, installed.
-	category → Required → Category: Extension, component, widget, plugin...
+ id       → Required → Unique identifier. Previously 'name' was used.
+ state    → Required → State: active, inactive, uninstalled, installed.
+ category → Required → Category: Extension, component, widget, plugin...
 
 ## 1.0.0 - 2017-05-07
 

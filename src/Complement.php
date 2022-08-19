@@ -88,7 +88,7 @@ abstract class Complement
 
         self::$id = $index;
 
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         if (! $params) {
             return $that;
@@ -117,7 +117,6 @@ abstract class Complement
         $complementType = self::getType('strtoupper');
 
         $path = App::$complementType();
-
         if ($paths = File::getFilesFromDir($path)) {
             foreach ($paths as $path) {
                 if (! $path->isDot() && $path->isDir()) {
@@ -150,7 +149,7 @@ abstract class Complement
         $complement = Json::fileToArray($file);
         $complement['config-file'] = $file;
         self::$id = isset($complement['id']) ? $complement['id'] : 'Default';
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         return $that->setComplement($complement);
     }
@@ -176,7 +175,7 @@ abstract class Complement
 
         foreach ($complements as $id) {
             self::setCurrentID($id);
-            $that = self::getInstance();
+            $that = self::getComplementInstance();
             $complement = $that->complement;
 
             if (! isset($complement['category'])) {
@@ -217,7 +216,7 @@ abstract class Complement
 
         self::setCurrentID($complementID);
 
-        self::getInstance();
+        self::getComplementInstance();
 
         $sorting = '|asort|arsort|krsort|ksort|rsort|shuffle|sort|';
 
@@ -273,7 +272,7 @@ abstract class Complement
      */
     public static function script($pathUrl = null, $vue = true, $vueResource = true)
     {
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         $file = $vue ? 'vue+' : '';
         $file .= $vueResource ? 'vue-resource+' : '';
@@ -292,7 +291,7 @@ abstract class Complement
      */
     public static function style($pathUrl = null)
     {
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         return $that->setFile('eliasis-complement.min', 'style', $pathUrl);
     }
@@ -356,7 +355,7 @@ abstract class Complement
      */
     public static function render($filter = 'all', $remote = null, $sort = 'asort', $translations = null)
     {
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         $translations = $translations ?: [
             'active' => 'active',
@@ -377,7 +376,7 @@ abstract class Complement
      *
      * @return object → complement instance
      */
-    protected static function getInstance()
+    protected static function getComplementInstance()
     {
         $type = self::getType();
         $appID = App::getCurrentID();

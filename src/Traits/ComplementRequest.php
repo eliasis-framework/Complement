@@ -196,7 +196,7 @@ trait ComplementRequest
     private static function changeStateRequest()
     {
         self::$id = self::$config['id'];
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
         $state = $that->changeState();
 
         $response = [
@@ -220,7 +220,7 @@ trait ComplementRequest
     {
         self::$id = self::$config['id'];
 
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
 
         $that->install();
 
@@ -248,7 +248,7 @@ trait ComplementRequest
     private static function uninstallRequest()
     {
         self::$id = self::$config['id'];
-        $that = self::getInstance();
+        $that = self::getComplementInstance();
         $that->remove();
         $state = 'uninstalled';
 

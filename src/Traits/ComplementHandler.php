@@ -47,7 +47,7 @@ trait ComplementHandler
      */
     public function setOption($option, $value)
     {
-        if (! is_array($value)) {
+        if (! is_array($value) || !$value) {
             return $this->complement[$option] = $value;
         }
 
@@ -76,23 +76,25 @@ trait ComplementHandler
     {
         $key = array_shift($params);
 
-        $col[] = isset($this->complement[$key]) ? $this->complement[$key] : 0;
+        $col[] = $this->setSettings($key) ? $this->complement[$key] : 0;
 
         if (! count($params)) {
-            return ($col[0]) ? $col[0] : '';
+            return ($col[0]) ? $col[0] : null;
         }
 
         foreach ($params as $param) {
             $col = array_column($col, $param);
         }
 
-        return (isset($col[0])) ? $col[0] : '';
+        return (isset($col[0])) ? $col[0] : null;
     }
 
     /**
      * Get complement controller instance.
      *
      * @since 1.1.0
+     *
+     * @deprecated 1.1.3
      *
      * @param array $class     → class name
      * @param array $namespace → namespace index
@@ -101,28 +103,43 @@ trait ComplementHandler
      */
     public function getControllerInstance($class, $namespace = '')
     {
-        if (isset($this->complement['namespaces'])) {
-            if (isset($this->complement['namespaces'][$namespace])) {
-                $namespace = $this->complement['namespaces'][$namespace];
+        $backtrace = debug_backtrace()[0];
 
-                $_class = $namespace . $class;
+        trigger_error("The \"getControllerInstance()\" method has been deprecated and will be removed in future versions. Instead, it uses the \"getInstance()\" method. File: " . $backtrace['file'] . '. Line: ' . $backtrace['line'] . '.', E_USER_WARNING);
 
-                if (class_exists($_class)) {
-                    return call_user_func([$_class, 'getInstance']);
-                }
+        return self::getInstance($class, $namespace);
+    }
 
-                return false;
-            }
+    /**
+     * Get complement class instance.
+     *
+     * @since 1.1.3
+     *
+     * @param array $class     → class name
+     * @param array $namespace → namespace index
+     *
+     * @return object|false → class instance or false
+     */
+    public function getInstance($class, $namespace)
+    {
+        $fullClass = $namespace . $class;
 
-            foreach ($this->complement['namespaces'] as $key => $namespace) {
-                $instance = $namespace . $class;
-                if (class_exists($instance)) {
-                    return call_user_func([$instance, 'getInstance']);
-                }
+        if ($this->setSettings('namespaces')) {
+            if (array_key_exists($namespace, $this->complement['namespaces'])) {
+                $fullClass = $this->complement['namespaces'][$namespace] . $class;
             }
         }
 
-        return false;
+        if (isset(self::$instances[$fullClass])) {
+            return self::$instances[$fullClass];
+        } elseif (method_exists($fullClass, 'getInstance')) {
+            return call_user_func([$fullClass, 'getInstance']);
+        } elseif (class_exists($fullClass)) {
+            self::$instances[$fullClass] = new $fullClass();
+            return self::$instances[$fullClass];
+        }
+
+        return null;
     }
 
     /**
@@ -150,7 +167,6 @@ trait ComplementHandler
 
         $this->setAction($action);
         $this->setState($state);
-        $this->getSettings();
 
         $states = ['active', 'outdated'];
 
@@ -216,27 +232,29 @@ trait ComplementHandler
     }
 
     /**
-     * Get settings.
+     * Set settings.
      *
-     * @uses \Eliasis\Complement\Complement->$complement → complement settings
+     * @since 1.1.3
+     *
+     * @return boolean
      */
-    private function getSettings()
+    private function setSettings($key)
     {
-        $rootPath = $this->complement['path']['root'];
-        $configFile = $rootPath . 'config/';
+        $settingsExists = isset($this->complement[$key]);
 
-        if (is_dir($configFile) && $handle = scandir($configFile)) {
-            $files = array_slice($handle, 2);
-
-            foreach ($files as $file) {
-                $content = require $configFile . $file;
-                $merge = array_merge($this->complement, $content);
-                $this->complement = $merge;
+        if (!$settingsExists) {
+            $rootPath = $this->complement['path']['root'];
+            $file = $rootPath . 'config/' . $key . '.php';
+            if (file_exists($file)) {
+                $config = require $file;
+                if (is_array($config) && count($config)) {
+                    $this->complement = array_merge($this->complement, $config);
+                    $settingsExists = true;
+                }
             }
         }
 
-        $this->complement['path']['root'] = $rootPath;
-        $this->complement['path']['config'] = $configFile;
+        return $settingsExists;
     }
 
     /**
@@ -325,7 +343,7 @@ trait ComplementHandler
     private function addRoutes()
     {
         if (class_exists($Router = 'Josantonius\Router\Router')) {
-            if (isset($this->complement['routes'])) {
+            if ($this->setSettings('routes')) {
                 $Router::add($this->complement['routes']);
             }
         }

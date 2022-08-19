@@ -11,9 +11,11 @@ tests/sample-app/templates/.templates-states.jsond
 docs/_build
 docs/*.pyc
 package-lock.json
-.git*/
 node_modules/
 _docpress/
 vendor/
 .idea
 .DS_STORE
+.repository.md
+complement.code-workspace
+.vscode
